@@ -18,7 +18,7 @@ public class MultiNodeTest {
 	@Test
 	public void nullTest() {
 		assertNotNull(new MultiNode());
-		assertNotNull(new MultiNode(new Node(), new Node()));
+		assertNotNull(new MultiNode(new Node(), new Node(),Piece.COLOR.red));
 		assertNotNull(new MultiNode(new Node(), new Node(), new Piece[4]));
 	}
 

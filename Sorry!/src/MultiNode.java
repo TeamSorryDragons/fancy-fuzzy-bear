@@ -7,8 +7,8 @@ public class MultiNode extends Node {
 		this.pieces = new Piece[MAX_PIECES];
 	}
 
-	public MultiNode(Node nextN, Node prevN) {
-		super(nextN, prevN);
+	public MultiNode(Node nextN, Node prevN, Piece.COLOR col) {
+		super(nextN, prevN, col);
 		this.pieces = new Piece[MAX_PIECES];
 	}
 

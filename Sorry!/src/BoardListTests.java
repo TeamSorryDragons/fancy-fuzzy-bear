@@ -21,12 +21,13 @@ public class BoardListTests {
 	@Test
 	public void constructorTest() {
 		BoardList board = new BoardList();
+		//assertEquals(board.toString(),"nn|");
 		assertEquals(
-				"nn|rsn|rsn|rsf|rsf|rsf|rsf|rsf|rhn|rsn|rsn|rst|nn|nn|nn|nn|rsn|rsn|rsn" +
-				"|rsn|rsn|nn|nn|bsn|bsn|bsf|bsf|bsf|bsf|bsf|bhn|bsn|bsn|bst|nn|nn|nn|nn" +
-				"|bsn|bsn|bsn|bsn|bsn|nn|nn|ysn|ysn|ysf|ysf|ysf|ysf|ysf|yhn|ysn|ysn|yst" +
-				"|nn|nn|nn|nn|ysn|ysn|ysn|ysn|ysn|nn|nn|gsn|gsn|gsf|gsf|gsf|gsf|gsf|ghn" +
-				"|gsn|gsn|gst|nn|nn|nn|nn|gsn|gsn|gsn|gsn|gsn|nn|",
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn0|nn|nn|nn|nn|hrsn|rsn|rsn" +
+				"|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn0|nn|nn|nn|nn" +
+				"|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn0" +
+				"|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0" +
+				"|gsn|gsn|gmn0|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|",
 				board.toString());
 	}
 }
