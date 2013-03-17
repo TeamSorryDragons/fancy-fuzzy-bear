@@ -26,7 +26,7 @@ public class BoardListTests {
 				"|rsn|rsn|nn|nn|bsn|bsn|bsf|bsf|bsf|bsf|bsf|bhn|bsn|bsn|bst|nn|nn|nn|nn" +
 				"|bsn|bsn|bsn|bsn|bsn|nn|nn|ysn|ysn|ysf|ysf|ysf|ysf|ysf|yhn|ysn|ysn|yst" +
 				"|nn|nn|nn|nn|ysn|ysn|ysn|ysn|ysn|nn|nn|gsn|gsn|gsf|gsf|gsf|gsf|gsf|ghn" +
-				"|gsn|gsn|gst|nn|nn|nn|nn|gsn|gsn|gsn|gsn|gsn|nn",
+				"|gsn|gsn|gst|nn|nn|nn|nn|gsn|gsn|gsn|gsn|gsn|nn|",
 				board.toString());
 	}
 }
