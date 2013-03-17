@@ -20,54 +20,29 @@ public class SlideNodeTest {
 		assertNotNull(new SlideNode());
 		assertNotNull(new SlideNode(new Node(), new Node()));
 		assertNotNull(new SlideNode(Piece.COLOR.blue));
-		assertNotNull(new SlideNode(new Node()));
+		assertNotNull(new SlideNode(new Node(), new Node()));
 		assertNotNull(new SlideNode(new Node(), new Node(), new Node(),
 				Piece.COLOR.blue));
+		SlideNode test = new SlideNode();
+		assertTrue(test instanceof SlideNode);
 	}
 
 	@Test
 	public void testSetSafeNode() {
 		SlideNode testNode = new SlideNode();
-		// TODO implement this stuffs
+		testNode.setSafeNode(new Node());
+		assertNotNull(testNode.getSafeNode());
 	}
 
 	@Test
 	public void testGetSafeNode() {
-		// TODO implement this stuffs
-	}
+		SlideNode test = new SlideNode();
+		Node safe = new Node();
+		safe.setColor(Piece.COLOR.yellow);
+		test.setSafeNode(safe);
 
-	@Test
-	public void testGetSetSlideColor() {
-		SlideNode testNode = new SlideNode();
-		testNode.setColor(Piece.COLOR.colorless);
-		assertEquals(testNode.getColor(), Piece.COLOR.colorless);
-
-		testNode.setColor(Piece.COLOR.red);
-		assertEquals(testNode.getColor(), Piece.COLOR.red);
-
-		testNode.setColor(Piece.COLOR.blue);
-		assertEquals(testNode.getColor(), Piece.COLOR.blue);
-
-		testNode.setColor(Piece.COLOR.green);
-		assertEquals(testNode.getColor(), Piece.COLOR.green);
-
-		testNode.setColor(Piece.COLOR.yellow);
-		assertEquals(testNode.getColor(), Piece.COLOR.yellow);
-
-		testNode = new SlideNode(Piece.COLOR.colorless);
-		assertEquals(testNode.getColor(), Piece.COLOR.colorless);
-
-		testNode = new SlideNode(Piece.COLOR.red);
-		assertEquals(testNode.getColor(), Piece.COLOR.red);
-
-		testNode = new SlideNode(Piece.COLOR.blue);
-		assertEquals(testNode.getColor(), Piece.COLOR.blue);
-
-		testNode = new SlideNode(Piece.COLOR.green);
-		assertEquals(testNode.getColor(), Piece.COLOR.green);
-
-		testNode = new SlideNode(Piece.COLOR.yellow);
-		assertEquals(testNode.getColor(), Piece.COLOR.yellow);
+		assertEquals(test.getSafeNode(), safe);
+		assertEquals(test.getSafeNode().getColor(), Piece.COLOR.yellow);
 	}
 
 	@Test
@@ -156,7 +131,7 @@ public class SlideNodeTest {
 		testPieces[0] = new Piece(Piece.COLOR.yellow);
 		testNode.setPieces(testPieces);
 		assertEquals(testNode.toString(), "ysny|");
-		
+
 		// do it all over again with a head slide
 		testNode = new SlideNode(Piece.COLOR.red);
 		testNode.head = true;
