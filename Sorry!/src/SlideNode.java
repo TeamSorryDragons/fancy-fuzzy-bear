@@ -1,35 +1,41 @@
 public class SlideNode extends Node {
 	private Node safe;
 	Piece.COLOR slideColor;
+	protected boolean head;
 
 	public SlideNode() {
 		super();
 		this.safe = null;
 		slideColor = Piece.COLOR.red;
+		this.head = false;
 	}
 
 	public SlideNode(Piece.COLOR col) {
 		super();
 		this.safe = null;
 		slideColor = col;
+		this.head = false;
 	}
 
 	public SlideNode(Node next, Node prev) {
 		super(next, prev);
 		this.safe = null;
 		slideColor = Piece.COLOR.red;
+		this.head = false;
 	}
 
 	public SlideNode(Node safe) {
 		super();
 		this.safe = safe;
 		slideColor = Piece.COLOR.red;
+		this.head = false;
 	}
 
 	public SlideNode(Node next, Node prev, Node safe, Piece.COLOR col) {
 		super(next, prev);
 		this.safe = safe;
 		slideColor = col;
+		this.head = false;
 	}
 
 	public Piece.COLOR getColor() {
@@ -46,5 +52,52 @@ public class SlideNode extends Node {
 
 	public void setSafeNode(Node newSafe) {
 		this.safe = newSafe;
+	}
+	
+	public String toString() {
+		StringBuilder ret = new StringBuilder();
+		if (this.head)
+			ret.append("h");
+		switch(this.slideColor) {
+		case red: 
+			ret.append("r");
+			break;
+		case blue:
+			ret.append("b");
+			break;
+		case yellow:
+			ret.append("y");
+			break;
+		case green:
+			ret.append("g");
+			break;
+		default:
+			ret.append("ITBROKEWILLIS");
+			break;
+		}
+		
+		ret.append("sn");
+		
+		if (this.getPieces()[0] != null){
+			switch(this.getPieces()[0].col) {
+			case red: 
+				ret.append("r");
+				break;
+			case blue:
+				ret.append("b");
+				break;
+			case yellow:
+				ret.append("y");
+				break;
+			case green:
+				ret.append("g");
+				break;
+			default:
+				ret.append("ITBROKEWILLIS");
+				break;
+			}
+		}
+		ret.append("|");
+		return ret.toString();	
 	}
 }
