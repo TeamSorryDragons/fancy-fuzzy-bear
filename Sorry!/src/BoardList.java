@@ -1,38 +1,65 @@
 public class BoardList {
 	Node[] cornerPointers;
+	Node[] homePointers;
+	Node[] startPointers;
 
 	public BoardList() {
 		cornerPointers = new Node[4];
+		homePointers = new Node[4];
+		startPointers = new Node[4];
 		cornerPointers[0] = new Node(null, null);
-		cornerPointers[1] = buildQuarterBoard(cornerPointers[0], Piece.COLOR.red);
-		cornerPointers[2] = buildQuarterBoard(cornerPointers[1], Piece.COLOR.blue);
-		cornerPointers[3] = buildQuarterBoard(cornerPointers[2], Piece.COLOR.yellow);
-		Node ret = buildQuarterBoard(cornerPointers[3], Piece.COLOR.green);
+		cornerPointers[1] = buildQuarterBoard(cornerPointers[0],
+				Piece.COLOR.red, 0);
+		cornerPointers[2] = buildQuarterBoard(cornerPointers[1],
+				Piece.COLOR.blue, 1);
+		cornerPointers[3] = buildQuarterBoard(cornerPointers[2],
+				Piece.COLOR.yellow, 2);
+		Node ret = buildQuarterBoard(cornerPointers[3], Piece.COLOR.green, 3);
 		cornerPointers[0].setPrevious(ret.getPrevious());
 		ret.getPrevious().setNext(cornerPointers[0]);
 	}
-
-	public String toString() {
-		return toString(cornerPointers[0], cornerPointers[0].getNext()).toString();
+	public void newGame(){
+		for(int i=0;i<4;i++){
+			Piece[] pieces= new Piece[4];
+			for(int n=0; n<4; n++)
+				pieces[n]=new Piece(startPointers[i].getColor());
+			startPointers[i].setPieces(pieces);
+		}
+			
 	}
-	private StringBuilder toString(Node start, Node next){
+	public String toString() {
+		return toString(cornerPointers[0], cornerPointers[0].getNext())
+				.toString();
+	}
+	public Node[] getHomePointers(){
+		return homePointers;
+	}
+	
+	public Node[] getStartPointers(){
+		return startPointers;
+	}
+	public Node[] getCornerPointers(){
+		return cornerPointers;
+	}
+
+	private StringBuilder toString(Node start, Node next) {
 		StringBuilder ret = new StringBuilder();
 		ret.append(next.toString());
-		if(next.getNext() == null)
+		if (next.getNext() == null)
 			return ret;
 		if (start == next)
 			return ret;
-		if(next instanceof SlideNode){
-			if (((SlideNode) next).getSafeNode() != null)
-			{
-				if(((SlideNode) next).getSafeNode() instanceof MultiNode)
-					ret.append(toString(((SlideNode) next).getSafeNode(),((SlideNode) next).getSafeNode()));
+		if (next instanceof SlideNode) {
+			if (((SlideNode) next).getSafeNode() != null) {
+				if (((SlideNode) next).getSafeNode() instanceof MultiNode)
+					ret.append(toString(((SlideNode) next).getSafeNode(),
+							((SlideNode) next).getSafeNode()));
 				else
-					ret.append(toString(start,((SlideNode) next).getSafeNode()));
+					ret.append(toString(start, ((SlideNode) next).getSafeNode()));
 			}
 		}
 		return ret.append(toString(start, next.getNext()));
-		
+
 	}
 
 	/*
@@ -41,12 +68,12 @@ public class BoardList {
 	 * 
 	 * } }
 	 */
-	protected Node buildQuarterBoard(Node previous, Piece.COLOR col) {
+	protected Node buildQuarterBoard(Node previous, Piece.COLOR col, int pos) {
 		SlideNode one = new SlideNode(null, previous, null, col);
 		one.head = true;
 		previous.setNext(one);
 		SlideNode two = new SlideNode(null, one, null, col); // This now goes to
-		one.setNext(two);									 // safety
+		one.setNext(two); // safety
 		Node three = new Node(null, two, col);
 		two.setSafeNode(three);
 		Node four = new Node(null, three, col);
@@ -58,12 +85,14 @@ public class BoardList {
 		Node seven = new Node(null, six, col);
 		six.setNext(seven);
 		MultiNode eight = new MultiNode(null, seven, col);
+		homePointers[pos] = eight;
 		seven.setNext(eight);
 		SlideNode nine = new SlideNode(null, two, null, col);
 		two.setNext(nine);
 		SlideNode ten = new SlideNode(null, nine, null, col);
 		nine.setNext(ten);
 		MultiNode eleven = new MultiNode(ten, null, col);
+		startPointers[pos] = eleven;
 		ten.setSafeNode(eleven);
 		Node twelve = new Node(null, ten);
 		ten.setNext(twelve);
