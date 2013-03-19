@@ -3,23 +3,23 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-public class DisplayableBoard extends JPanel {
+public class DisplayableBoard extends JComponent {
 	private static final long serialVersionUID = 1L;
 	BoardList board;
-	private static BufferedImage image;
+	private static ImageIcon image;
 	public DisplayableBoard(BoardList board){
 		super();
+		this.setSize(1000, 1000);
 		this.board = board;
-		try {
-			DisplayableBoard.image = ImageIO.read(new File("board.bmp"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		File fil = new File("Board.jpg");
+		image = new ImageIcon("Board.jpg");
+		this.setBackground(Color.GREEN);
 	}
 	public void paintComponent(Graphics g){
-		g.drawImage(DisplayableBoard.image, 0, 0, null);
+		image.paintIcon(this,  g, 100, 100);
 	}
 }
