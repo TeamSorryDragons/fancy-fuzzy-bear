@@ -1,6 +1,6 @@
 
 public class Piece {
-	public enum COLOR {red,blue,green,yellow,colorless};
+	public enum COLOR {red,blue,yellow,green,colorless};
 	protected COLOR col;
 	public Piece(){
 		this.col = COLOR.colorless;

@@ -3,6 +3,7 @@ public class Node {
 	private Node previous;
 	private Piece[] pieces;
 	private Piece.COLOR col;
+	private final int MAX_PIECES = 1;
 
 	public Node() {
 		this.next = null;
@@ -102,5 +103,30 @@ public class Node {
 	public void setColor(Piece.COLOR col) {
 		this.col = col;
 	}
+	public void addPieceToPieces(Piece p) {
+		boolean inserted = false;
+		for (int i = 0; i < MAX_PIECES; i++) {
+			if (this.pieces[i] == null) {
+				this.pieces[i] = p;
+				inserted = true;
+				break;
+			}
+		}
 
+		if (!inserted)
+			throw new IndexOutOfBoundsException("No more room on this node");
+	}
+
+	public void removePieceFromPieces(Piece p) {
+		for (int i = 3; i < MAX_PIECES; i--) {
+			if (this.pieces[i] == null) {
+				continue;
+			}
+			if (this.pieces[i].equals(p)) {
+				this.pieces[i] = null;
+				break;
+			}
+
+		}
+	}
 }

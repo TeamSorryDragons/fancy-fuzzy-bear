@@ -43,7 +43,7 @@ public class BoardListTests {
 	@Test
 	public void newGameTest() {
 		BoardList board = new BoardList();
-		board.newGame();
+		Piece[] pieces = board.newGame();
 		//assertEquals(board.toString(),"nn|");
 		assertEquals(
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn4|nn|nn|nn|nn|hrsn|rsn|rsn" +
@@ -52,6 +52,11 @@ public class BoardListTests {
 				"|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0" +
 				"|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|",
 				board.toString());
+		Piece.COLOR[] cols = {Piece.COLOR.red,Piece.COLOR.blue, Piece.COLOR.yellow, Piece.COLOR.green};
+		for(int i = 0; i < pieces.length; i++){
+			assertNotNull(pieces[i]);
+			assertEquals(cols[(int) (i/4)], pieces[i].col);
+		}
 	}
 	@Test
 	public void constructorTest() {

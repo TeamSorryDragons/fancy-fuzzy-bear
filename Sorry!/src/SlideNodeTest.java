@@ -25,6 +25,7 @@ public class SlideNodeTest {
 				Piece.COLOR.blue));
 		SlideNode test = new SlideNode();
 		assertTrue(test instanceof SlideNode);
+		assertFalse(null instanceof SlideNode);
 	}
 
 	@Test
