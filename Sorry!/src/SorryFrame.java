@@ -1,6 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 
@@ -11,9 +12,11 @@ public class SorryFrame extends JFrame implements ActionListener{
 	public SorryFrame(BoardList board){
 		super("Sorry!");
 		this.board = board;
-		this.setSize(1022,1028);
+		this.setSize(1000,1000);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.add(new DisplayableBoard(this.board));
+		JComponent displayBoard = new DisplayableBoard(this.board);
+		this.add(displayBoard);
+//		displayBoard.setSize(width, height)
 		this.setVisible(true);
 		this.repaint();
 	}
