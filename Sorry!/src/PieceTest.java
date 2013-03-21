@@ -31,5 +31,7 @@ public class PieceTest {
 		assertTrue(a == a); //testing object memory construction.
 		Piece b = new Piece(Piece.COLOR.blue);
 		assertTrue(b == b); //testing object memory construction.
+		Piece c = new Piece(Piece.COLOR.blue);
+		assertFalse(b == c);
 	}
 }

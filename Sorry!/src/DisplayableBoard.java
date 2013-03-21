@@ -31,15 +31,15 @@ public class DisplayableBoard extends JComponent {
 		int size = image.getWidth() / 16;
 		Graphics2D g2 = (Graphics2D) g;
 		draw(cornerPointers[0], cornerPointers[0].getNext(), Math.PI,
-				image.getWidth() - 2 * size, image.getHeight() - size, size, g2,
-				Piece.COLOR.red);
+				image.getWidth() - 2 * size, image.getHeight() - size, size,
+				g2, Piece.COLOR.red);
 	}
 
 	@SuppressWarnings("incomplete-switch")
 	public void draw(Node start, Node next, Double angle, int x, int y,
 			int size, Graphics2D g, Piece.COLOR curcolor) {
-		if (next.getPieces()[0] != null) {
-			switch (next.getPieces()[0].col) {
+		if (next.hasPiece()) {
+			switch (next.firstPiece().col) {
 			case blue:
 				g.setColor(Color.blue);
 				break;
@@ -71,6 +71,8 @@ public class DisplayableBoard extends JComponent {
 		if (start == next)
 			return;
 		if (next.getNext() == null)
+			return;
+		if (next.getPrevious() == null)
 			return;
 		if (next instanceof SlideNode) {
 			if (((SlideNode) next).getSafeNode() != null) {

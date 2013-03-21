@@ -9,10 +9,17 @@ public class Engine {
 	
 	public void testing(){
 		try {
-			move(3,pieces[5]);
-			move(4,pieces[2]);
-			move(2,pieces[9]);
 			move(1,pieces[14]);
+			move(3, pieces[4]);
+		} catch (Unstarted e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void testing2(){
+		try {
+			move(1,pieces[9]);
+			move(1, pieces[0]);
 		} catch (Unstarted e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

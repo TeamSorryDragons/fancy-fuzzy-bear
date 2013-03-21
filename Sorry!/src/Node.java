@@ -103,30 +103,34 @@ public class Node {
 	public void setColor(Piece.COLOR col) {
 		this.col = col;
 	}
+
 	public void addPieceToPieces(Piece p) {
-		boolean inserted = false;
-		for (int i = 0; i < MAX_PIECES; i++) {
-			if (this.pieces[i] == null) {
-				this.pieces[i] = p;
-				inserted = true;
-				break;
-			}
+		if (this.pieces[0] == null) {
+			this.pieces[0] = p;
 		}
 
-		if (!inserted)
+		else
 			throw new IndexOutOfBoundsException("No more room on this node");
 	}
 
 	public void removePieceFromPieces(Piece p) {
-		for (int i = 3; i < MAX_PIECES; i--) {
-			if (this.pieces[i] == null) {
-				continue;
+		this.pieces[0] = null;
+	}
+	public boolean hasPiece(){
+		for(int i = 0; i < pieces.length; i++){
+			if(pieces[i] != null){
+				return true;
 			}
-			if (this.pieces[i].equals(p)) {
-				this.pieces[i] = null;
-				break;
-			}
-
 		}
+		return false;
+	}
+	
+	public Piece firstPiece(){
+		for(int i = 0; i < pieces.length; i++){
+			if(pieces[i] != null){
+				return pieces[i];
+			}
+		}
+		return null;
 	}
 }

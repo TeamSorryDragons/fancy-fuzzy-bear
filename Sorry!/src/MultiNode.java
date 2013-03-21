@@ -64,12 +64,30 @@ public class MultiNode extends Node {
 			if (this.pieces[i] == null) {
 				continue;
 			}
-			if (this.pieces[i].equals(p)) {
+			if (this.pieces[i] == (p)) {
 				this.pieces[i] = null;
 				break;
 			}
 
 		}
+	}
+	
+	public boolean hasPiece(){
+		for(int i = 0; i < pieces.length; i++){
+			if(pieces[i] != null){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Piece firstPiece(){
+		for(int i = 0; i < pieces.length; i++){
+			if(pieces[i] != null){
+				return pieces[i];
+			}
+		}
+		return null;
 	}
 
 	public String toString() {
