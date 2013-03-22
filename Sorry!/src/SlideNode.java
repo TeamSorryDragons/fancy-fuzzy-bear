@@ -21,11 +21,11 @@ public class SlideNode extends Node {
 		this.head = false;
 	}
 
-	public SlideNode(Node safe) {
-		super();
-		this.safe = safe;
-		this.head = false;
-	}
+//	public SlideNode(Node safe) {
+//		super();
+//		this.safe = safe;
+//		this.head = false;
+//	}
 
 	public SlideNode(Node next, Node prev, Node safe, Piece.COLOR col) {
 		super(next, prev);
@@ -59,9 +59,6 @@ public class SlideNode extends Node {
 		case green:
 			ret.append("g");
 			break;
-		default:
-			ret.append("ITBROKEWILLIS");
-			break;
 		}
 
 		ret.append("sn");
@@ -79,9 +76,6 @@ public class SlideNode extends Node {
 				break;
 			case green:
 				ret.append("g");
-				break;
-			default:
-				ret.append("ITBROKEWILLIS");
 				break;
 			}
 		}

@@ -105,8 +105,6 @@ public class MultiNode extends Node {
 		case yellow:
 			ret.append("y");
 			break;
-		default:
-			ret.append("ITDONEBROKEWILLIS");
 		}
 
 		ret.append("mn");
