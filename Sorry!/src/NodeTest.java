@@ -129,9 +129,9 @@ public class NodeTest {
 	public void testSafeNodesToString() {
 		Node head = new Node();
 		head.setColor(Piece.COLOR.red);
-		
+
 		assertEquals(head.toString(), "rsf|");
-		
+
 		Piece[] test = new Piece[1];
 		test[0] = new Piece(Piece.COLOR.red);
 		head.setPieces(test);
@@ -148,12 +148,12 @@ public class NodeTest {
 		test[0] = new Piece();
 		head.setPieces(test);
 		assertEquals(head.toString(), "rsfITBROKEWILLIS|");
-		
+
 		head = new Node();
 		head.setColor(Piece.COLOR.blue);
-		
+
 		assertEquals(head.toString(), "bsf|");
-		
+
 		test = new Piece[1];
 		test[0] = new Piece(Piece.COLOR.red);
 		head.setPieces(test);
@@ -170,12 +170,12 @@ public class NodeTest {
 		test[0] = new Piece();
 		head.setPieces(test);
 		assertEquals(head.toString(), "bsfITBROKEWILLIS|");
-		
+
 		head = new Node();
 		head.setColor(Piece.COLOR.yellow);
-		
+
 		assertEquals(head.toString(), "ysf|");
-		
+
 		test = new Piece[1];
 		test[0] = new Piece(Piece.COLOR.red);
 		head.setPieces(test);
@@ -192,12 +192,12 @@ public class NodeTest {
 		test[0] = new Piece();
 		head.setPieces(test);
 		assertEquals(head.toString(), "ysfITBROKEWILLIS|");
-		
+
 		head = new Node();
 		head.setColor(Piece.COLOR.green);
-		
+
 		assertEquals(head.toString(), "gsf|");
-		
+
 		test = new Piece[1];
 		test[0] = new Piece(Piece.COLOR.red);
 		head.setPieces(test);
@@ -214,7 +214,7 @@ public class NodeTest {
 		test[0] = new Piece();
 		head.setPieces(test);
 		assertEquals(head.toString(), "gsfITBROKEWILLIS|");
-		
-		
+
+
 	}
 }

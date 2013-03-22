@@ -29,14 +29,14 @@ public class MultiNodeTest {
 			test.setPieces(new Piece[5]);
 			fail();
 		} catch (IllegalArgumentException e) {
-
+			assertTrue(true);
 		}
 
 		try {
 			test.setPieces(new Piece[3]);
 			fail();
 		} catch (IllegalArgumentException e) {
-
+			assertTrue(true);
 		}
 
 	}
@@ -76,7 +76,7 @@ public class MultiNodeTest {
 			test.addPieceToPieces(new Piece(Piece.COLOR.yellow));
 			fail();
 		} catch (IllegalArgumentException e) {
-
+			assertTrue(true);
 		}
 
 		try {
@@ -85,7 +85,7 @@ public class MultiNodeTest {
 			test.setPieces(pieces);
 			fail();
 		} catch (IllegalArgumentException e) {
-
+			assertTrue(true);
 		}
 	}
 
