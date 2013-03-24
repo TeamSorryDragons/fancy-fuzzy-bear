@@ -7,7 +7,7 @@ public class Engine {
 		this.board = board;
 	}
 
-	public void testing() {
+/*	public void testing() {
 		try {
 			move(1, this.pieces[14]);
 			move(3, this.pieces[4]);
@@ -23,7 +23,7 @@ public class Engine {
 		} catch (Unstarted e) {
 			e.printStackTrace();
 		}
-	}
+	} */
 
 	public void newGame() {
 		this.pieces = this.board.newGame();
