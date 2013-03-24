@@ -1,7 +1,2 @@
-/DisplayableBoard.class
-/Engine.class
-/Main.class
-/SorryFrame.class
-/Engine$Unstarted.class
-/SorryFrameInstanceTest.class
-/EngineNonGUITest.class
+/images
+*.clas
