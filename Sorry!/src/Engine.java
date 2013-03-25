@@ -160,20 +160,22 @@ public class Engine {
 	 */
 	public Node convertCoordToNode(SorryFrame.Coordinate coordinate) {
 		// TODO this
-		if (coordsMap.containsKey(coordinate)){
+		if (coordsMap.containsKey(coordinate)) {
 			return null;
 		} else {
 			// the map doesn't contain it, probably an invalid coordinate
 			return null;
 		}
-			
-	
+
 	}
 
 	protected static int getNodePosition(SorryFrame.Coordinate coord) {
 		if (coordsMap == null)
 			populateCoordsMap();
-		return coordsMap.get(coord);
+		if (coordsMap.containsKey(coord))
+			return coordsMap.get(coord);
+		throw new CoordinateOffOfBoardException("Bad coordinate access: "
+				+ coord.getX() + " " + coord.getY());
 	}
 
 	private static void populateCoordsMap() {

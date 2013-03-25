@@ -103,6 +103,39 @@ public class SorryFrameCoordinateConversionTest {
 
 	}
 
+	@SuppressWarnings("javadoc")
+	@Test
+	public void testOffBoardException() {
+		try {
+			SorryFrame.convertClickToCoordinate(-1, 0);
+			fail();
+		} catch (CoordinateOffOfBoardException e) {
+			// passes test
+		}
+
+		try {
+			SorryFrame.convertClickToCoordinate(0, -1);
+			fail();
+		} catch (CoordinateOffOfBoardException e) {
+			// passes test
+		}
+
+		try {
+			SorryFrame.convertClickToCoordinate(1001, 500);
+			fail();
+		} catch (CoordinateOffOfBoardException e) {
+			// passes test
+		}
+
+		try {
+			SorryFrame.convertClickToCoordinate(500, 1001);
+			fail();
+		} catch (CoordinateOffOfBoardException e) {
+			// passes test
+		}
+
+	}
+
 	private static void checkCoordinates(SorryFrame.Coordinate c1,
 			SorryFrame.Coordinate c2) {
 		assertEquals(c1.getX(), c2.getX());

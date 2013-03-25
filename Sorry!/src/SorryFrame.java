@@ -6,16 +6,21 @@ import java.awt.event.MouseListener;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+/**
+ * Extension of JFrame used to contain necessary menus and the Sorry board game.
+ * 
+ * @author sturgedl. Created Mar 25, 2013.
+ */
 public class SorryFrame extends JFrame implements ActionListener {
-	public static final int BOARD_WIDTH = 1000;
-	public static final int BOARD_HEIGHT = 1000;
-	public static final int BOARD_ROWS = 16;
-	public static final int BOARD_COLS = 16;
-	public static final double CELL_WIDTH = ((double) BOARD_WIDTH / BOARD_COLS);
-	public static final double CELL_HEIGHT = ((double) BOARD_HEIGHT / BOARD_ROWS);
-	protected static final int FRAME_X_PAD = 10;
-	protected static final int FRAME_Y_PAD = 30;
-	
+	private static final int BOARD_WIDTH = 1000;
+	private static final int BOARD_HEIGHT = 1000;
+	private static final int BOARD_ROWS = 16;
+	private static final int BOARD_COLS = 16;
+	private static final double CELL_WIDTH = ((double) BOARD_WIDTH / BOARD_COLS);
+	private static final double CELL_HEIGHT = ((double) BOARD_HEIGHT / BOARD_ROWS);
+	private static final int FRAME_X_PAD = 10;
+	private static final int FRAME_Y_PAD = 30;
+
 	private static final long serialVersionUID = 1L;
 	private BoardList board;
 	private Engine engine;
@@ -23,6 +28,12 @@ public class SorryFrame extends JFrame implements ActionListener {
 	/*
 	 * Indices 0-3 are red, Indices 4-7 are blue, Indices 8-11 are Yellow,
 	 * Indices 12-15 are green
+	 */
+	/**
+	 * Basic constructor. Does what it does.
+	 * 
+	 * @param board
+	 * @param engine
 	 */
 	public SorryFrame(BoardList board, Engine engine) {
 		super("Sorry!");
@@ -48,6 +59,14 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * @return Coordinate, position on board corresponding to x and y
 	 */
 	public static Coordinate convertClickToCoordinate(double x, double y) {
+		if (x > BOARD_WIDTH || x < 0)
+			throw new CoordinateOffOfBoardException("Bad location: x = " + x
+					+ " y = " + y);
+
+		if (y > BOARD_HEIGHT || y < 0)
+			throw new CoordinateOffOfBoardException("Bad location: x = " + x
+					+ " y = " + y);
+
 		int xCoord = (int) Math.floor((x / CELL_WIDTH));
 		int yCoord = (int) Math.floor((y / CELL_HEIGHT));
 
@@ -141,8 +160,14 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * @author sturgedl. Created Mar 25, 2013.
 	 */
 	protected class BoardMouseListener implements MouseListener {
-		SorryFrame myFrame;
+		private SorryFrame myFrame;
 
+		/**
+		 * Basic MouseListener constructor, takes a frame to interact with. Uses
+		 * the frame to register mouse clicks upon.
+		 * 
+		 * @param frame
+		 */
 		public BoardMouseListener(SorryFrame frame) {
 			this.myFrame = frame;
 		}
@@ -151,8 +176,13 @@ public class SorryFrame extends JFrame implements ActionListener {
 		public void mouseClicked(MouseEvent click) {
 			System.out.println("Mouse click registerd! x: " + click.getX()
 					+ " y: " + click.getY());
-			this.myFrame.registerMouseClick(SorryFrame
-					.convertClickToCoordinate(click.getX()-FRAME_X_PAD, click.getY()-FRAME_Y_PAD));
+			try {
+				this.myFrame.registerMouseClick(SorryFrame
+						.convertClickToCoordinate(click.getX() - FRAME_X_PAD,
+								click.getY() - FRAME_Y_PAD));
+			} catch (CoordinateOffOfBoardException e) {
+				System.out.println("Got an exception.");
+			}
 
 		}
 
