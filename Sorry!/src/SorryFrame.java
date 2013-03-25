@@ -1,5 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -11,7 +13,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 	public static final int BOARD_COLS = 16;
 	public static final double CELL_WIDTH = ((double) BOARD_WIDTH / BOARD_COLS);
 	public static final double CELL_HEIGHT = ((double) BOARD_HEIGHT / BOARD_ROWS);
-
+	protected static final int FRAME_X_PAD = 10;
+	protected static final int FRAME_Y_PAD = 30;
+	
 	private static final long serialVersionUID = 1L;
 	private BoardList board;
 	private Engine engine;
@@ -31,12 +35,33 @@ public class SorryFrame extends JFrame implements ActionListener {
 		// displayBoard.setSize(width, height)
 		this.setVisible(true);
 		this.repaint();
+		this.addMouseListener(new BoardMouseListener(this));
+	}
+
+	/**
+	 * Given an (x, y) tuple of doubles, will return an appropriate board grid
+	 * coordinate of integers.
+	 * 
+	 * @param x
+	 * @param y
+	 * 
+	 * @return Coordinate, position on board corresponding to x and y
+	 */
+	public static Coordinate convertClickToCoordinate(double x, double y) {
+		int xCoord = (int) Math.floor((x / CELL_WIDTH));
+		int yCoord = (int) Math.floor((y / CELL_HEIGHT));
+
+		return new Coordinate(xCoord, yCoord);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 
+	}
+
+	private void registerMouseClick(Coordinate coord) {
+		System.out.println("The node number: " + Engine.getNodePosition(coord));
 	}
 
 	/**
@@ -92,12 +117,11 @@ public class SorryFrame extends JFrame implements ActionListener {
 				return this.equals((Coordinate) o);
 			return false;
 		}
-		
+
 		@Override
-		public int hashCode(){
-			return this.x * HASH_BROWNS + this.y*SALT;
+		public int hashCode() {
+			return this.x * HASH_BROWNS + this.y * SALT;
 		}
-		
 
 		/**
 		 * Checks if 2 coordinates are equal, based on their x and y values.
@@ -112,19 +136,50 @@ public class SorryFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * Given an (x, y) tuple of doubles, will return an appropriate board grid
-	 * coordinate of integers.
+	 * Class for the Mouse listener used on the game board.
 	 * 
-	 * @param x
-	 * @param y
-	 * 
-	 * @return Coordinate, position on board corresponding to x and y
+	 * @author sturgedl. Created Mar 25, 2013.
 	 */
-	public static Coordinate convertClickToCoordinate(double x, double y) {
-		int xCoord = (int) Math.floor((x / CELL_WIDTH));
-		int yCoord = (int) Math.floor((y / CELL_HEIGHT));
+	protected class BoardMouseListener implements MouseListener {
+		SorryFrame myFrame;
 
-		return new Coordinate(xCoord, yCoord);
+		public BoardMouseListener(SorryFrame frame) {
+			this.myFrame = frame;
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent click) {
+			System.out.println("Mouse click registerd! x: " + click.getX()
+					+ " y: " + click.getY());
+			this.myFrame.registerMouseClick(SorryFrame
+					.convertClickToCoordinate(click.getX()-FRAME_X_PAD, click.getY()-FRAME_Y_PAD));
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent click) {
+			// NOT NEEDED (YET)
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent click) {
+			// NOT NEEDED (YET)
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent click) {
+			// NOT NEEDED (YET)
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent click) {
+			// NOT NEEDED (YET)
+
+		}
+
 	}
 
 }

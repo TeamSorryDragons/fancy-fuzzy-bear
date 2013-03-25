@@ -159,7 +159,15 @@ public class Engine {
 	 * @return node corresponding to the given coordinate
 	 */
 	public Node convertCoordToNode(SorryFrame.Coordinate coordinate) {
-		return this.board.getCornerPointers()[2];
+		// TODO this
+		if (coordsMap.containsKey(coordinate)){
+			return null;
+		} else {
+			// the map doesn't contain it, probably an invalid coordinate
+			return null;
+		}
+			
+	
 	}
 
 	protected static int getNodePosition(SorryFrame.Coordinate coord) {
