@@ -1,4 +1,9 @@
+import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+
 public class Engine {
+	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
 	BoardList board;
 	Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue, Indices 8-11
 					// are Yellow, Indices 12-15 are green
@@ -7,23 +12,13 @@ public class Engine {
 		this.board = board;
 	}
 
-/*	public void testing() {
-		try {
-			move(1, this.pieces[14]);
-			move(3, this.pieces[4]);
-		} catch (Unstarted e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void testing2() {
-		try {
-			move(1, this.pieces[9]);
-			move(1, this.pieces[0]);
-		} catch (Unstarted e) {
-			e.printStackTrace();
-		}
-	} */
+	/*
+	 * public void testing() { try { move(1, this.pieces[14]); move(3,
+	 * this.pieces[4]); } catch (Unstarted e) { e.printStackTrace(); } }
+	 * 
+	 * public void testing2() { try { move(1, this.pieces[9]); move(1,
+	 * this.pieces[0]); } catch (Unstarted e) { e.printStackTrace(); } }
+	 */
 
 	public void newGame() {
 		this.pieces = this.board.newGame();
@@ -155,5 +150,147 @@ public class Engine {
 		public Unstarted(String message) {
 			super(message);
 		}
+	}
+
+	/**
+	 * Returns the node at the given coordinate position.
+	 * 
+	 * @param coordinate
+	 * @return node corresponding to the given coordinate
+	 */
+	public Node convertCoordToNode(SorryFrame.Coordinate coordinate) {
+		return this.board.getCornerPointers()[2];
+	}
+
+	protected static int getNodePosition(SorryFrame.Coordinate coord) {
+		if (coordsMap == null)
+			populateCoordsMap();
+		return coordsMap.get(coord);
+	}
+
+	private static void populateCoordsMap() {
+		coordsMap = new HashMap<SorryFrame.Coordinate, Integer>();
+		populateCorners();
+		populateStartZones();
+		populateHomeZones();
+		populateSafeZones();
+		populateSideLines();
+	}
+
+	private static void populateSideLines() {
+		mapInsert(14, 15, 1);
+		mapInsert(13, 15, 2);
+		mapInsert(12, 15, 9);
+		mapInsert(11, 15, 10);
+
+		mapInsert(0, 14, 23);
+		mapInsert(0, 13, 24);
+		mapInsert(0, 12, 31);
+		mapInsert(0, 11, 32);
+
+		mapInsert(1, 0, 45);
+		mapInsert(2, 0, 46);
+		mapInsert(3, 0, 53);
+		mapInsert(4, 0, 54);
+
+		mapInsert(15, 1, 67);
+		mapInsert(15, 2, 68);
+		mapInsert(15, 3, 75);
+		mapInsert(15, 4, 76);
+
+	}
+
+	private static void mapInsert(int x, int y, int pos) {
+		coordsMap.put(new SorryFrame.Coordinate(x, y), pos);
+
+	}
+
+	private static void populateSafeZones() {
+		int redZone = 2;
+		for (int i = 15; i >= 10; i--)
+			coordsMap.put(new SorryFrame.Coordinate(13, i), redZone++);
+
+		int blueZone = 24;
+		for (int i = 0; i <= 5; i++)
+			coordsMap.put(new SorryFrame.Coordinate(i, 13), blueZone++);
+
+		int yellowZone = 46;
+		for (int i = 0; i <= 5; i++)
+			coordsMap.put(new SorryFrame.Coordinate(2, i), yellowZone++);
+
+		int greenZone = 68;
+		for (int i = 15; i >= 10; i--)
+			coordsMap.put(new SorryFrame.Coordinate(i, 2), greenZone++);
+	}
+
+	private static void populateHomeZones() {
+		int redHome = 8;
+		for (int i = 14; i >= 12; i--)
+			for (int j = 9; j >= 7; j--)
+				coordsMap.put(new SorryFrame.Coordinate(i, j), redHome);
+
+		int blueHome = 30;
+		for (int i = 6; i <= 8; i++)
+			for (int j = 14; j >= 12; j--)
+				coordsMap.put(new SorryFrame.Coordinate(i, j), blueHome);
+
+		int yellowHome = 52;
+		for (int i = 1; i <= 3; i++)
+			for (int j = 6; j <= 8; j++)
+				coordsMap.put(new SorryFrame.Coordinate(i, j), yellowHome);
+
+		int greenHome = 74;
+		for (int i = 7; i <= 9; i++)
+			for (int j = 1; j <= 3; j++)
+				coordsMap.put(new SorryFrame.Coordinate(i, j), greenHome);
+
+	}
+
+	private static void populateStartZones() {
+		int redStart = 11;
+		for (int i = 10; i <= 12; i++) {
+			for (int j = 12; j <= 14; j++) {
+				coordsMap.put(new SorryFrame.Coordinate(i, j), redStart);
+			}
+		}
+
+		int blueStart = 33;
+		for (int i = 10; i <= 12; i++) {
+			for (int j = 1; j <= 3; j++) {
+				coordsMap.put(new SorryFrame.Coordinate(j, i), blueStart);
+			}
+		}
+
+		int yellowStart = 55;
+		for (int i = 3; i <= 5; i++) {
+			for (int j = 1; j <= 3; j++) {
+				coordsMap.put(new SorryFrame.Coordinate(i, j), yellowStart);
+			}
+		}
+
+		int greenStart = 77;
+		for (int i = 3; i <= 5; i++) {
+			for (int j = 12; j <= 14; j++)
+				coordsMap.put(new SorryFrame.Coordinate(j, i), greenStart);
+		}
+	}
+
+	private static void populateCorners() {
+		int redSide = 12;
+		int blueSide = 34;
+
+		for (int i = 10; i >= 0; i--) {
+			coordsMap.put(new SorryFrame.Coordinate(i, 15), redSide++);
+			coordsMap.put(new SorryFrame.Coordinate(0, i), blueSide++);
+		}
+
+		int greenSide = 78;
+		int yellowSide = 56;
+		for (int i = 5; i <= 15; i++) {
+			coordsMap.put(new SorryFrame.Coordinate(i, 0), yellowSide++);
+			coordsMap.put(new SorryFrame.Coordinate(15, i), greenSide++);
+		}
+		coordsMap.put(new SorryFrame.Coordinate(15, 15), 0);
+
 	}
 }

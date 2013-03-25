@@ -50,6 +50,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * @author sturgedl. Created Mar 24, 2013.
 	 */
 	protected static class Coordinate {
+		private static final int HASH_BROWNS = 17;
+		private static final int SALT = 113;
 		private int x;
 		private int y;
 
@@ -90,6 +92,12 @@ public class SorryFrame extends JFrame implements ActionListener {
 				return this.equals((Coordinate) o);
 			return false;
 		}
+		
+		@Override
+		public int hashCode(){
+			return this.x * HASH_BROWNS + this.y*SALT;
+		}
+		
 
 		/**
 		 * Checks if 2 coordinates are equal, based on their x and y values.
