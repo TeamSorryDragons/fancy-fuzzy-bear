@@ -1,7 +1,7 @@
 public class Node {
 	private Node next;
 	private Node previous;
-	private Piece[] pieces;
+	protected Piece[] pieces;
 	private Piece.COLOR col;
 	private final int MAX_PIECES = 1;
 
@@ -132,5 +132,36 @@ public class Node {
 			}
 		}
 		return null;
+	}
+	
+	public Node findNodeWithPiece(Piece p){//we always start at the corner node which is a normal node
+		if(this.pieces[0] == p){
+			return this;
+		}
+		else{
+			return this.next.findNodeWithPiece(p,this);
+		}
+	}
+	public Node findNodeWithPiece(Piece p, Node start){
+		if(this == start){
+			throw new IllegalArgumentException();
+		}
+		else if(this.pieces[0] == p){
+			return this;
+		}
+		else{
+			return this.next.findNodeWithPiece(p,start);
+		}
+	}
+	public Node findNodeWithPosition(int i){
+		if(i > 87){
+			throw new IndexOutOfBoundsException();
+		}
+		else if(i == 0){
+			return this;
+		}
+		else{
+			return this.next.findNodeWithPosition(i-1);
+		}
 	}
 }

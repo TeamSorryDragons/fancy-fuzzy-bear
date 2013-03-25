@@ -64,12 +64,16 @@ public class Engine {
 		}
 	}
 
-	private Node findNode(Piece piece) {
+	public Node findNode(Piece piece) {
 
-		return findNode(piece, this.board.getCornerPointers()[0]);
+		return this.board.getCornerPointers()[0].findNodeWithPiece(piece);
+	}
+	
+	public Node findNodeByPosition(int i){
+		return this.board.getCornerPointers()[0].findNodeWithPosition(i);
 	}
 
-	private Node findNode(Piece pawn, Node next) {
+/*	private Node findNode(Piece pawn, Node next) {
 		if (next == null) {
 			return null;
 		}
@@ -98,7 +102,7 @@ public class Engine {
 
 		return findNode(pawn, next.getNext());
 
-	}
+	} */
 
 	/**
 	 * Helper method for moving pieces to the start position.

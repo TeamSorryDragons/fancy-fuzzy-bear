@@ -368,4 +368,23 @@ public class EngineNonGUITest {
 		}
 
 	}
+	
+	@Test
+	public void testFindNodeWithPiece(){
+		BoardList temp = new BoardList();
+		Engine e = new Engine(temp);
+		e.newGame();
+		Piece p = temp.getStartPointers()[0].getPieces()[0];
+		assertEquals(e.findNode(p),temp.getStartPointers()[0]);
+	}
+	
+	@Test
+	public void testFindNodeWithPosition(){
+		BoardList temp = new BoardList();
+		Engine e = new Engine(temp);
+		e.newGame();
+		assertEquals(e.findNodeByPosition(87), temp.getCornerPointers()[0].getPrevious());
+		assertEquals(e.findNodeByPosition(11), temp.getStartPointers()[0]);
+		assertEquals(e.findNodeByPosition(8), temp.getHomePointers()[0]);
+	}
 }
