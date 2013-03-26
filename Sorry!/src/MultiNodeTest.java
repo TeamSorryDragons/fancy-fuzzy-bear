@@ -71,6 +71,14 @@ public class MultiNodeTest {
 
 		test.addPieceToPieces(new Piece(Piece.COLOR.blue));
 		assertEquals(test.getPieces()[1].col, Piece.COLOR.blue);
+		test.addPieceToPieces(new Piece(Piece.COLOR.blue));
+		test.addPieceToPieces(new Piece(Piece.COLOR.blue));
+		try {
+			test.addPieceToPieces(new Piece(Piece.COLOR.blue));
+			fail();
+		} catch (IndexOutOfBoundsException e){
+			assertTrue(true);
+		}
 
 		try {
 			test.addPieceToPieces(new Piece(Piece.COLOR.yellow));
@@ -105,6 +113,7 @@ public class MultiNodeTest {
 		test.addPieceToPieces(p);
 		test.addPieceToPieces(p);
 		test.removePieceFromPieces(p);
+		test.removePieceFromPieces(new Piece(Piece.COLOR.green));
 		assertEquals(test.getPieces()[0], p);
 		assertNull(test.getPieces()[1]);
 	}
@@ -128,5 +137,23 @@ public class MultiNodeTest {
 			}
 			test = new MultiNode();
 		}
+	}
+	
+	@Test
+	public void testHasPiece(){
+		MultiNode test = new MultiNode();
+		assertFalse(test.hasPiece());
+		Piece test2 = new Piece();
+		test.addPieceToPieces(test2);
+		assertTrue(test.hasPiece());
+	}
+	
+	@Test
+	public void testFirstPiece(){
+		MultiNode test = new MultiNode();
+		assertNull(test.firstPiece());
+		Piece[] test2 = {null,null,new Piece(),null};
+		test.setPieces(test2);
+		assertEquals(test.firstPiece(),test2[2]);
 	}
 }

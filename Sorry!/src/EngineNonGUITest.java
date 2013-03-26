@@ -197,6 +197,21 @@ public class EngineNonGUITest {
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsng|gmn3|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 	}
+	
+	@Test
+	public void testSlideMoves() {
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		e.newGame();
+		movePawn(13,e.pieces[0],e);
+		assertEquals(
+				board.toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
+						+ "|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsnr|bmn4|nn|nn|nn|nn"
+						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+	}
 
 	@SuppressWarnings("javadoc")
 	@Test
