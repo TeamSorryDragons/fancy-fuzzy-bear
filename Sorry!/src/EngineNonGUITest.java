@@ -10,11 +10,13 @@ import org.junit.Test;
  */
 public class EngineNonGUITest {
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void test() {
 		assertNotNull(new Engine(new BoardList()));
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testMoveOnePieceOnce() {
 		BoardList board = new BoardList();
@@ -43,6 +45,7 @@ public class EngineNonGUITest {
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testMoveOnePieceToEnd() {
 		BoardList board = new BoardList();
@@ -128,6 +131,7 @@ public class EngineNonGUITest {
 
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void toStartTest() {
 		BoardList board = new BoardList();
@@ -194,17 +198,19 @@ public class EngineNonGUITest {
 						+ "|gsn|gsng|gmn3|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testCoordinateToNodeCorners() {
 		BoardList board = new BoardList();
 		Engine e = new Engine(board);
 		e.newGame();
 
-		//assertEquals(e.convertCoordToNode(new SorryFrame.Coordinate(0, 0)),
-			//	board.getCornerPointers()[2]);
+		// assertEquals(e.convertCoordToNode(new SorryFrame.Coordinate(0, 0)),
+		// board.getCornerPointers()[2]);
 
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testCoordinateToIntCorners() {
 		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 15)),
@@ -217,6 +223,7 @@ public class EngineNonGUITest {
 				66);
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testCoordinateToIntStarts() {
 		for (int i = 10; i <= 12; i++) {
@@ -251,6 +258,7 @@ public class EngineNonGUITest {
 
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testCoordinateToIntHomeZones() {
 		for (int i = 14; i >= 12; i--) {
@@ -281,6 +289,7 @@ public class EngineNonGUITest {
 
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testCoordinateToIntSafeZones() {
 		int green = 68;
@@ -309,6 +318,7 @@ public class EngineNonGUITest {
 
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testCoordinateToIntSideLines() {
 		checkCoordinateInt(15, 15, 0);
