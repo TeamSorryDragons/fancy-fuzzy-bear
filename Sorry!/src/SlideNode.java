@@ -93,23 +93,50 @@ public class SlideNode extends Node {
 		}
 		return this.getNext().findNodeWithPiece(p, start);
 	}
-	
-	public Node findNodeWithPosition(int i){
-		if(i == 0){
+
+	public Node findNodeWithPosition(int i) {
+		if (i == 0) {
 			return this;
-		}
-		else if(this.safe != null){
-			Node temp = this.safe.findNodeWithPosition(i-1);
-			if(temp != null){
+		} else if (this.safe != null) {
+			Node temp = this.safe.findNodeWithPosition(i - 1);
+			if (temp != null) {
 				return temp;
-			}
-			else if(this.safe instanceof MultiNode){
+			} else if (this.safe instanceof MultiNode) {
 				i -= 1;
-			}
-			else{
-				i-= 6;
+			} else {
+				i -= 6;
 			}
 		}
-		return this.getNext().findNodeWithPosition(i-1);
+		return this.getNext().findNodeWithPosition(i - 1);
+	}
+
+	public Piece move(int moves, Piece p) {
+		if (moves == 0) {
+			if (this.head && p.col != this.getColor()) {
+				Node temp = this.getNext();
+				while (temp.getNext() instanceof SlideNode) {
+					temp = temp.getNext();
+				}
+				Piece temp2 = null;
+				if(temp.hasPiece()){
+					temp2 = temp.firstPiece();
+					temp.removePieceFromPieces(temp2);
+				}
+				temp.addPieceToPieces(p);
+				return temp2;
+			} else {
+				Piece temp2 = null;
+				if(hasPiece()){
+					temp2 = this.firstPiece();
+					this.removePieceFromPieces(temp2);
+				}
+				this.addPieceToPieces(p);
+				return temp2;
+			}
+		}
+		else if(this.getSafeNode() != null && !(this.getSafeNode() instanceof MultiNode) && this.getColor() == p.col){
+			return this.safe.move(moves-1, p);
+		}
+		return this.getNext().move(moves-1, p);
 	}
 }

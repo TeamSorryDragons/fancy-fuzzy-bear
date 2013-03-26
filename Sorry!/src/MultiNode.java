@@ -132,4 +132,13 @@ public class MultiNode extends Node {
 		else
 			return null;
 	}
+	public Piece move(int moves, Piece p){
+		if(this.getPrevious() != null){
+			this.addPieceToPieces(p);
+			return null;
+		}
+		else{
+			return this.getNext().move(moves-1, p);
+		}
+	}
 }

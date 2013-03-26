@@ -164,4 +164,21 @@ public class Node {
 			return this.next.findNodeWithPosition(i-1);
 		}
 	}
+	public Piece move(int moves, Piece p){
+		if(moves != 0){
+			return this.next.move(moves-1, p);
+		}
+		else{
+			if(hasPiece()){
+				Piece temp = firstPiece();
+				removePieceFromPieces(temp);
+				addPieceToPieces(p);
+				return temp;
+			}
+			else{
+				addPieceToPieces(p);
+				return null;
+			}
+		}
+	}
 }
