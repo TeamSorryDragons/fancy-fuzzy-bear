@@ -117,4 +117,28 @@ public class MultiNode extends Node {
 		ret.append("|");
 		return ret.toString();
 	}
+	public Node findNodeWithPiece(Piece p, Node start){
+		for(int i = 0; i < MAX_PIECES; i++){
+			if(this.pieces[i] == p){
+				return this;
+			}
+		}
+		return null;
+	}
+	public Node findNodeWithPosition(int i){
+		if(i == 0){
+			return this;
+		}
+		else
+			return null;
+	}
+	public Piece move(int moves, Piece p){
+		if(this.getPrevious() != null){
+			this.addPieceToPieces(p);
+			return null;
+		}
+		else{
+			return this.getNext().move(moves-1, p);
+		}
+	}
 }

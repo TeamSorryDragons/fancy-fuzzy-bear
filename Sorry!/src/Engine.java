@@ -38,38 +38,22 @@ public class Engine {
 	public void move(int moves, Piece piece) throws Unstarted {
 		Node piecenode = findNode(piece);
 		piecenode.removePieceFromPieces(piece);
-		for (int i = 0; i < moves; i++) {
-			if (piecenode instanceof SlideNode) {
-				if (piecenode.getColor() == piece.col) {
-					if (((SlideNode) piecenode).getSafeNode() != null
-							&& !(((SlideNode) piecenode).getSafeNode() instanceof MultiNode)) {
-						piecenode = ((SlideNode) piecenode).getSafeNode();
-						continue;
-					}
-				}
-			}
-			if (piecenode.getNext() == null) {
-				break;
-			} else {
-				piecenode = piecenode.getNext();
-			}
-		}
-		try {
-			piecenode.addPieceToPieces(piece);
-		} catch (IndexOutOfBoundsException e) {
-			Piece[] pawnArray = piecenode.getPieces();
-			toStart(pawnArray[0]);
-			piecenode.removePieceFromPieces(pawnArray[0]);
-			piecenode.addPieceToPieces(piece);
+		Piece strt = piecenode.move(moves,piece);
+		if(strt != null){
+			toStart(strt);
 		}
 	}
 
-	private Node findNode(Piece piece) {
+	public Node findNode(Piece piece) {
 
-		return findNode(piece, this.board.getCornerPointers()[0]);
+		return this.board.getCornerPointers()[0].findNodeWithPiece(piece);
+	}
+	
+	public Node findNodeByPosition(int i){
+		return this.board.getCornerPointers()[0].findNodeWithPosition(i);
 	}
 
-	private Node findNode(Piece pawn, Node next) {
+/*	private Node findNode(Piece pawn, Node next) {
 		if (next == null) {
 			return null;
 		}
@@ -98,7 +82,7 @@ public class Engine {
 
 		return findNode(pawn, next.getNext());
 
-	}
+	} */
 
 	/**
 	 * Helper method for moving pieces to the start position.
