@@ -139,6 +139,13 @@ public class SorryFrameCoordinateConversionTest {
 		}
 
 	}
+	
+	@Test
+	public void testNotCoordinateCompare(){
+		SorryFrame.Coordinate c = new SorryFrame.Coordinate(0,0);
+		assertNotSame(c, new Node());
+		
+	}
 
 	private static void checkCoordinates(SorryFrame.Coordinate c1,
 			SorryFrame.Coordinate c2) {

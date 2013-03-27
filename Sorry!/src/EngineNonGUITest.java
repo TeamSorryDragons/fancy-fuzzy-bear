@@ -308,7 +308,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testCoordinateToIntSafeZones() {
 		int green = 68;
-		for (int i = 15; i <= 10; i--)
+		for (int i = 15; i >= 10; i--)
 			assertEquals(
 					Engine.getNodePosition(new SorryFrame.Coordinate(i, 2)),
 					green++);
@@ -412,4 +412,6 @@ public class EngineNonGUITest {
 		assertEquals(e.findNodeByPosition(11), temp.getStartPointers()[0]);
 		assertEquals(e.findNodeByPosition(8), temp.getHomePointers()[0]);
 	}
+	
+	
 }
