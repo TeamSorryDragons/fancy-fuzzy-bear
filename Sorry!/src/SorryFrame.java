@@ -162,10 +162,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 		JOptionPane.showMessageDialog(this,this.engine.activePlayer.getName() + " it is your turn");
 	}
 
-	private void notifyPlayer(){
-		JOptionPane.showMessageDialog(this,this.engine.activePlayer.getName() + " it is your turn");
-	}
-
 	/**
 	 * Container class for mouse-click coordinates. Really just to provide
 	 * convenience, because Java is really horrible at dealing with multiple
