@@ -51,6 +51,13 @@ public class NodeTest {
 		test[0] = new Piece(Piece.COLOR.yellow);
 		head.setPieces(test);
 		assertArrayEquals(head.getPieces(), test);
+		
+		try{
+		head.addPieceToPieces(new Piece(Piece.COLOR.colorless));
+		fail();
+		} catch(IndexOutOfBoundsException e){
+			
+		}
 	}
 
 	@Test
