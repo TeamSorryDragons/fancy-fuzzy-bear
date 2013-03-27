@@ -1,24 +1,33 @@
 import static org.junit.Assert.assertEquals;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Engine {
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
 	protected BoardList board;
-	protected Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue, Indices 8-11
-					// are Yellow, Indices 12-15 are green
+	protected Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue,
+								// Indices 8-11
+	// are Yellow, Indices 12-15 are green
 	protected Player activePlayer;
+	protected Deck deck;
 	protected CircularLinkedList<Player> players;
-	
-	
+	private Card currentCard;
 
 	public Engine(BoardList board) {
 		this.board = board;
 		this.players = new CircularLinkedList<Player>();
+		try {
+			this.deck = new Deck("eng");
+		} catch (FileNotFoundException exception) {
+			System.out
+					.println("Language was not found and It's crashing cause you be not dare.");
+			exception.printStackTrace();
+		}
 	}
-	
-	public void insertPlayer(Player bigP){
+
+	public void insertPlayer(Player bigP) {
 		if (this.players.isEmpty())
 			this.players.insertFirst(bigP);
 		else {
@@ -38,13 +47,19 @@ public class Engine {
 	public void newGame() {
 		this.pieces = this.board.newGame();
 	}
-	
-	public boolean isValidMove(Piece pawn, int numberMoves, Player player){
+
+	public boolean isValidMove(Piece pawn, int numberMoves, Player player) {
 		return true;
 	}
-	
-	
-	public int pawnMove(SorryFrame.Coordinate start, SorryFrame.Coordinate end){
+
+	public int pawnMove(SorryFrame.Coordinate start, SorryFrame.Coordinate end) {
+		Node first = this.convertCoordToNode(start);
+		Node second = this.convertCoordToNode(end);
+
+		if (first == null || second == null) {
+			return -1; // bad things happened for reasons
+		}
+
 		return 0;
 	}
 
@@ -62,9 +77,9 @@ public class Engine {
 	public void move(int moves, Piece piece) throws Unstarted {
 		Node piecenode = findNode(piece);
 		piecenode.removePieceFromPieces(piece);
-		ArrayList<Piece> strt = piecenode.move(moves,piece);
-		if(strt != null && strt.size() > 0){
-			for(int i = 0; i < strt.size(); i++){
+		ArrayList<Piece> strt = piecenode.move(moves, piece);
+		if (strt != null && strt.size() > 0) {
+			for (int i = 0; i < strt.size(); i++) {
 				toStart(strt.get(i));
 			}
 		}
@@ -73,41 +88,36 @@ public class Engine {
 	public Node findNode(Piece piece) {
 		return this.board.getCornerPointers()[0].findNodeWithPiece(piece);
 	}
-	
-	public Node findNodeByPosition(int i){
+
+	public Node findNodeByPosition(int i) {
 		return this.board.getCornerPointers()[0].findNodeWithPosition(i);
 	}
 
-/*	private Node findNode(Piece pawn, Node next) {
-		if (next == null) {
-			return null;
-		}
-		Piece[] currentPieces = next.getPieces();
-		if (contains(currentPieces, pawn)) {
-			return next;
-		}
+	public Card getNextCard() {
+		this.currentCard = this.deck.getTopCard();
+		return this.currentCard;
 
-		if (next instanceof SlideNode) {
-			SlideNode slide = (SlideNode) next;
-			if (slide.getColor() == pawn.col
-					&& !(slide.getSafeNode() instanceof MultiNode)) {
-				Node maybeFoundIt = findNode(pawn, slide.getSafeNode());
-				if (maybeFoundIt != null)
-					return maybeFoundIt;
-			}
-			if (slide.getColor() == pawn.col && slide.getSafeNode() != null) {
-				// we're looking at the start node right here for reasons
-				if (contains(slide.getSafeNode().getPieces(), pawn))
-					return slide.getSafeNode();
-			}
-		}
+	}
 
-		if (next.getNext() == null)
-			return null;
-
-		return findNode(pawn, next.getNext());
-
-	} */
+	/*
+	 * private Node findNode(Piece pawn, Node next) { if (next == null) { return
+	 * null; } Piece[] currentPieces = next.getPieces(); if
+	 * (contains(currentPieces, pawn)) { return next; }
+	 * 
+	 * if (next instanceof SlideNode) { SlideNode slide = (SlideNode) next; if
+	 * (slide.getColor() == pawn.col && !(slide.getSafeNode() instanceof
+	 * MultiNode)) { Node maybeFoundIt = findNode(pawn, slide.getSafeNode()); if
+	 * (maybeFoundIt != null) return maybeFoundIt; } if (slide.getColor() ==
+	 * pawn.col && slide.getSafeNode() != null) { // we're looking at the start
+	 * node right here for reasons if (contains(slide.getSafeNode().getPieces(),
+	 * pawn)) return slide.getSafeNode(); } }
+	 * 
+	 * if (next.getNext() == null) return null;
+	 * 
+	 * return findNode(pawn, next.getNext());
+	 * 
+	 * }
+	 */
 
 	/**
 	 * Helper method for moving pieces to the start position.
@@ -170,10 +180,10 @@ public class Engine {
 	public Node convertCoordToNode(SorryFrame.Coordinate coordinate) {
 		// TODO this
 		if (coordsMap.containsKey(coordinate)) {
-			return null;
+			return this.findNodeByPosition(coordsMap.get(coordinate));
 		} else {
 			// the map doesn't contain it, probably an invalid coordinate
-			return null;
+			throw new CoordinateOffOfBoardException();
 		}
 
 	}
@@ -310,6 +320,29 @@ public class Engine {
 			coordsMap.put(new SorryFrame.Coordinate(15, i), greenSide++);
 		}
 		coordsMap.put(new SorryFrame.Coordinate(15, 15), 0);
+
+	}
+
+	/**
+	 * Get the next player.
+	 * 
+	 */
+	public void rotatePlayers() {
+		if (this.activePlayer != null)
+			this.activePlayer.setActive(false);
+		this.players.goToNextElement();
+		this.activePlayer = this.players.getActualElementData();
+		this.activePlayer.setActive(true);
+
+	}
+
+	/**
+	 * Finalize the player's turn by setting the temporary movement board to the
+	 * real board. Reset the temp board.
+	 * 
+	 */
+	public void finalizeTurn() {
+		// TODO implement it, when the time comes
 
 	}
 }

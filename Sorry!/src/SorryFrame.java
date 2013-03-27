@@ -28,6 +28,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private BoardList board;
 	private Engine engine;
+	private Card currentCard;
 
 	/*
 	 * Indices 0-3 are red, Indices 4-7 are blue, Indices 8-11 are Yellow,
@@ -81,6 +82,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 	private void awaitUserInteraction() {
 		while (this.clickCount < 2)
+			// wait for it
 			;
 		System.out.println("got enough clicks");
 		this.clickCount = 0;
@@ -94,7 +96,11 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private void initiateTurn() {
-		
+		this.currentCard = this.engine.getNextCard();
+		this.engine.rotatePlayers();
+		this.resetClickDetection();
+		this.awaitUserInteraction();
+		this.performTurn();
 	}
 
 	/**
@@ -106,7 +112,29 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private void performTurn() {
+		int result = this.engine.pawnMove(this.clicks.get(0), this.clicks.get(1));
+		if (result < 0){
+			// movement failed, alert player... blah blah blah
+		} else if (result == 0) {
+			// user clicked the same node twice cause they dumb so tell them so
+		} else {
+			if (this.currentCard.cardNum == result){
+				// turn is over, rotate
+				this.engine.finalizeTurn();
+				this.initiateTurn();
+			} else {
+				// player had a 7, let them go again
+				this.resetClickDetection();
+				this.awaitUserInteraction();
+			}
+		}
+		
 
+	}
+
+	private void resetClickDetection() {
+		this.clicks.clear();
+		this.clickCount = 0;
 	}
 
 	@Override
