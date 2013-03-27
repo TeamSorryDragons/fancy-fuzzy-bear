@@ -425,6 +425,7 @@ public class EngineNonGUITest {
 	public void testPanwMovement(){
 		BoardList board = new BoardList();
 		Engine e = new Engine(board);
+		e.getNextCard();
 		assertEquals(e.pawnMove(new SorryFrame.Coordinate(0,0), new SorryFrame.Coordinate(0,0)), 0);
 	}
 

@@ -171,6 +171,9 @@ public class SlideNode extends Node {
 				return 1 + temp2;
 			}
 		}
+		else if(this.getSafeNode() != null && this.getSafeNode() == node){
+			return 1;
+		}
 		return 1 + this.getNext().countTo(node);
 	}
 }

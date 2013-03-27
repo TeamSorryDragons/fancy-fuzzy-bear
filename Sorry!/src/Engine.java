@@ -66,8 +66,15 @@ public class Engine {
 			return -1; // bad things happened for reasons
 		}
 		int temp = first.countTo(second);
-		System.out.println(temp);
-		return 0;
+		if(temp == this.currentCard.cardNum){
+			try {
+				move(temp,first.firstPiece());
+			} catch (Unstarted e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return temp;
 	}
 
 	/**
@@ -350,6 +357,5 @@ public class Engine {
 	 */
 	public void finalizeTurn() {
 		// TODO implement it, when the time comes
-
 	}
 }
