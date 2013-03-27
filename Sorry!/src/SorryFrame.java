@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * Extension of JFrame used to contain necessary menus and the Sorry board game.
@@ -52,8 +53,15 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.setVisible(true);
 		this.repaint();
 		this.addMouseListener(new BoardMouseListener(this));
-		while (true)
-			this.awaitUserInteraction();
+		this.insertTestPlayers();
+		this.initiateTurn();
+	}
+
+	private void insertTestPlayers(){
+		this.engine.insertPlayer(new Player(Piece.COLOR.red, "Hugh Hefner"));
+		this.engine.insertPlayer(new Player(Piece.COLOR.blue, "Amanda Streich"));
+		this.engine.insertPlayer(new Player(Piece.COLOR.green, "Britany Nola"));
+		this.engine.insertPlayer(new Player(Piece.COLOR.yellow, "Pamela Horton"));
 	}
 
 	/**
@@ -85,8 +93,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 			// wait for it
 			;
 		System.out.println("got enough clicks");
-		this.clickCount = 0;
-		this.clicks.clear();
 	}
 
 	/**
@@ -97,7 +103,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	private void initiateTurn() {
 		this.currentCard = this.engine.getNextCard();
+		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
+		this.notifyPlayer();
 		this.resetClickDetection();
 		this.awaitUserInteraction();
 		this.performTurn();
@@ -121,6 +129,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 			if (this.currentCard.cardNum == result){
 				// turn is over, rotate
 				this.engine.finalizeTurn();
+				this.repaint();
 				this.initiateTurn();
 			} else {
 				// player had a 7, let them go again
@@ -128,7 +137,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 				this.awaitUserInteraction();
 			}
 		}
-		
+
 
 	}
 
@@ -147,6 +156,10 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.clickCount++;
 		this.clicks.add(coord);
 		System.out.println("The node number: " + Engine.getNodePosition(coord));
+	}
+
+	private void notifyPlayer(){
+		JOptionPane.showMessageDialog(this,this.engine.activePlayer.getName() + " it is your turn");
 	}
 
 	/**
