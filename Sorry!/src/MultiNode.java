@@ -141,7 +141,10 @@ public class MultiNode extends Node {
 			return null;
 		}
 		else{
-			return this.getNext().move(moves-1, p);
+			if(moves < 0){
+				return null;
+			}
+			return direction(moves).move(goTo(moves), p);
 		}
 	}
 }

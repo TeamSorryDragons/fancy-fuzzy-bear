@@ -169,7 +169,7 @@ public class Node {
 	public ArrayList<Piece> move(int moves, Piece p){
 		ArrayList<Piece> ret = new ArrayList<Piece>();
 		if(moves != 0){
-			return this.next.move(moves-1, p);
+			return direction(moves).move(goTo(moves), p);
 		}
 		else{
 			if(hasPiece()){
@@ -184,5 +184,22 @@ public class Node {
 				return null;
 			}
 		}
+	}
+	protected Node direction(int moves){
+		if(moves > 0){
+			return this.getNext();
+		}
+		else if(moves < 0){
+			return this.getPrevious();
+		}
+		else
+			return null;
+	}
+	protected int goTo(int moves){
+		if(moves < 0){
+			return moves+1;
+		}
+		else
+			return moves-1;
 	}
 }

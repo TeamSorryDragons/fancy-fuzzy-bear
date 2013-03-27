@@ -143,9 +143,9 @@ public class SlideNode extends Node {
 				return ret;
 			}
 		}
-		else if(this.getSafeNode() != null && !(this.getSafeNode() instanceof MultiNode) && this.getColor() == p.col){
+		else if(this.getSafeNode() != null && !(this.getSafeNode() instanceof MultiNode) && this.getColor() == p.col && moves > 0){
 			return this.safe.move(moves-1, p);
 		}
-		return this.getNext().move(moves-1, p);
+		return direction(moves).move(goTo(moves), p);
 	}
 }
