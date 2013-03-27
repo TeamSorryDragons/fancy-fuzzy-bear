@@ -1,0 +1,11 @@
+Move a pawn from Start or move a pawn 1 space forward. 
+Move a pawn from Start or move a pawn 2 spaces forward. Drawing a 2 entitles the player to draw again at the end of his or her turn. If you cannot use 2, you can still draw again. 
+Move a pawn 3 spaces forward. 
+Move a pawn 4 spaces backwards. 
+Move a pawn 5 spaces forward. 
+Move one pawn 7 spaces forward or split the 7 spaces between two pawns (such as four spaces for one pawn and three for another). This makes it possible for two pawns to enter Home on the same turn, for example. The 7 cannot be split into a 6 and 1 or a 5 and 2 for the purposes of moving out of Start. The entire seven spaces must be used one way or the other or the turn is lost. 
+Move a pawn 8 spaces forward. 
+Move a pawn 10 spaces forward or 1 space backward. If a player cannot go forward ten spaces, then one pawn must go back one space. 
+Move 11 spaces forward or switch places with one opposing pawn. A player that cannot move 11 spaces is not forced to switch and instead can forfeit the turn. 
+Move a pawn 12 spaces forward. 
+Move any one pawn from Start to a square occupied by any opponent, sending that pawn back to its own Start. If there are no pawns on the player's Start, or no opponent's pawns on any squares, the turn is lost. 
