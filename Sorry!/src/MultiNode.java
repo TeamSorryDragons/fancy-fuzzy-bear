@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class MultiNode extends Node {
 	private final int MAX_PIECES = 4;
 	private Piece[] pieces;
@@ -132,7 +134,8 @@ public class MultiNode extends Node {
 		else
 			return null;
 	}
-	public Piece move(int moves, Piece p){
+	public ArrayList<Piece> move(int moves, Piece p){
+		ArrayList<Piece> ret = new ArrayList<Piece>();
 		if(this.getPrevious() != null){
 			this.addPieceToPieces(p);
 			return null;

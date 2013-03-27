@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Engine {
@@ -38,9 +39,11 @@ public class Engine {
 	public void move(int moves, Piece piece) throws Unstarted {
 		Node piecenode = findNode(piece);
 		piecenode.removePieceFromPieces(piece);
-		Piece strt = piecenode.move(moves,piece);
-		if(strt != null){
-			toStart(strt);
+		ArrayList<Piece> strt = piecenode.move(moves,piece);
+		if(strt != null && strt.size() > 0){
+			for(int i = 0; i < strt.size(); i++){
+				toStart(strt.get(i));
+			}
 		}
 	}
 

@@ -111,6 +111,7 @@ public class SorryFrameCoordinateConversionTest {
 			fail();
 		} catch (CoordinateOffOfBoardException e) {
 			// passes test
+			assertTrue(true);
 		}
 
 		try {
@@ -118,6 +119,7 @@ public class SorryFrameCoordinateConversionTest {
 			fail();
 		} catch (CoordinateOffOfBoardException e) {
 			// passes test
+			assertTrue(true);
 		}
 
 		try {
@@ -125,6 +127,7 @@ public class SorryFrameCoordinateConversionTest {
 			fail();
 		} catch (CoordinateOffOfBoardException e) {
 			// passes test
+			assertTrue(true);
 		}
 
 		try {
@@ -132,6 +135,7 @@ public class SorryFrameCoordinateConversionTest {
 			fail();
 		} catch (CoordinateOffOfBoardException e) {
 			// passes test
+			assertTrue(true);
 		}
 
 	}
