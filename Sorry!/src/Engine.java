@@ -28,8 +28,10 @@ public class Engine {
 	}
 
 	public void insertPlayer(Player bigP) {
-		if (this.players.isEmpty())
+		if (this.players.isEmpty()){
 			this.players.insertFirst(bigP);
+			this.players.goToNextElement();
+		}
 		else {
 			this.players.insertAfterActual(bigP);
 			this.players.goToNextElement();
@@ -53,14 +55,26 @@ public class Engine {
 	}
 
 	public int pawnMove(SorryFrame.Coordinate start, SorryFrame.Coordinate end) {
+		System.out.println("I got called");
 		Node first = this.convertCoordToNode(start);
+		System.out.println("THINGS");
 		Node second = this.convertCoordToNode(end);
+		System.out.println("STUFF");
 
 		if (first == null || second == null) {
+			System.out.println("well damnit willis");
 			return -1; // bad things happened for reasons
 		}
-
-		return 0;
+		int temp = first.countTo(second);
+		if(temp == this.currentCard.cardNum){
+			try {
+				move(temp,first.firstPiece());
+			} catch (Unstarted e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return temp;
 	}
 
 	/**
@@ -343,6 +357,5 @@ public class Engine {
 	 */
 	public void finalizeTurn() {
 		// TODO implement it, when the time comes
-
 	}
 }

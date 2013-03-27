@@ -157,6 +157,10 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.clicks.add(coord);
 		System.out.println("The node number: " + Engine.getNodePosition(coord));
 	}
+	
+	private void notifyPlayer(){
+		JOptionPane.showMessageDialog(this,this.engine.activePlayer.getName() + " it is your turn");
+	}
 
 	private void notifyPlayer(){
 		JOptionPane.showMessageDialog(this,this.engine.activePlayer.getName() + " it is your turn");
