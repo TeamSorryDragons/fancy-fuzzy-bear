@@ -413,5 +413,19 @@ public class EngineNonGUITest {
 		assertEquals(e.findNodeByPosition(8), temp.getHomePointers()[0]);
 	}
 	
+	@Test
+	public void testIsValidMoveNoMove(){
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		e.newGame();
+		assertTrue(e.isValidMove(e.pieces[0], 0, new Player(Piece.COLOR.red, "Bob Dole")));
+	}
+
+	@Test
+	public void testPanwMovement(){
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		assertEquals(e.pawnMove(new SorryFrame.Coordinate(0,0), new SorryFrame.Coordinate(0,0)), 0);
+	}
 	
 }

@@ -5,13 +5,26 @@ import java.util.HashMap;
 
 public class Engine {
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
-	BoardList board;
-	Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue, Indices 8-11
+	protected BoardList board;
+	protected Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue, Indices 8-11
 					// are Yellow, Indices 12-15 are green
+	protected Player activePlayer;
+	protected CircularLinkedList<Player> players;
+	
 	
 
 	public Engine(BoardList board) {
 		this.board = board;
+		this.players = new CircularLinkedList<Player>();
+	}
+	
+	public void insertPlayer(Player bigP){
+		if (this.players.isEmpty())
+			this.players.insertFirst(bigP);
+		else {
+			this.players.insertAfterActual(bigP);
+			this.players.goToNextElement();
+		}
 	}
 
 	/*
@@ -24,6 +37,15 @@ public class Engine {
 
 	public void newGame() {
 		this.pieces = this.board.newGame();
+	}
+	
+	public boolean isValidMove(Piece pawn, int numberMoves, Player player){
+		return true;
+	}
+	
+	
+	public int pawnMove(SorryFrame.Coordinate start, SorryFrame.Coordinate end){
+		return 0;
 	}
 
 	/**
