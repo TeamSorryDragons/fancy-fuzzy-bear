@@ -214,7 +214,23 @@ public class NodeTest {
 		test[0] = new Piece();
 		head.setPieces(test);
 		assertEquals(head.toString(), "gsfITBROKEWILLIS|");
-
-
+	}
+	
+	@Test
+	public void testHasPiece(){
+		Node test = new Node();
+		assertFalse(test.hasPiece());
+		Piece test2 = new Piece();
+		test.addPieceToPieces(test2);
+		assertTrue(test.hasPiece());
+	}
+	
+	@Test
+	public void testFirstPiece(){
+		Node test = new Node();
+		assertNull(test.firstPiece());
+		Piece test2 = new Piece();
+		test.addPieceToPieces(test2);
+		assertEquals(test.firstPiece(),test2);
 	}
 }

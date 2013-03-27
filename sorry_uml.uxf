@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.1">
+  <zoom_level>7</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>588</x>
+      <y>679</y>
+      <w>112</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>BoardList
+--
+Node[] cornerPointers
+Node[] homePointers
+Node[] startPointers
+--
+void newGame()
+String toString()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>504</x>
+      <y>847</y>
+      <w>175</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>Node
+--
+Color col
+Node Next
+Node Previous
+Piece[] pieces
+--
+String toString()
+void addPieceToPieces(Piece)
+void removePieceFromPieces(Piece)
+bool hasPiece()
+Piece firstPiece()
+ArrayList&lt;Piece&gt; move(Piece, positions)
+Node findNodeWithPiece(Piece)
+Node findNodeWithPosition(int pos)
+int countTo(Node)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>273</x>
+      <y>980</y>
+      <w>70</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>SlideNode
+--
+Node Safe
+bool Head
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>322</x>
+      <y>826</y>
+      <w>195</w>
+      <h>167</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>182;21;21;154</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>357</x>
+      <y>980</y>
+      <w>98</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>MultiNode
+--
+Note: Overrides node
+methods and fields to 
+allow up to 4 pieces
+on the node.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>427</x>
+      <y>889</y>
+      <w>91</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>77;21;28;91</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>560</x>
+      <y>770</y>
+      <w>55</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>21;77;42;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>770</x>
+      <y>371</y>
+      <w>203</w>
+      <h>196</h>
+    </coordinates>
+    <panel_attributes>Engine
+--
+BoardList currentBoard
+BoardList updatedBoard
+Piece[] pieces
+Deck deck
+Card currentCard
+Player[] players
+int activePlayer
+--
+void newGame()
+Node findNode(Piece)
+void move(Piece, positions)
+bool isValidMove(Piece, numberMoves, player)
+Card getNextCard()
+int pawnMove(Coord start, Coord end)
+void finalizeTurn()
+void revertBoard()
+Node convertCoordToNode(Coord c)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>679</x>
+      <y>546</y>
+      <w>104</w>
+      <h>146</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>21;133;91;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>791</x>
+      <y>847</y>
+      <w>119</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>Piece
+--
+Color col
+--
+enum Color { Red, Blue, 
+Yellow, Green, Colorless}
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>658</x>
+      <y>826</y>
+      <w>146</w>
+      <h>34</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>133;21;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>679</x>
+      <y>770</y>
+      <w>153</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>140;77;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>763</x>
+      <y>546</y>
+      <w>76</w>
+      <h>314</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>63;301;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>329</x>
+      <y>378</y>
+      <w>161</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>DisplayableBoard
+--
+extends JComponent
+--
+BoardList board
+BufferedImage boardImage
+--
+void paintComponent(Graphics g)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>462</x>
+      <y>441</y>
+      <w>139</w>
+      <h>251</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>126;238;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>553</x>
+      <y>14</y>
+      <w>203</w>
+      <h>259</h>
+    </coordinates>
+    <panel_attributes>SorryFrame
+--
+extends JFrame
+implements ActionListener
+--
+BoardList board
+Engine engine
+Card currentCard
+--
+void initiateTurn()
+	/* Asks engine for a card, displays that card.
+		Instructs engine to swap active player.
+		Begins listening to mouse input.
+	*/
+void performTurn()
+	/*
+		Waits for mouse input, converts them to coords.
+		Relays coords to engine, checking if the move
+		was legal and if the turn should end.
+		Checks for turn forfeit, reverts the board if so.
+		If turn is done, finalizes turn in engine.
+		Initiates next player's turn.
+	*/
+Coord convertClickToCoord(double x, double y)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1085</x>
+      <y>266</y>
+      <w>91</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>Player
+--
+Color col
+String name
+bool active
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1015</x>
+      <y>595</y>
+      <w>105</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Deck
+--
+Card[] cards
+int topCard
+--
+Card getTopCard()
+void shuffle()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>945</x>
+      <y>749</y>
+      <w>98</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Card
+--
+int cardNum
+String description
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>112</x>
+      <y>357</y>
+      <w>126</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>MenuComponent
+--
+extends JComponent
+JButton[] optionButtons
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>924</x>
+      <y>686</y>
+      <w>104</w>
+      <h>76</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>21;63;91;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>952</x>
+      <y>518</y>
+      <w>76</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>63;77;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>469</x>
+      <y>252</y>
+      <w>146</w>
+      <h>139</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>21;126;133;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>196</x>
+      <y>252</y>
+      <w>384</w>
+      <h>118</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>21;105;371;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>637</x>
+      <y>252</y>
+      <w>146</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>133;119;21;21</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>952</x>
+      <y>245</y>
+      <w>146</w>
+      <h>139</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>133;21;21;126</additional_attributes>
+  </element>
+</diagram>

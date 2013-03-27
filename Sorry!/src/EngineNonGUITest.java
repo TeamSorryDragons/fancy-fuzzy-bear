@@ -10,11 +10,13 @@ import org.junit.Test;
  */
 public class EngineNonGUITest {
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void test() {
 		assertNotNull(new Engine(new BoardList()));
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testMoveOnePieceOnce() {
 		BoardList board = new BoardList();
@@ -43,6 +45,7 @@ public class EngineNonGUITest {
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testMoveOnePieceToEnd() {
 		BoardList board = new BoardList();
@@ -128,6 +131,7 @@ public class EngineNonGUITest {
 
 	}
 
+	@SuppressWarnings("javadoc")
 	@Test
 	public void toStartTest() {
 		BoardList board = new BoardList();
@@ -141,7 +145,7 @@ public class EngineNonGUITest {
 						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
-		movePawn(16,e.pieces[1],e);
+		movePawn(16, e.pieces[1], e);
 		assertEquals(
 				board.toString(),
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
@@ -149,7 +153,7 @@ public class EngineNonGUITest {
 						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
-		movePawn(1,e.pieces[9],e);
+		movePawn(1, e.pieces[9], e);
 		assertEquals(
 				board.toString(),
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
@@ -157,7 +161,7 @@ public class EngineNonGUITest {
 						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysny|ymn3"
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
-		movePawn(15,e.pieces[1],e);
+		movePawn(15, e.pieces[1], e);
 		assertEquals(
 				board.toString(),
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
@@ -165,7 +169,7 @@ public class EngineNonGUITest {
 						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysnr|ymn4"
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
-		movePawn(1,e.pieces[13],e);
+		movePawn(1, e.pieces[13], e);
 
 		assertEquals(
 				board.toString(),
@@ -174,7 +178,7 @@ public class EngineNonGUITest {
 						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysnr|ymn4"
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsng|gmn3|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
-		movePawn(15,e.pieces[1],e);
+		movePawn(15, e.pieces[1], e);
 
 		assertEquals(
 				board.toString(),
@@ -183,7 +187,7 @@ public class EngineNonGUITest {
 						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsnr|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
-		movePawn(1,e.pieces[12],e);
+		movePawn(1, e.pieces[12], e);
 
 		assertEquals(
 				board.toString(),
@@ -192,6 +196,193 @@ public class EngineNonGUITest {
 						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsng|gmn3|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+	}
+	
+	@Test
+	public void testSlideMoves() {
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		e.newGame();
+		movePawn(13,e.pieces[0],e);
+		assertEquals(
+				board.toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
+						+ "|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsnr|bmn4|nn|nn|nn|nn"
+						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test
+	public void testCoordinateToNodeCorners() {
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		e.newGame();
+
+		// assertEquals(e.convertCoordToNode(new SorryFrame.Coordinate(0, 0)),
+		// board.getCornerPointers()[2]);
+
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test
+	public void testCoordinateToIntCorners() {
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 15)),
+				0);
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(0, 15)),
+				22);
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(0, 0)),
+				44);
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 0)),
+				66);
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test
+	public void testCoordinateToIntStarts() {
+		for (int i = 10; i <= 12; i++) {
+			for (int j = 12; j <= 14; j++)
+				assertEquals(
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						11);
+		}
+
+		for (int i = 3; i <= 5; i++) {
+			for (int j = 14; j >= 12; j--)
+				assertEquals(
+						Engine.getNodePosition(new SorryFrame.Coordinate(j, i)),
+						77);
+		}
+
+		for (int i = 3; i <= 5; i++) {
+			for (int j = 1; j <= 3; j++) {
+				assertEquals(
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						55);
+			}
+		}
+
+		for (int i = 1; i <= 3; i++) {
+			for (int j = 12; j >= 10; j--) {
+				assertEquals(
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						33);
+			}
+		}
+
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test
+	public void testCoordinateToIntHomeZones() {
+		for (int i = 14; i >= 12; i--) {
+			for (int j = 7; j <= 9; j++)
+				assertEquals(
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						8);
+		}
+
+		for (int i = 9; i >= 7; i--) {
+			for (int j = 1; j <= 3; j++)
+				assertEquals(
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						74);
+		}
+
+		for (int i = 1; i <= 3; i++)
+			for (int j = 6; j <= 8; j++)
+				assertEquals(
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						52);
+
+		for (int i = 6; i <= 8; i++)
+			for (int j = 14; j >= 12; j--)
+				assertEquals(
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						30);
+
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test
+	public void testCoordinateToIntSafeZones() {
+		int green = 68;
+		for (int i = 15; i >= 10; i--)
+			assertEquals(
+					Engine.getNodePosition(new SorryFrame.Coordinate(i, 2)),
+					green++);
+
+		int red = 2;
+		for (int i = 15; i >= 10; i--)
+			assertEquals(
+					Engine.getNodePosition(new SorryFrame.Coordinate(13, i)),
+					red++);
+
+		int blue = 24;
+		for (int i = 0; i <= 5; i++)
+			assertEquals(
+					Engine.getNodePosition(new SorryFrame.Coordinate(i, 13)),
+					blue++);
+
+		int yellow = 46;
+		for (int i = 0; i <= 5; i++)
+			assertEquals(
+					Engine.getNodePosition(new SorryFrame.Coordinate(2, i)),
+					yellow++);
+
+	}
+
+	@SuppressWarnings("javadoc")
+	@Test
+	public void testCoordinateToIntSideLines() {
+		checkCoordinateInt(15, 15, 0);
+		checkCoordinateInt(14, 15, 1);
+		checkCoordinateInt(13, 15, 2);
+		checkCoordinateInt(12, 15, 9);
+		checkCoordinateInt(11, 15, 10);
+		checkCoordinateInt(10, 15, 12);
+
+		int red = 13;
+		for (int i = 9; i >= 0; i--)
+			checkCoordinateInt(i, 15, red++);
+
+		checkCoordinateInt(0, 15, 22);
+		checkCoordinateInt(0, 14, 23);
+		checkCoordinateInt(0, 13, 24);
+		checkCoordinateInt(0, 12, 31);
+		checkCoordinateInt(0, 11, 32);
+		checkCoordinateInt(0, 10, 34);
+
+		int blue = 35;
+		for (int i = 9; i >= 0; i--)
+			checkCoordinateInt(0, i, blue++);
+
+		checkCoordinateInt(0, 0, 44);
+		checkCoordinateInt(1, 0, 45);
+		checkCoordinateInt(2, 0, 46);
+		checkCoordinateInt(3, 0, 53);
+		checkCoordinateInt(4, 0, 54);
+
+		int yellow = 56;
+		for (int i = 5; i <= 15; i++)
+			checkCoordinateInt(i, 0, yellow++);
+
+		checkCoordinateInt(15, 0, 66);
+		checkCoordinateInt(15, 1, 67);
+		checkCoordinateInt(15, 2, 68);
+		checkCoordinateInt(15, 3, 75);
+		checkCoordinateInt(15, 4, 76);
+
+		int green = 78;
+		for (int i = 5; i < 15; i++)
+			checkCoordinateInt(15, i, green++);
+
+	}
+
+	private void checkCoordinateInt(int x, int y, int pos) {
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(x, y)),
+				pos);
 	}
 
 	private void movePawn(int num, Piece p, Engine e) {
@@ -202,4 +393,25 @@ public class EngineNonGUITest {
 		}
 
 	}
+	
+	@Test
+	public void testFindNodeWithPiece(){
+		BoardList temp = new BoardList();
+		Engine e = new Engine(temp);
+		e.newGame();
+		Piece p = temp.getStartPointers()[0].getPieces()[0];
+		assertEquals(e.findNode(p),temp.getStartPointers()[0]);
+	}
+	
+	@Test
+	public void testFindNodeWithPosition(){
+		BoardList temp = new BoardList();
+		Engine e = new Engine(temp);
+		e.newGame();
+		assertEquals(e.findNodeByPosition(87), temp.getCornerPointers()[0].getPrevious());
+		assertEquals(e.findNodeByPosition(11), temp.getStartPointers()[0]);
+		assertEquals(e.findNodeByPosition(8), temp.getHomePointers()[0]);
+	}
+	
+	
 }
