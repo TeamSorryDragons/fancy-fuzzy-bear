@@ -427,5 +427,12 @@ public class EngineNonGUITest {
 		Engine e = new Engine(board);
 		assertEquals(e.pawnMove(new SorryFrame.Coordinate(0,0), new SorryFrame.Coordinate(0,0)), 0);
 	}
-	
+
+	@Test
+	public void testCountTo(){
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		int count = board.cornerPointers[0].countTo(board.cornerPointers[1]);
+		assertEquals(count , 15);
+	}
 }

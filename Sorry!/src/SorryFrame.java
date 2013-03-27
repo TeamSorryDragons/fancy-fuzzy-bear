@@ -52,8 +52,15 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.setVisible(true);
 		this.repaint();
 		this.addMouseListener(new BoardMouseListener(this));
-		while (true)
-			this.awaitUserInteraction();
+		this.insertTestPlayers();
+		this.initiateTurn();
+	}
+	
+	private void insertTestPlayers(){
+		this.engine.insertPlayer(new Player(Piece.COLOR.red, "Hugh Hefner"));
+		this.engine.insertPlayer(new Player(Piece.COLOR.blue, "Amanda Streich"));
+		this.engine.insertPlayer(new Player(Piece.COLOR.green, "Britany Nola"));
+		this.engine.insertPlayer(new Player(Piece.COLOR.yellow, "Pamela Horton"));
 	}
 
 	/**
@@ -85,8 +92,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 			// wait for it
 			;
 		System.out.println("got enough clicks");
-		this.clickCount = 0;
-		this.clicks.clear();
 	}
 
 	/**
@@ -97,6 +102,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	private void initiateTurn() {
 		this.currentCard = this.engine.getNextCard();
+		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
 		this.resetClickDetection();
 		this.awaitUserInteraction();

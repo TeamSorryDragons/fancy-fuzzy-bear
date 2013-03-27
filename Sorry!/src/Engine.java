@@ -28,8 +28,10 @@ public class Engine {
 	}
 
 	public void insertPlayer(Player bigP) {
-		if (this.players.isEmpty())
+		if (this.players.isEmpty()){
 			this.players.insertFirst(bigP);
+			this.players.goToNextElement();
+		}
 		else {
 			this.players.insertAfterActual(bigP);
 			this.players.goToNextElement();
@@ -53,13 +55,18 @@ public class Engine {
 	}
 
 	public int pawnMove(SorryFrame.Coordinate start, SorryFrame.Coordinate end) {
+		System.out.println("I got called");
 		Node first = this.convertCoordToNode(start);
+		System.out.println("THINGS");
 		Node second = this.convertCoordToNode(end);
+		System.out.println("STUFF");
 
 		if (first == null || second == null) {
+			System.out.println("well damnit willis");
 			return -1; // bad things happened for reasons
 		}
-
+		int temp = first.countTo(second);
+		System.out.println(temp);
 		return 0;
 	}
 
