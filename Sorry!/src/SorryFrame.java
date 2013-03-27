@@ -2,6 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -20,6 +21,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 	private static final double CELL_HEIGHT = ((double) BOARD_HEIGHT / BOARD_ROWS);
 	private static final int FRAME_X_PAD = 10;
 	private static final int FRAME_Y_PAD = 30;
+
+	private volatile int clickCount = 0;
+	private volatile ArrayList<Coordinate> clicks = new ArrayList<Coordinate>();
 
 	private static final long serialVersionUID = 1L;
 	private BoardList board;
@@ -47,6 +51,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.setVisible(true);
 		this.repaint();
 		this.addMouseListener(new BoardMouseListener(this));
+		while (true)
+			this.awaitUserInteraction();
 	}
 
 	/**
@@ -73,6 +79,14 @@ public class SorryFrame extends JFrame implements ActionListener {
 		return new Coordinate(xCoord, yCoord);
 	}
 
+	private void awaitUserInteraction() {
+		while (this.clickCount < 2)
+			;
+		System.out.println("got enough clicks");
+		this.clickCount = 0;
+		this.clicks.clear();
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
@@ -80,6 +94,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	}
 
 	private void registerMouseClick(Coordinate coord) {
+		this.clickCount++;
+		this.clicks.add(coord);
 		System.out.println("The node number: " + Engine.getNodePosition(coord));
 	}
 
