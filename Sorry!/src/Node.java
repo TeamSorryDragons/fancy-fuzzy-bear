@@ -202,4 +202,12 @@ public class Node {
 		else
 			return moves-1;
 	}
+	public int countTo(Node node){
+		if(this == node){
+			return 0;
+		}
+		else{
+			return 1 + this.next.countTo(node);
+		}
+	}
 }

@@ -148,4 +148,23 @@ public class SlideNode extends Node {
 		}
 		return direction(moves).move(goTo(moves), p);
 	}
+	
+	public int countTo(Node node){
+		if(this == node){
+			return 0;
+		}
+		else if(this.getSafeNode() != null){
+			Node temp = this.getSafeNode();
+			boolean breaker = false;
+			while(temp != null){
+				if(temp == node){
+					breaker = true;
+				}
+			}
+			if(breaker){
+				return 1 + this.getSafeNode().countTo(node);
+			}
+		}
+		return 1 + this.getNext().countTo(node);
+	}
 }
