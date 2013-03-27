@@ -8,6 +8,7 @@ public class Engine {
 	BoardList board;
 	Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue, Indices 8-11
 					// are Yellow, Indices 12-15 are green
+	
 
 	public Engine(BoardList board) {
 		this.board = board;
@@ -48,7 +49,6 @@ public class Engine {
 	}
 
 	public Node findNode(Piece piece) {
-
 		return this.board.getCornerPointers()[0].findNodeWithPiece(piece);
 	}
 	

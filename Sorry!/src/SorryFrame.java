@@ -87,6 +87,28 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.clicks.clear();
 	}
 
+	/**
+	 * 
+	 * Asks engine for a card, displays that card. Instructs engine to swap
+	 * active player. Begins listening to mouse input.
+	 * 
+	 */
+	private void initiateTurn() {
+		
+	}
+
+	/**
+	 * 
+	 * Waits for mouse input, converts them to coords. Relays coords to engine,
+	 * checking if the move was legal and if the turn should end. Checks for
+	 * turn forfeit, reverts the board if so. If turn is done, finalizes turn in
+	 * engine. Initiates next player's turn.
+	 * 
+	 */
+	private void performTurn() {
+
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
