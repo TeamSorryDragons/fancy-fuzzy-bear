@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Node {
 	private Node next;
 	private Node previous;
@@ -164,7 +166,8 @@ public class Node {
 			return this.next.findNodeWithPosition(i-1);
 		}
 	}
-	public Piece move(int moves, Piece p){
+	public ArrayList<Piece> move(int moves, Piece p){
+		ArrayList<Piece> ret = new ArrayList<Piece>();
 		if(moves != 0){
 			return this.next.move(moves-1, p);
 		}
@@ -173,7 +176,8 @@ public class Node {
 				Piece temp = firstPiece();
 				removePieceFromPieces(temp);
 				addPieceToPieces(p);
-				return temp;
+				ret.add(temp);
+				return ret;
 			}
 			else{
 				addPieceToPieces(p);
