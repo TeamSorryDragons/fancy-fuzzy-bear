@@ -144,6 +144,10 @@ public class SorryFrameCoordinateConversionTest {
 	public void testNotCoordinateCompare(){
 		SorryFrame.Coordinate c = new SorryFrame.Coordinate(0,0);
 		assertNotSame(c, new Node());
+		assertFalse(c.equals(new BoardList()));
+		
+		assertFalse(c.equals(new SorryFrame.Coordinate(0, 2)));
+		assertFalse(c.equals(new SorryFrame.Coordinate(2,0)));
 		
 	}
 
