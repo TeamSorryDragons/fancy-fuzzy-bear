@@ -144,9 +144,18 @@ public class SlideNode extends Node {
 			}
 		}
 		else if(this.getSafeNode() != null && !(this.getSafeNode() instanceof MultiNode) && this.getColor() == p.col && moves > 0){
-			return this.safe.move(moves-1, p);
+			try {
+				return this.safe.move(moves-1, p);
+			} catch (InvalidMoveException e) {
+				e.printStackTrace();
+			}
 		}
-		return direction(moves).move(goTo(moves), p);
+		try {
+			return direction(moves).move(goTo(moves), p);
+		} catch (InvalidMoveException e) {
+			e.printStackTrace();
+			return ret;
+		}
 	}
 	
 	public int countTo(Node node){

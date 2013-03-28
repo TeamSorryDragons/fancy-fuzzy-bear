@@ -134,11 +134,15 @@ public class MultiNode extends Node {
 		else
 			return null;
 	}
-	public ArrayList<Piece> move(int moves, Piece p){
-		ArrayList<Piece> ret = new ArrayList<Piece>();
+	public ArrayList<Piece> move(int moves, Piece p) throws InvalidMoveException{
 		if(this.getPrevious() != null){
-			this.addPieceToPieces(p);
-			return null;
+			if(moves == 0){
+				this.addPieceToPieces(p);
+				return null;
+			}
+			else{
+				throw new InvalidMoveException("You moved past home");
+			}
 		}
 		else{
 			if(moves < 0){

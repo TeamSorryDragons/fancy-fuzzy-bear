@@ -31,7 +31,7 @@ public class EngineNonGUITest {
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 
 		try {
-			e.move(1, e.pieces[0]);
+			e.move(1, e.pieces[0],e.board.getStartPointers()[0]);
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
@@ -387,7 +387,7 @@ public class EngineNonGUITest {
 
 	private void movePawn(int num, Piece p, Engine e) {
 		try {
-			e.move(num, p);
+			e.move(num, p, e.findNode(p));
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
@@ -542,7 +542,5 @@ public class EngineNonGUITest {
 		e.insertPlayer(buffalo);
 		assertEquals(e.activePlayer, siriam);
 	}
-	
-	
 
 }
