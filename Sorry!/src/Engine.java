@@ -361,7 +361,34 @@ public class Engine {
 	 * real board. Reset the temp board.
 	 * 
 	 */
-	public void finalizeTurn() {
+	public boolean finalizeTurn() {
 		// TODO implement it, when the time comes
+
+		return hasWon();
+	}
+
+	public boolean hasWon() {
+		int spot = 0;
+		switch (this.activePlayer.getColor()) {
+		case red:
+			spot = 0;
+			break;
+		case blue:
+			spot = 1;
+			break;
+		case yellow:
+			spot = 2;
+			break;
+		case green:
+			spot = 3;
+			break;
+		}
+		Piece[] piecesInHome = this.board.getHomePointers()[spot].pieces;
+		for(int i = 0; i < 4; i++){
+			if(piecesInHome[i] == null){
+				return false;
+			}
+		}
+		return true;
 	}
 }
