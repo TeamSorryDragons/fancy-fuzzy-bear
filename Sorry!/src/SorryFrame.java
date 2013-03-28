@@ -97,7 +97,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 		while (this.clickCount < 2)
 			// wait for it
 			;
-		System.out.println("got enough clicks");
 	}
 
 	/**
@@ -110,7 +109,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.currentCard = this.engine.getNextCard();
 		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
-		this.notifyPlayer();
+		this.notifyPlayer(" it is your turn!");
 		this.awaitUserInteraction();
 		this.performTurn();
 	}
@@ -124,34 +123,27 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private void performTurn() {
-		System.out.println("performing a turn");
 		int result = this.engine.pawnMove(this.clicks.get(0),
 				this.clicks.get(1));
 		if (result == Engine.SAME_NODE_SELECTED) {
-			System.out.println("You picked the same node twice.");
-			this.notifyPlayer();
+			this.notifyPlayer("You picked the same node twice.");
 			this.awaitUserInteraction();
 			this.performTurn();
 		} else if (result == Engine.INVALID_MOVE) {
-			System.out.println("That move is illegal.");
-			this.notifyPlayer();
+			this.notifyPlayer("That move is illegal.");
 			this.awaitUserInteraction();
 			this.performTurn();
 		} else if (result == Engine.NODE_NOT_FOUND) {
-			System.out.println("No node was found where you clicked.");
-			this.notifyPlayer();
+			this.notifyPlayer("That move is illegal.");
 			this.awaitUserInteraction();
 			this.performTurn();
 
 		} else {
-			System.out.println("Attempting a move.");
 			if (this.currentCard.cardNum == result) {
 				// turn is over, rotate
 				if (this.engine.finalizeTurn()) {
 					this.repaint();
-					JOptionPane.showMessageDialog(this,
-							this.engine.activePlayer.getName()
-									+ " You have won!");
+					this.notifyPlayer(" you have won!");
 				} else {
 					this.repaint();
 					this.initiateTurn();
@@ -160,7 +152,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 				// player had a 7, let them go again
 				this.resetClickDetection();
 				this.awaitUserInteraction();
-				this.notifyPlayer();
+				this.notifyPlayer(" this shouldn't happen, what'd you do?");
 				this.performTurn();
 			}
 		}
@@ -183,9 +175,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.clicks.add(coord);
 	}
 
-	private void notifyPlayer() {
+	private void notifyPlayer(String message) {
 		JOptionPane.showMessageDialog(this, this.engine.activePlayer.getName()
-				+ " it is your turn");
+				+ message);
 	}
 
 	/**

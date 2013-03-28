@@ -56,6 +56,8 @@ public class Engine {
 		// start with a rudimentary, who owns this piece check
 		if (pawn == null || pawn.col != player.getColor())
 			return false;
+		if (numberMoves != this.currentCard.cardNum)
+			return false;
 		return true;
 	}
 
