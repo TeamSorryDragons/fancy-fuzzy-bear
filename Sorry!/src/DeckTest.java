@@ -37,4 +37,9 @@ public class DeckTest {
 			d.getTopCard();
 		assertEquals(d.cards[d.topCard],d.getTopCard());
 	}
+	@Test
+	public void testCardToString(){
+		Card test = new Card(1,"This is a card");
+		assertEquals("1 - This is a card", test.toString());
+	}
 }
