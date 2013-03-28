@@ -146,9 +146,14 @@ public class SorryFrame extends JFrame implements ActionListener {
 		} else {
 			if (this.currentCard.cardNum == result) {
 				// turn is over, rotate
-				this.engine.finalizeTurn();
-				this.repaint();
-				this.initiateTurn();
+				if(this.engine.finalizeTurn()){
+					this.repaint();
+					JOptionPane.showMessageDialog(this,this.engine.activePlayer.getName() + " You have won!");
+				}
+				else{
+					this.repaint();
+					this.initiateTurn();
+				}
 			} else {
 				// player had a 7, let them go again
 				this.resetClickDetection();
