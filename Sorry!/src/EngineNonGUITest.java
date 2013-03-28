@@ -197,13 +197,13 @@ public class EngineNonGUITest {
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsng|gmn3|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 	}
-	
+
 	@Test
 	public void testSlideMoves() {
 		BoardList board = new BoardList();
 		Engine e = new Engine(board);
 		e.newGame();
-		movePawn(13,e.pieces[0],e);
+		movePawn(13, e.pieces[0], e);
 		assertEquals(
 				board.toString(),
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
@@ -393,47 +393,156 @@ public class EngineNonGUITest {
 		}
 
 	}
-	
+
 	@Test
-	public void testFindNodeWithPiece(){
+	public void testFindNodeWithPiece() {
 		BoardList temp = new BoardList();
 		Engine e = new Engine(temp);
 		e.newGame();
 		Piece p = temp.getStartPointers()[0].getPieces()[0];
-		assertEquals(e.findNode(p),temp.getStartPointers()[0]);
+		assertEquals(e.findNode(p), temp.getStartPointers()[0]);
 	}
-	
+
 	@Test
-	public void testFindNodeWithPosition(){
+	public void testFindNodeWithPosition() {
 		BoardList temp = new BoardList();
 		Engine e = new Engine(temp);
 		e.newGame();
-		assertEquals(e.findNodeByPosition(87), temp.getCornerPointers()[0].getPrevious());
+		assertEquals(e.findNodeByPosition(87),
+				temp.getCornerPointers()[0].getPrevious());
 		assertEquals(e.findNodeByPosition(11), temp.getStartPointers()[0]);
 		assertEquals(e.findNodeByPosition(8), temp.getHomePointers()[0]);
 	}
-	
+
 	@Test
-	public void testIsValidMoveNoMove(){
+	public void testIsValidMoveNoMove() {
 		BoardList board = new BoardList();
 		Engine e = new Engine(board);
 		e.newGame();
-		assertTrue(e.isValidMove(e.pieces[0], 0, new Player(Piece.COLOR.red, "Bob Dole")));
+		assertTrue(e.isValidMove(e.pieces[0], 0, new Player(Piece.COLOR.red,
+				"Bob Dole")));
 	}
 
 	@Test
-	public void testPanwMovement(){
+	public void testPanwMovement() {
 		BoardList board = new BoardList();
 		Engine e = new Engine(board);
 		e.getNextCard();
-		assertEquals(e.pawnMove(new SorryFrame.Coordinate(0,0), new SorryFrame.Coordinate(0,0)), 0);
+		assertEquals(e.pawnMove(new SorryFrame.Coordinate(0, 0),
+				new SorryFrame.Coordinate(0, 0)), 0);
 	}
 
 	@Test
-	public void testCountTo(){
+	public void testCountTo() {
 		BoardList board = new BoardList();
 		Engine e = new Engine(board);
 		int count = board.cornerPointers[0].countTo(board.cornerPointers[1]);
-		assertEquals(count , 15);
+		assertEquals(count, 15);
 	}
+
+	@Test
+	public void testIsValidPlayerCheck() {
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		Player p = new Player(Piece.COLOR.red, "James Bond");
+
+		e.newGame();
+
+		assertTrue(e.isValidMove(e.pieces[0], 0, p));
+
+		assertFalse(e.isValidMove(e.pieces[0], 0, new Player(Piece.COLOR.blue,
+				"Steve Jobs")));
+
+		for (int i = 1; i < 4; i++)
+			assertTrue(e.isValidMove(e.pieces[i], 0, p));
+
+		assertFalse(e.isValidMove(e.pieces[4], 0, p));
+	}
+
+	@Test
+	public void testPawnMoveSamePositions() {
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		e.newGame();
+
+		assertEquals(Engine.SAME_NODE_SELECTED, e.pawnMove(
+				new SorryFrame.Coordinate(0, 0),
+				new SorryFrame.Coordinate(0, 0)));
+
+		for (int i = 0; i < 16; i++) {
+			assertEquals(Engine.SAME_NODE_SELECTED, e.pawnMove(
+					new SorryFrame.Coordinate(i, 0), new SorryFrame.Coordinate(
+							i, 0)));
+			assertEquals(0, e.pawnMove(new SorryFrame.Coordinate(0, i),
+					new SorryFrame.Coordinate(0, i)));
+		}
+	}
+
+	@Test
+	public void testPawnMoveInvalidCoordinates() {
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		e.newGame();
+
+		assertEquals(Engine.NODE_NOT_FOUND, e.pawnMove(
+				new SorryFrame.Coordinate(-1, -1), new SorryFrame.Coordinate(0,
+						0)));
+
+		assertEquals(Engine.NODE_NOT_FOUND, e.pawnMove(
+				new SorryFrame.Coordinate(0, 0), new SorryFrame.Coordinate(-1,
+						-1)));
+
+		assertEquals(Engine.NODE_NOT_FOUND, e.pawnMove(
+				new SorryFrame.Coordinate(1, 1),
+				new SorryFrame.Coordinate(0, 0)));
+
+		assertEquals(Engine.NODE_NOT_FOUND, e.pawnMove(
+				new SorryFrame.Coordinate(6, 6), new SorryFrame.Coordinate(-1,
+						-1)));
+
+		assertEquals(Engine.NODE_NOT_FOUND, e.pawnMove(
+				new SorryFrame.Coordinate(7, 7),
+				new SorryFrame.Coordinate(7, 7)));
+
+	}
+
+	@Test
+	public void testInsertPlayers() {
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+
+		Player john = new Player(Piece.COLOR.green, "Johnny Depp");
+		Player bill = new Player(Piece.COLOR.blue, "Bill Gates");
+		Player siriam = new Player(Piece.COLOR.yellow, "Whale Rider");
+		Player buffalo = new Player(Piece.COLOR.red, "Buffalo");
+
+		e.insertPlayer(john);
+		e.insertPlayer(bill);
+
+		e.rotatePlayers();
+
+		assertEquals(e.activePlayer, john);
+		e.rotatePlayers();
+		assertEquals(e.activePlayer, bill);
+		e.rotatePlayers();
+		assertEquals(e.activePlayer, john);
+
+		e.insertPlayer(siriam);
+		assertEquals(e.activePlayer, john);
+
+		e.rotatePlayers();
+		assertEquals(e.activePlayer, bill);
+
+		e.rotatePlayers();
+		assertEquals(e.activePlayer, john);
+
+		e.rotatePlayers();
+		assertEquals(e.activePlayer, siriam);
+
+		e.insertPlayer(buffalo);
+		assertEquals(e.activePlayer, siriam);
+	}
+	
+	
+
 }

@@ -2,6 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.SampleModel;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
@@ -57,11 +58,13 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.initiateTurn();
 	}
 
-	private void insertTestPlayers(){
+	private void insertTestPlayers() {
 		this.engine.insertPlayer(new Player(Piece.COLOR.red, "Hugh Hefner"));
-		this.engine.insertPlayer(new Player(Piece.COLOR.blue, "Amanda Streich"));
+		this.engine
+				.insertPlayer(new Player(Piece.COLOR.blue, "Amanda Streich"));
 		this.engine.insertPlayer(new Player(Piece.COLOR.green, "Britany Nola"));
-		this.engine.insertPlayer(new Player(Piece.COLOR.yellow, "Pamela Horton"));
+		this.engine
+				.insertPlayer(new Player(Piece.COLOR.yellow, "Pamela Horton"));
 	}
 
 	/**
@@ -120,13 +123,28 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private void performTurn() {
-		int result = this.engine.pawnMove(this.clicks.get(0), this.clicks.get(1));
-		if (result < 0){
+		int result = this.engine.pawnMove(this.clicks.get(0),
+				this.clicks.get(1));
+		if (result < 0) {
 			// movement failed, alert player... blah blah blah
-		} else if (result == 0) {
-			// user clicked the same node twice cause they dumb so tell them so
+		} else if (result == Engine.SAME_NODE_SELECTED) {
+			this.resetClickDetection();
+			this.notifyPlayer();
+			this.awaitUserInteraction();
+			this.performTurn();
+		} else if (result == Engine.INVALID_MOVE) {
+			this.resetClickDetection();
+			this.notifyPlayer();
+			this.awaitUserInteraction();
+			this.performTurn();
+		} else if (result == Engine.NODE_NOT_FOUND) {
+			this.resetClickDetection();
+			this.notifyPlayer();
+			this.awaitUserInteraction();
+			this.performTurn();
+
 		} else {
-			if (this.currentCard.cardNum == result){
+			if (this.currentCard.cardNum == result) {
 				// turn is over, rotate
 				this.engine.finalizeTurn();
 				this.repaint();
@@ -135,9 +153,10 @@ public class SorryFrame extends JFrame implements ActionListener {
 				// player had a 7, let them go again
 				this.resetClickDetection();
 				this.awaitUserInteraction();
+				this.notifyPlayer();
+				this.performTurn();
 			}
 		}
-
 
 	}
 
@@ -157,9 +176,10 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.clicks.add(coord);
 		System.out.println("The node number: " + Engine.getNodePosition(coord));
 	}
-	
-	private void notifyPlayer(){
-		JOptionPane.showMessageDialog(this,this.engine.activePlayer.getName() + " it is your turn");
+
+	private void notifyPlayer() {
+		JOptionPane.showMessageDialog(this, this.engine.activePlayer.getName()
+				+ " it is your turn");
 	}
 
 	/**

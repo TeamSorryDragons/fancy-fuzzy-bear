@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Engine {
+	public static final int NODE_NOT_FOUND = -128;
+	public static final int SAME_NODE_SELECTED = 0;
+	public static final int INVALID_MOVE = -512;
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
 	protected BoardList board;
 	protected Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue,
@@ -28,11 +31,10 @@ public class Engine {
 	}
 
 	public void insertPlayer(Player bigP) {
-		if (this.players.isEmpty()){
+		if (this.players.isEmpty()) {
 			this.players.insertFirst(bigP);
 			this.players.goToNextElement();
-		}
-		else {
+		} else {
 			this.players.insertAfterActual(bigP);
 			this.players.goToNextElement();
 		}
@@ -51,24 +53,34 @@ public class Engine {
 	}
 
 	public boolean isValidMove(Piece pawn, int numberMoves, Player player) {
+		// start with a rudimentary, who owns this piece check
+		if (pawn.col != player.getColor())
+			return false;
 		return true;
 	}
 
 	public int pawnMove(SorryFrame.Coordinate start, SorryFrame.Coordinate end) {
-		System.out.println("I got called");
-		Node first = this.convertCoordToNode(start);
-		System.out.println("THINGS");
-		Node second = this.convertCoordToNode(end);
-		System.out.println("STUFF");
-
-		if (first == null || second == null) {
-			System.out.println("well damnit willis");
-			return -1; // bad things happened for reasons
+		Node first, second;
+		// Start with error checking - are the coordinates and desired nodes
+		// valid?
+		try {
+			first = this.convertCoordToNode(start);
+			second = this.convertCoordToNode(end);
+		} catch (CoordinateOffOfBoardException e) {
+			return NODE_NOT_FOUND;
 		}
+
+		if (first == second)
+			return SAME_NODE_SELECTED;
+
 		int temp = first.countTo(second);
-		if(temp == this.currentCard.cardNum){
+		if (temp == this.currentCard.cardNum) {
 			try {
-				move(temp,first.firstPiece());
+				if (isValidMove(first.firstPiece(), temp, this.activePlayer))
+					move(temp, first.firstPiece());
+				else {
+					return INVALID_MOVE;
+				}
 			} catch (Unstarted e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -193,13 +205,7 @@ public class Engine {
 	 */
 	public Node convertCoordToNode(SorryFrame.Coordinate coordinate) {
 		// TODO this
-		if (coordsMap.containsKey(coordinate)) {
-			return this.findNodeByPosition(coordsMap.get(coordinate));
-		} else {
-			// the map doesn't contain it, probably an invalid coordinate
-			throw new CoordinateOffOfBoardException();
-		}
-
+		return this.findNodeByPosition(this.getNodePosition(coordinate));
 	}
 
 	protected static int getNodePosition(SorryFrame.Coordinate coord) {
