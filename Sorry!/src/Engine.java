@@ -54,7 +54,7 @@ public class Engine {
 
 	public boolean isValidMove(Piece pawn, int numberMoves, Player player) {
 		// start with a rudimentary, who owns this piece check
-		if (pawn.col != player.getColor())
+		if (pawn == null || pawn.col != player.getColor())
 			return false;
 		return true;
 	}
@@ -74,18 +74,18 @@ public class Engine {
 			return SAME_NODE_SELECTED;
 
 		int temp = first.countTo(second);
-		if (temp == this.currentCard.cardNum) {
-			try {
-				if (isValidMove(first.firstPiece(), temp, this.activePlayer))
-					move(temp, first.firstPiece(),first);
-				else {
-					return INVALID_MOVE;
-				}
-			} catch (Unstarted e) {
-				e.printStackTrace();
-			} catch (InvalidMoveException e) {
-				e.printStackTrace();
-			}
+		if (!isValidMove(first.firstPiece(), temp, this.activePlayer)) {
+			return INVALID_MOVE;
+		}
+
+		try {
+			move(temp, first.firstPiece(), first);
+
+		} catch (Unstarted e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidMoveException e) {
+			e.printStackTrace();
 		}
 		return temp;
 	}
@@ -100,9 +100,10 @@ public class Engine {
 	 * @param piece
 	 * @throws Unstarted
 	 *             if the game hasn't been generated
-	 * @throws InvalidMoveException 
+	 * @throws InvalidMoveException
 	 */
-	public void move(int moves, Piece piece, Node piecenode) throws Unstarted, InvalidMoveException {
+	public void move(int moves, Piece piece, Node piecenode) throws Unstarted,
+			InvalidMoveException {
 		piecenode.removePieceFromPieces(piece);
 		ArrayList<Piece> strt = piecenode.move(moves, piece);
 		if (strt != null && strt.size() > 0) {
@@ -385,8 +386,8 @@ public class Engine {
 			break;
 		}
 		Piece[] piecesInHome = this.board.getHomePointers()[spot].pieces;
-		for(int i = 0; i < 4; i++){
-			if(piecesInHome[i] == null){
+		for (int i = 0; i < 4; i++) {
+			if (piecesInHome[i] == null) {
 				return false;
 			}
 		}

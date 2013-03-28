@@ -62,7 +62,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.engine.insertPlayer(new Player(Piece.COLOR.red, "Hugh Hefner"));
 		this.engine
 				.insertPlayer(new Player(Piece.COLOR.blue, "Amanda Streich"));
-		this.engine.insertPlayer(new Player(Piece.COLOR.yellow, "Britany Nola"));
+		this.engine
+				.insertPlayer(new Player(Piece.COLOR.yellow, "Britany Nola"));
 		this.engine
 				.insertPlayer(new Player(Piece.COLOR.green, "Pamela Horton"));
 	}
@@ -92,6 +93,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	}
 
 	private void awaitUserInteraction() {
+		this.resetClickDetection();
 		while (this.clickCount < 2)
 			// wait for it
 			;
@@ -109,7 +111,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
 		this.notifyPlayer();
-		this.resetClickDetection();
 		this.awaitUserInteraction();
 		this.performTurn();
 	}
@@ -123,35 +124,35 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private void performTurn() {
+		System.out.println("performing a turn");
 		int result = this.engine.pawnMove(this.clicks.get(0),
 				this.clicks.get(1));
-		if (result < 0) {
-			// movement failed, alert player... blah blah blah
-		} else if (result == Engine.SAME_NODE_SELECTED) {
-			this.resetClickDetection();
+		if (result == Engine.SAME_NODE_SELECTED) {
+			System.out.println("You picked the same node twice.");
 			this.notifyPlayer();
 			this.awaitUserInteraction();
 			this.performTurn();
 		} else if (result == Engine.INVALID_MOVE) {
-			this.resetClickDetection();
+			System.out.println("That move is illegal.");
 			this.notifyPlayer();
 			this.awaitUserInteraction();
 			this.performTurn();
 		} else if (result == Engine.NODE_NOT_FOUND) {
-			this.resetClickDetection();
+			System.out.println("No node was found where you clicked.");
 			this.notifyPlayer();
 			this.awaitUserInteraction();
 			this.performTurn();
-			
 
 		} else {
+			System.out.println("Attempting a move.");
 			if (this.currentCard.cardNum == result) {
 				// turn is over, rotate
-				if(this.engine.finalizeTurn()){
+				if (this.engine.finalizeTurn()) {
 					this.repaint();
-					JOptionPane.showMessageDialog(this,this.engine.activePlayer.getName() + " You have won!");
-				}
-				else{
+					JOptionPane.showMessageDialog(this,
+							this.engine.activePlayer.getName()
+									+ " You have won!");
+				} else {
 					this.repaint();
 					this.initiateTurn();
 				}
@@ -180,7 +181,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 	private void registerMouseClick(Coordinate coord) {
 		this.clickCount++;
 		this.clicks.add(coord);
-		System.out.println("The node number: " + Engine.getNodePosition(coord));
 	}
 
 	private void notifyPlayer() {
@@ -279,14 +279,12 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 		@Override
 		public void mouseClicked(MouseEvent click) {
-			System.out.println("Mouse click registerd! x: " + click.getX()
-					+ " y: " + click.getY());
 			try {
 				this.myFrame.registerMouseClick(SorryFrame
 						.convertClickToCoordinate(click.getX() - FRAME_X_PAD,
 								click.getY() - FRAME_Y_PAD));
 			} catch (CoordinateOffOfBoardException e) {
-				System.out.println("Got an exception.");
+				e.printStackTrace();
 			}
 
 		}
