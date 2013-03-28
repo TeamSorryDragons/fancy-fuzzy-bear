@@ -142,6 +142,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 			this.notifyPlayer();
 			this.awaitUserInteraction();
 			this.performTurn();
+			
 
 		} else {
 			if (this.currentCard.cardNum == result) {
