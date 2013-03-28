@@ -62,9 +62,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.engine.insertPlayer(new Player(Piece.COLOR.red, "Hugh Hefner"));
 		this.engine
 				.insertPlayer(new Player(Piece.COLOR.blue, "Amanda Streich"));
-		this.engine.insertPlayer(new Player(Piece.COLOR.green, "Britany Nola"));
+		this.engine.insertPlayer(new Player(Piece.COLOR.yellow, "Britany Nola"));
 		this.engine
-				.insertPlayer(new Player(Piece.COLOR.yellow, "Pamela Horton"));
+				.insertPlayer(new Player(Piece.COLOR.green, "Pamela Horton"));
 	}
 
 	/**
