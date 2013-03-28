@@ -166,7 +166,7 @@ public class Node {
 			return this.next.findNodeWithPosition(i-1);
 		}
 	}
-	public ArrayList<Piece> move(int moves, Piece p){
+	public ArrayList<Piece> move(int moves, Piece p) throws InvalidMoveException{
 		ArrayList<Piece> ret = new ArrayList<Piece>();
 		if(moves != 0){
 			return direction(moves).move(goTo(moves), p);

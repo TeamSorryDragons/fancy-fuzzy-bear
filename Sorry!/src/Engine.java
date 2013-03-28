@@ -77,12 +77,13 @@ public class Engine {
 		if (temp == this.currentCard.cardNum) {
 			try {
 				if (isValidMove(first.firstPiece(), temp, this.activePlayer))
-					move(temp, first.firstPiece());
+					move(temp, first.firstPiece(),first);
 				else {
 					return INVALID_MOVE;
 				}
 			} catch (Unstarted e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidMoveException e) {
 				e.printStackTrace();
 			}
 		}
@@ -99,9 +100,9 @@ public class Engine {
 	 * @param piece
 	 * @throws Unstarted
 	 *             if the game hasn't been generated
+	 * @throws InvalidMoveException 
 	 */
-	public void move(int moves, Piece piece) throws Unstarted {
-		Node piecenode = findNode(piece);
+	public void move(int moves, Piece piece, Node piecenode) throws Unstarted, InvalidMoveException {
 		piecenode.removePieceFromPieces(piece);
 		ArrayList<Piece> strt = piecenode.move(moves, piece);
 		if (strt != null && strt.size() > 0) {
