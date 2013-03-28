@@ -46,7 +46,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		super("Sorry!");
 		this.board = board;
 		this.engine = engine;
-		this.setSize(1000, 1000);
+		this.setSize(1015, 1040);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JComponent displayBoard = new DisplayableBoard(this.board);
 		this.add(displayBoard);
