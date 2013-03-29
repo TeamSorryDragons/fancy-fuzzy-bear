@@ -419,7 +419,8 @@ public class EngineNonGUITest {
 		BoardList board = new BoardList();
 		Engine e = new Engine(board);
 		e.newGame();
-		assertTrue(e.isValidMove(e.pieces[0], 0, new Player(Piece.COLOR.red,
+		e.getNextCard();
+		assertTrue(e.isValidMove(e.pieces[0], e.currentCard.cardNum, new Player(Piece.COLOR.red,
 				"Bob Dole")));
 	}
 
@@ -447,16 +448,17 @@ public class EngineNonGUITest {
 		Player p = new Player(Piece.COLOR.red, "James Bond");
 
 		e.newGame();
+		e.getNextCard();
 
-		assertTrue(e.isValidMove(e.pieces[0], 0, p));
+		assertTrue(e.isValidMove(e.pieces[0], e.currentCard.cardNum, p));
 
-		assertFalse(e.isValidMove(e.pieces[0], 0, new Player(Piece.COLOR.blue,
+		assertFalse(e.isValidMove(e.pieces[0], e.currentCard.cardNum, new Player(Piece.COLOR.blue,
 				"Steve Jobs")));
 
 		for (int i = 1; i < 4; i++)
-			assertTrue(e.isValidMove(e.pieces[i], 0, p));
+			assertTrue(e.isValidMove(e.pieces[i], e.currentCard.cardNum, p));
 
-		assertFalse(e.isValidMove(e.pieces[4], 0, p));
+		assertFalse(e.isValidMove(e.pieces[4], e.currentCard.cardNum, p));
 	}
 
 	@Test

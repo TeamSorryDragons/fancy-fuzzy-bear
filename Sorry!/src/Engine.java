@@ -16,7 +16,7 @@ public class Engine {
 	protected Player activePlayer;
 	protected Deck deck;
 	protected CircularLinkedList<Player> players;
-	private Card currentCard;
+	protected Card currentCard;
 
 	public Engine(BoardList board) {
 		this.board = board;
