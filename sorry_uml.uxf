@@ -25,7 +25,7 @@ String toString()</panel_attributes>
       <x>406</x>
       <y>574</y>
       <w>175</w>
-      <h>182</h>
+      <h>189</h>
     </coordinates>
     <panel_attributes>Node
 --
@@ -115,7 +115,7 @@ bool Head</panel_attributes>
       <x>630</x>
       <y>245</y>
       <w>203</w>
-      <h>217</h>
+      <h>224</h>
     </coordinates>
     <panel_attributes>Engine
 --
@@ -194,12 +194,12 @@ Yellow, Green, Colorless}
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>623</x>
-      <y>441</y>
+      <y>448</y>
       <w>62</w>
-      <h>104</h>
+      <h>97</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>49;91;21;21</additional_attributes>
+    <additional_attributes>49;84;21;21</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
