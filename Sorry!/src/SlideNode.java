@@ -193,14 +193,12 @@ public class SlideNode extends Node {
 		else if(this.getSafeNode() != null && this.getSafeNode().getPrevious() != null){
 			Node temp = this.getSafeNode();
 			boolean breaker = false;
-			int temp2 = 0;
 			while(temp != null){
 				if(temp == node){
 					breaker = true;
 					break;
 				}
 				else{
-					temp2 ++;
 					temp = temp.getNext();
 				}
 			}

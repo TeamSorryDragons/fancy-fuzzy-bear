@@ -220,24 +220,47 @@ public class SlideNodeTest {
 		testNode.setPieces(testPieces);
 		assertEquals(testNode.toString(), "hysny|");
 	}
-	
+
 	@Test
-	public void testCountTo(){
+	public void testCountTo() {
 		SlideNode test = new SlideNode(Piece.COLOR.red);
-		SlideNode test2 = new SlideNode(test,null,null,Piece.COLOR.red);
-		MultiNode test6 = new MultiNode(test,null,Piece.COLOR.red);
+		SlideNode test2 = new SlideNode(test, null, null, Piece.COLOR.red);
+		MultiNode test6 = new MultiNode(test, null, Piece.COLOR.red);
 		test.setSafeNode(test6);
-		Node test3 = new Node(null,test2);
-		Node test4 = new Node(null,test3);
+		Node test3 = new Node(null, test2);
+		Node test4 = new Node(null, test3);
 		test3.setNext(test4);
-		Node test5 = new Node(null,test4);
+		Node test5 = new Node(null, test4);
 		test4.setNext(test5);
 		test.setPrevious(test2);
 		test2.setSafeNode(test3);
-		assertEquals(0,test2.countTo(test2));
-		assertEquals(1,test2.countTo(test));
-		assertEquals(1,test2.countTo(test3));
-		assertEquals(3,test2.countTo(test5));
-		assertEquals(1,test.countTo(test6));
+		assertEquals(0, test2.countTo(test2));
+		assertEquals(1, test2.countTo(test));
+		assertEquals(1, test2.countTo(test3));
+		assertEquals(3, test2.countTo(test5));
+		assertEquals(1, test.countTo(test6));
+	}
+
+	@Test
+	public void testCountBack() {
+		SlideNode test = new SlideNode(Piece.COLOR.red);
+		SlideNode test2 = new SlideNode(test, null, null, Piece.COLOR.red);
+		MultiNode test6 = new MultiNode(test, null, Piece.COLOR.red);
+		test.setPrevious(test2);
+		test2.setSafeNode(test6);
+		test.setSafeNode(new Node(new Node(), test));
+		test.getSafeNode().getNext().setPrevious(test.getSafeNode());
+		assertEquals(test.countBack(test2), 1);
+		assertEquals(test.getSafeNode().getNext().countBack(test2), 3);
+		assertEquals(
+				test.getSafeNode().getNext().countBack(test.getSafeNode()), 1);
+		try {
+			test.countBack(test.getSafeNode());
+		} catch (Exception e) {
+		}
+		try{
+			test2.countBack(test6);
+		} catch(Exception e) {
+		}
 	}
 }
