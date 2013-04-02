@@ -18,7 +18,7 @@ public class MultiNodeTest {
 	@Test
 	public void nullTest() {
 		assertNotNull(new MultiNode());
-		assertNotNull(new MultiNode(new Node(), new Node(),Piece.COLOR.red));
+		assertNotNull(new MultiNode(new Node(), new Node(), Piece.COLOR.red));
 		assertNotNull(new MultiNode(new Node(), new Node(), new Piece[4]));
 	}
 
@@ -76,7 +76,7 @@ public class MultiNodeTest {
 		try {
 			test.addPieceToPieces(new Piece(Piece.COLOR.blue));
 			fail();
-		} catch (IndexOutOfBoundsException e){
+		} catch (IndexOutOfBoundsException e) {
 			assertTrue(true);
 		}
 
@@ -86,10 +86,9 @@ public class MultiNodeTest {
 		} catch (IllegalArgumentException e) {
 			assertTrue(true);
 		}
-
+		pieces = new Piece[4];
+		pieces[0] = new Piece(Piece.COLOR.green);
 		try {
-			pieces = new Piece[4];
-			pieces[0] = new Piece(Piece.COLOR.green);
 			test.setPieces(pieces);
 			fail();
 		} catch (IllegalArgumentException e) {
@@ -138,22 +137,46 @@ public class MultiNodeTest {
 			test = new MultiNode();
 		}
 	}
-	
+
 	@Test
-	public void testHasPiece(){
+	public void testHasPiece() {
 		MultiNode test = new MultiNode();
 		assertFalse(test.hasPiece());
 		Piece test2 = new Piece();
 		test.addPieceToPieces(test2);
 		assertTrue(test.hasPiece());
 	}
-	
+
 	@Test
-	public void testFirstPiece(){
+	public void testFirstPiece() {
 		MultiNode test = new MultiNode();
 		assertNull(test.firstPiece());
-		Piece[] test2 = {null,null,new Piece(),null};
+		Piece[] test2 = { null, null, new Piece(), null };
 		test.setPieces(test2);
-		assertEquals(test.firstPiece(),test2[2]);
+		assertEquals(test.firstPiece(), test2[2]);
+	}
+
+	@Test
+	public void testExceptions() {
+		MultiNode test = new MultiNode();
+		MultiNode test2 = new MultiNode();
+		test.setPrevious(test2);
+		try {
+			test.move(1, new Piece(Piece.COLOR.red));
+		} catch (InvalidMoveException e) {
+		}
+	}
+	
+	@Test
+	public void testCountBack(){
+		MultiNode test = new MultiNode();
+		MultiNode test2 = new MultiNode();
+		test.setPrevious(test2);
+		assertEquals(1,test.countBack(test2));
+		assertEquals(0,test.countBack(test));
+		test.setPrevious(null);
+		try{
+			test.countBack(test2);
+		}catch(Exception e){}
 	}
 }

@@ -189,11 +189,9 @@ public class Node {
 		if(moves > 0){
 			return this.getNext();
 		}
-		else if(moves < 0){
+		else{ //this never gets called unless moves != 0
 			return this.getPrevious();
 		}
-		else
-			return null;
 	}
 	protected int goTo(int moves){
 		if(moves < 0){
@@ -208,6 +206,14 @@ public class Node {
 		}
 		else{
 			return 1 + this.next.countTo(node);
+		}
+	}
+	public int countBack(Node node){
+		if(this == node){
+			return 0;
+		}
+		else{
+			return 1+this.previous.countBack(node);
 		}
 	}
 }

@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 public class NodeTest {
@@ -62,12 +64,21 @@ public class NodeTest {
 
 	@Test
 	public void ExceptionTest() {
+		Node head = new Node();
+		Piece[] test = new Piece[2];
+		test[0] = new Piece();
+		test[1] = new Piece();
+		Piece trial = new Piece(Piece.COLOR.blue);
+		head.setNext(new Node());
+		head.getNext().addPieceToPieces(trial);
 		try {
-			Node head = new Node();
-			Piece[] test = new Piece[2];
-			test[0] = new Piece();
-			test[1] = new Piece();
 			head.setPieces(test);
+			fail();
+		} catch (Exception e) {
+			assertTrue(true);
+		}
+		try {
+			head.findNodeWithPosition(88);
 			fail();
 		} catch (Exception e) {
 			assertTrue(true);
@@ -239,5 +250,35 @@ public class NodeTest {
 		Piece test2 = new Piece();
 		test.addPieceToPieces(test2);
 		assertEquals(test.firstPiece(),test2);
+	}
+	
+	@Test
+	public void testFindPiece(){
+		Node test = new Node();
+		Piece trial = new Piece(Piece.COLOR.blue);
+		test.addPieceToPieces(trial);
+		assertEquals(test,test.findNodeWithPiece(trial));
+	}
+	
+	@Test
+	public void testMoveFoundPiece(){
+		Node test = new Node();
+		Piece trial = new Piece(Piece.COLOR.blue);
+		test.addPieceToPieces(trial);
+		try {
+			ArrayList<Piece> tested = test.move(0, new Piece(Piece.COLOR.red));
+			assertEquals(tested.get(0), trial);
+		} catch (InvalidMoveException e) {}
+	}
+	
+	@Test
+	public void testCountBack(){
+		Node test1 = new Node();
+		Node test2 = new Node();
+		test1.setPrevious(test2);
+		test2.setNext(test1);
+		assertEquals(1,test1.countBack(test2));
+		assertEquals(0,test1.countBack(test1));
+		assertEquals(test1.countBack(test2),test2.countTo(test1));
 	}
 }

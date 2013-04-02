@@ -387,7 +387,7 @@ public class Engine {
 			spot = 3;
 			break;
 		}
-		Piece[] piecesInHome = this.board.getHomePointers()[spot].pieces;
+		Piece[] piecesInHome = this.board.getHomePointers()[spot].getPieces();
 		for (int i = 0; i < 4; i++) {
 			if (piecesInHome[i] == null) {
 				return false;

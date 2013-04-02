@@ -31,9 +31,8 @@ public class EngineNonGUITest {
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 
 		try {
-			e.move(1, e.pieces[0],e.board.getStartPointers()[0]);
+			e.move(1, e.pieces[0], e.board.getStartPointers()[0]);
 		} catch (Exception exception) {
-			exception.printStackTrace();
 		}
 
 		assertEquals(
@@ -389,7 +388,6 @@ public class EngineNonGUITest {
 		try {
 			e.move(num, p, e.findNode(p));
 		} catch (Exception exception) {
-			exception.printStackTrace();
 		}
 
 	}
@@ -401,6 +399,12 @@ public class EngineNonGUITest {
 		e.newGame();
 		Piece p = temp.getStartPointers()[0].getPieces()[0];
 		assertEquals(e.findNode(p), temp.getStartPointers()[0]);
+		temp.getCornerPointers()[0].addPieceToPieces(p);
+		try {
+			temp.getCornerPointers()[0].findNodeWithPiece(new Piece());
+		} catch (Exception ex) {
+			assertTrue(true);
+		}
 	}
 
 	@Test
@@ -420,8 +424,8 @@ public class EngineNonGUITest {
 		Engine e = new Engine(board);
 		e.newGame();
 		e.getNextCard();
-		assertTrue(e.isValidMove(e.pieces[0], e.currentCard.cardNum, new Player(Piece.COLOR.red,
-				"Bob Dole")));
+		assertTrue(e.isValidMove(e.pieces[0], e.currentCard.cardNum,
+				new Player(Piece.COLOR.red, "Bob Dole")));
 	}
 
 	@Test
@@ -452,8 +456,8 @@ public class EngineNonGUITest {
 
 		assertTrue(e.isValidMove(e.pieces[0], e.currentCard.cardNum, p));
 
-		assertFalse(e.isValidMove(e.pieces[0], e.currentCard.cardNum, new Player(Piece.COLOR.blue,
-				"Steve Jobs")));
+		assertFalse(e.isValidMove(e.pieces[0], e.currentCard.cardNum,
+				new Player(Piece.COLOR.blue, "Steve Jobs")));
 
 		for (int i = 1; i < 4; i++)
 			assertTrue(e.isValidMove(e.pieces[i], e.currentCard.cardNum, p));
@@ -545,4 +549,64 @@ public class EngineNonGUITest {
 		assertEquals(e.activePlayer, siriam);
 	}
 
+	@Test
+	public void testBackwardsMove() {
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		e.newGame();
+		movePawn(1, e.pieces[7], e);
+		assertEquals(
+				board.toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn4|nn|nn|nn|nn|hrsn|rsn|rsn"
+						+ "|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsnb|bmn3|nn|nn|nn|nn"
+						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+		movePawn(-4, e.pieces[7], e);
+		assertEquals(
+				board.toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn4|nn|nn|nn|nn|hrsn|rsn|rsn"
+						+ "|rsn|rsn|nn|nnb|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nn|nn|nn|nn"
+						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+		movePawn(-1, e.pieces[7], e);
+		assertEquals(
+				board.toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn4|nn|nn|nn|nn|hrsn|rsn|rsn"
+						+ "|rsn|rsn|nnb|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nn|nn|nn|nn"
+						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+		try {
+			movePawn(-1, e.pieces[1], e);
+		} catch (Exception ex) {
+		}
+	}
+
+	@Test
+	public void testHasWon() {
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		e.newGame();
+		Player john = new Player(Piece.COLOR.green, "Johnny Depp");
+		Player bill = new Player(Piece.COLOR.blue, "Bill Gates");
+		Player siriam = new Player(Piece.COLOR.yellow, "Whale Rider");
+		Player buffalo = new Player(Piece.COLOR.red, "Buffalo");
+		e.insertPlayer(buffalo);
+		e.insertPlayer(bill);
+		e.insertPlayer(siriam);
+		e.insertPlayer(john);
+		Piece[] temp = new Piece[4];
+		for (int i = 0; i < 4; i++) {
+			e.rotatePlayers();
+			temp = board.getStartPointers()[i].getPieces();
+			board.getHomePointers()[i].setPieces(temp);
+			assertTrue(e.hasWon());
+		}
+		e.rotatePlayers();
+		temp = new Piece[4];
+		board.getHomePointers()[0].setPieces(temp);
+		assertFalse(e.hasWon());
+	}
 }

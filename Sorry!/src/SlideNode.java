@@ -185,4 +185,32 @@ public class SlideNode extends Node {
 		}
 		return 1 + this.getNext().countTo(node);
 	}
+	
+	public int countBack(Node node){
+		if(this == node){
+			return 0;
+		}
+		else if(this.getSafeNode() != null && this.getSafeNode().getPrevious() != null){
+			Node temp = this.getSafeNode();
+			boolean breaker = false;
+			int temp2 = 0;
+			while(temp != null){
+				if(temp == node){
+					breaker = true;
+					break;
+				}
+				else{
+					temp2 ++;
+					temp = temp.getNext();
+				}
+			}
+			if(breaker){
+				throw new IllegalArgumentException("You decided that going forwards on a slide was backwards.");
+			}
+		}
+		else if(this.getSafeNode() != null && this.getSafeNode() == node){
+			throw new IllegalArgumentException("You decided that going forwards into start was backwards.");
+		}
+		return 1 + this.getPrevious().countBack(node);
+	}
 }

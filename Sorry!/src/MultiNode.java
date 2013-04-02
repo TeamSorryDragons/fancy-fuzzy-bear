@@ -151,4 +151,15 @@ public class MultiNode extends Node {
 			return direction(moves).move(goTo(moves), p);
 		}
 	}
+	public int countBack(Node node){
+		if(this == node){
+			return 0;
+		}
+		else if(this.getPrevious() != null){
+			return 1 + this.getPrevious().countBack(node);
+		}
+		else{
+			throw new IllegalArgumentException();
+		}
+	}
 }
