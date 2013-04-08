@@ -609,4 +609,139 @@ public class EngineNonGUITest {
 		board.getHomePointers()[0].setPieces(temp);
 		assertFalse(e.hasWon());
 	}
+
+	@Test
+	public void testValidMoves() {
+		BoardList board = new BoardList();
+		Engine e = new Engine(board);
+		e.newGame();
+
+		Node start = new Node();
+		Node end = new Node();
+		Piece pawn = new Piece(Piece.COLOR.red);
+		start.addPieceToPieces(pawn);
+
+		createNodeChain(start, end, 2);
+
+		assertEquals(start.countTo(end), 1);
+
+		e.currentCard = new Card(1, "Test CARD");
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 1, 0), 1);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 2, 0),
+				Engine.INVALID_MOVE);
+
+		start = new Node();
+		end = new Node();
+		end.addPieceToPieces(pawn);
+		createNodeChain(start, end, 5);
+		assertEquals(4, start.countTo(end));
+		assertEquals(4, end.countBack(start));
+
+		e.currentCard = new Card(4, "Test CARD");
+		assertEquals(e.checkValidityOriginalRules(pawn, end, start, 0, 4), -4);
+		assertEquals(e.checkValidityOriginalRules(pawn, end, start, 0, -5),
+				Engine.INVALID_MOVE);
+
+		start = new Node();
+		end = new Node();
+		start.addPieceToPieces(pawn);
+		e.currentCard = new Card(7, "TEST");
+		createNodeChain(start, end, 8);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 7, 0), 7);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 8, 0),
+				Engine.INVALID_MOVE);
+
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 4, 0), 4);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 7, 0),
+				Engine.INVALID_MOVE);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 3, 0), 3);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 7, 0), 7);
+
+		start = new Node();
+		end = new Node();
+		start.addPieceToPieces(pawn);
+		e.currentCard = new Card(10, "TEST");
+		createNodeChain(start, end, 11);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 10, 0), 10);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 8, 0),
+				Engine.INVALID_MOVE);
+
+		start = new Node();
+		end = new Node();
+		createNodeChain(start, end, 11);
+		end.addPieceToPieces(pawn);
+		assertEquals(e.checkValidityOriginalRules(pawn, end, start, 0, 1), -1);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 0, -2),
+				Engine.INVALID_MOVE);
+
+		start = new Node();
+		end = new Node();
+		createNodeChain(start, end, 12);
+		e.currentCard = new Card(11, "TEST");
+		start.addPieceToPieces(pawn);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 11, 0), 11);
+		end.removePieceFromPieces(pawn);
+		start.removePieceFromPieces(pawn);
+		start.addPieceToPieces(pawn);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 0, -2),
+				Engine.INVALID_MOVE);
+
+		start = new Node();
+		end = new Node();
+		start.addPieceToPieces(pawn);
+		end.addPieceToPieces(new Piece(Piece.COLOR.blue));
+		createNodeChain(start, end, 4);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 3, 0), 3);
+
+		start = new Node();
+		end = new Node();
+		createNodeChain(start, end, 13);
+		e.currentCard = new Card(13, "TEST");
+		start.addPieceToPieces(pawn);
+		end.addPieceToPieces(new Piece(Piece.COLOR.blue));
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 12, 0), 12);
+		end.removePieceFromPieces(pawn);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 4, 0),
+				Engine.INVALID_MOVE);
+
+	}
+
+	@Test
+	public void testCreateNodeChain() {
+		Node start = new Node();
+		Node end = new Node();
+
+		createNodeChain(start, end, 2);
+		assertEquals(start.getNext(), end);
+		assertEquals(end.getPrevious(), start);
+
+		start = new Node();
+		end = new Node();
+
+		createNodeChain(start, end, 3);
+		assertEquals(start.getNext().getNext(), end);
+		assertNull(start.getNext().getNext().getNext());
+		assertEquals(end.getPrevious().getPrevious(), start);
+
+		start = new Node();
+		end = new Node();
+
+		createNodeChain(start, end, 5);
+		assertEquals(start.getNext().getNext().getNext().getNext(), end);
+		assertEquals(end.getPrevious().getPrevious().getPrevious()
+				.getPrevious(), start);
+
+	}
+
+	private static void createNodeChain(Node start, Node end, int length) {
+		Node current = start;
+		for (int i = 2; i < length; i++) {
+			Node temp = new Node();
+			temp.setPrevious(current);
+			current.setNext(temp);
+			current = temp;
+		}
+		current.setNext(end);
+		end.setPrevious(current);
+	}
 }

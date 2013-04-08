@@ -9,6 +9,7 @@ public class Engine {
 	public static final int SAME_NODE_SELECTED = 0;
 	public static final int INVALID_MOVE = -512;
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
+	private int remainingMoves = 0;
 	protected BoardList board;
 	protected Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue,
 								// Indices 8-11
@@ -52,13 +53,127 @@ public class Engine {
 		this.pieces = this.board.newGame();
 	}
 
-	public boolean isValidMove(Piece pawn, int numberMoves, Player player) {
+	public boolean isValidMove(Piece pawn, int numberMovesForward, Player player) {
 		// start with a rudimentary, who owns this piece check
 		if (pawn == null || pawn.col != player.getColor())
 			return false;
-		if (numberMoves != this.currentCard.cardNum)
-			return false;
+
 		return true;
+	}
+
+	/**
+	 * Use the original game rules to decide if a move is valid, then perform
+	 * that move, allowing the nodes to do some validity checks.
+	 * 
+	 * @param pawn
+	 * @param start
+	 * @param end
+	 * @param numberMovesForward
+	 * @param numberMovesBackward
+	 * @param player
+	 * @return
+	 */
+	protected int checkValidityOriginalRules(Piece pawn, Node start, Node end,
+			int numberMovesForward, int numberMovesBackward) {
+		int moves = 0;
+		int error = 1;
+		switch (this.currentCard.cardNum) {
+		// case 1:
+		// break;
+		case 2:
+			// 2 forward, get another turn
+			// for now, same rules as the default, but we might need a way to
+			// instruct the GUI to give them another turn
+			if (numberMovesForward != this.currentCard.cardNum)
+				error = INVALID_MOVE;
+			else
+				moves = 2;
+			break;
+		// case 3:
+		// break;
+		case 4:
+			// 4 spots backward
+			if (numberMovesBackward != this.currentCard.cardNum)
+				error = INVALID_MOVE;
+			else
+				moves = -4;
+			break;
+			// case 5:
+			// break;
+		case 7:
+			// 7 forward, or a split
+			if (this.remainingMoves != 0) {
+				// player is finishing a split
+				if (numberMovesForward == this.remainingMoves) {
+					moves = numberMovesForward;
+					this.remainingMoves = 0;
+				} else
+					error = INVALID_MOVE;
+			} else {
+				// player is starting a split or using the whole card
+				if (numberMovesForward == 7)
+					moves = 7;
+				else if (numberMovesForward < 7) {
+					moves = numberMovesForward;
+					this.remainingMoves = 7 - numberMovesForward;
+				} else
+					error = INVALID_MOVE;
+
+			}
+
+			if (numberMovesForward > this.currentCard.cardNum)
+				error = INVALID_MOVE;
+			else
+				moves = numberMovesForward;
+			break;
+		// case 8:
+		// break;
+		case 10:
+			// 10 forward, or 1 backward
+			if (numberMovesForward == 10)
+				moves = 10;
+			else if (numberMovesBackward == 1)
+				moves = -1;
+			else
+				error = INVALID_MOVE;
+			break;
+		case 11:
+			// 11 spaces forward or a swap
+			if (numberMovesForward == 11)
+				moves = 11;
+			else if (end.hasPiece())
+				moves = numberMovesForward;
+			else
+				error = INVALID_MOVE;
+			break;
+		// case 12:
+		// break;
+		case 13:
+			// Sorry card
+			if (end.hasPiece())
+				moves = numberMovesForward;
+			else
+				error = INVALID_MOVE;
+			break;
+		default:
+			// all remaining cases, simply allow move forward the number or no
+			// dice
+			if (numberMovesForward == this.currentCard.cardNum)
+				moves = numberMovesForward;
+			else
+				error = INVALID_MOVE;
+		}
+
+		if (error < 1)
+			return error;
+
+		try {
+			start.move(moves, pawn);
+		} catch (InvalidMoveException e) {
+			return INVALID_MOVE;
+		}
+
+		return moves;
 	}
 
 	public int pawnMove(SorryFrame.Coordinate start, SorryFrame.Coordinate end) {
@@ -75,21 +190,26 @@ public class Engine {
 		if (first == second)
 			return SAME_NODE_SELECTED;
 
-		int temp = first.countTo(second);
-		if (!isValidMove(first.firstPiece(), temp, this.activePlayer)) {
+		int nodeCountForward = first.countTo(second);
+		int nodeCountBackward = 0; //first.countBack(second);
+		if (!isValidMove(first.firstPiece(), nodeCountForward,
+				this.activePlayer)) {
 			return INVALID_MOVE;
 		}
 
-		try {
-			move(temp, first.firstPiece(), first);
-
-		} catch (Unstarted e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidMoveException e) {
-			e.printStackTrace();
-		}
-		return temp;
+		int ret = checkValidityOriginalRules(first.firstPiece(), first, second,
+				nodeCountForward, nodeCountBackward);
+		// try {
+		//
+		// move(nodeCount, first.firstPiece(), first);
+		//
+		// } catch (Unstarted e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (InvalidMoveException e) {
+		// return INVALID_MOVE;
+		// }
+		return ret;
 	}
 
 	/**
