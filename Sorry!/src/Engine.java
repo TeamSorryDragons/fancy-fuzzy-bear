@@ -191,7 +191,13 @@ public class Engine {
 			return SAME_NODE_SELECTED;
 
 		int nodeCountForward = first.countTo(second);
-		int nodeCountBackward = 0; //first.countBack(second);
+		int nodeCountBackward = 0;
+		try {
+		nodeCountBackward = first.countBack(second);
+		
+		} catch (Exception e){
+			nodeCountBackward = 0;
+		}
 		if (!isValidMove(first.firstPiece(), nodeCountForward,
 				this.activePlayer)) {
 			return INVALID_MOVE;
