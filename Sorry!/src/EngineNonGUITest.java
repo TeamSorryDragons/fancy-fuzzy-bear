@@ -629,6 +629,18 @@ public class EngineNonGUITest {
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 1, 0), 1);
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 2, 0),
 				Engine.INVALID_MOVE);
+		
+		start = new Node();
+		end = new Node();
+		end.addPieceToPieces(pawn);
+		createNodeChain(start, end, 3);
+		assertEquals(2, start.countTo(end));
+		assertEquals(2, end.countBack(start));
+		
+		e.currentCard = new Card(2, "Test");
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 2, 0), 2);
+		
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 1, 0), Engine.INVALID_MOVE);
 
 		start = new Node();
 		end = new Node();

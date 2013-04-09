@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class Engine {
 	public static final int NODE_NOT_FOUND = -128;
 	public static final int SAME_NODE_SELECTED = 0;
+	public static final int NO_PIECE_SELECTED = -256;
 	public static final int INVALID_MOVE = -512;
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
 	private int remainingMoves = 0;
@@ -98,8 +99,8 @@ public class Engine {
 			else
 				moves = -4;
 			break;
-			// case 5:
-			// break;
+		// case 5:
+		// break;
 		case 7:
 			// 7 forward, or a split
 			if (this.remainingMoves != 0) {
@@ -190,12 +191,15 @@ public class Engine {
 		if (first == second)
 			return SAME_NODE_SELECTED;
 
+		if (!first.hasPiece())
+			return INVALID_MOVE;
+
 		int nodeCountForward = first.countTo(second);
 		int nodeCountBackward = 0;
 		try {
-		nodeCountBackward = first.countBack(second);
-		
-		} catch (Exception e){
+			nodeCountBackward = first.countBack(second);
+
+		} catch (Exception e) {
 			nodeCountBackward = 0;
 		}
 		if (!isValidMove(first.firstPiece(), nodeCountForward,
