@@ -10,32 +10,64 @@ import org.junit.Test;
  *
  */
 public class DeckTest {
-	
-	private Deck d;
+	protected Deck e;
+	protected Deck f;
 	
 	@Test
 	public void test() {
 		assertFalse(false);
 	}
+	
 	@Test
-	public void testInitialize() throws FileNotFoundException{
-		d=new Deck("eng");
+	public void testInitializeEnglish() {
+		e=new Deck("english");
 		String s="";
-		for(Card c: d.cards)
+		for(Card c: e.cards)
 			s+=c.cardNum + " ";
-		assertEquals(d.toString(),s);
+		
+		assertEquals(e.toString(),s);
+		System.out.println(s);
 	}
 	@Test
-	public void testGetTopCard() throws FileNotFoundException{
-		d=new Deck("eng");
-		assertEquals(d.cards[d.topCard],d.getTopCard());
+	public void testGetTopCardEnglish() {
+		Deck e=new Deck("english");
+		System.out.println(e.getTopCard());
+		assertEquals(e.cards[e.topCard],e.getTopCard());
+	}
+	
+	@Test
+	public void testGetTopCardShuffleEnglish(){
+		Deck e=new Deck("english");
+		for(int i=0; i<e.cards.length;i++)
+			e.getTopCard();
+		System.out.println(e.getTopCard());
+		assertEquals(e.cards[e.topCard],e.getTopCard());
 	}
 	@Test
-	public void testGetTopCardShuffle() throws FileNotFoundException{
-		d=new Deck("eng");
-		for(int i=0; i<d.cards.length;i++)
-			d.getTopCard();
-		assertEquals(d.cards[d.topCard],d.getTopCard());
+	public void testInitializeFrench() {
+		Deck f=new Deck("french");
+		String s="";
+		for(Card c: f.cards)
+			s+=c.cardNum + " ";
+		
+		assertEquals(f.toString(), s);
+		System.out.println(s);
+	}
+	
+	@Test
+	public void testGetTopCardFrench(){
+		Deck f=new Deck("french");
+		System.out.println(f.getTopCard()+" "+ f.toString());
+		
+		assertEquals(f.cards[f.topCard],f.getTopCard());
+	}
+	@Test
+	public void testGetTopCardShuffleFrench(){
+		Deck f=new Deck("french");
+		for(int i=0; i<f.cards.length;i++)
+			f.getTopCard();
+		System.out.println(f.getTopCard());
+		assertEquals(f.cards[f.topCard],f.getTopCard());
 	}
 	@Test
 	public void testCardToString(){
