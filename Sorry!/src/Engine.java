@@ -164,7 +164,7 @@ public class Engine {
 		// break;
 		case 13:
 			// Sorry card
-			if (end.hasPiece())
+			if (end.hasPiece() && start.getPrevious() == null)
 				moves = numberMovesForward;
 			else
 				error = INVALID_MOVE;
