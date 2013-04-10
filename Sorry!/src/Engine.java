@@ -83,15 +83,22 @@ public class Engine {
 		int error = 1;
 		switch (this.currentCard.cardNum) {
 		// case 1:
-		// break;
+		// if (numberMovesForward == this.currentCard.cardNum)
+		// moves = numberMovesForward;
+		// else
+		// error = INVALID_MOVE;
 		case 2:
 			// 2 forward, get another turn
 			// for now, same rules as the default, but we might need a way to
 			// instruct the GUI to give them another turn
 			if (numberMovesForward != this.currentCard.cardNum)
 				error = INVALID_MOVE;
-			else
+			else {
 				moves = 2;
+				for (int j = 0; j < players.getNumberOfElements() - 1; j++) {
+					players.goToNextElement();
+				}
+			}
 			break;
 		// case 3:
 		// break;
@@ -106,6 +113,9 @@ public class Engine {
 		// break;
 		case 7:
 			// 7 forward, or a split
+			if (start instanceof MultiNode && start.getPrevious() == null) {
+				error = INVALID_MOVE;
+			}
 			if (this.remainingMoves != 0) {
 				// player is finishing a split
 				if (numberMovesForward == this.remainingMoves) {
@@ -195,9 +205,6 @@ public class Engine {
 
 		if (first == second)
 			return SAME_NODE_SELECTED;
-
-		if (!first.hasPiece())
-			return INVALID_MOVE;
 
 		int nodeCountForward = first.countTo(second);
 		int nodeCountBackward = 0;
@@ -519,7 +526,6 @@ public class Engine {
 		//this.board = this.actualBoard.clone();
 		return hasWon();
 	}
-
 	/**
 	 * 
 	 * Reverts the current board to the state prior to starting the current
@@ -531,7 +537,6 @@ public class Engine {
 		//this.board = this.actualBoard.clone();
 		return;
 	}
-
 	public boolean hasWon() {
 		int spot = 0;
 		switch (this.activePlayer.getColor()) {

@@ -19,6 +19,98 @@ public class BoardList {
 		ret.getPrevious().setNext(cornerPointers[0]);
 	}
 
+	public BoardList(String load) {
+		cornerPointers = new Node[4];
+		homePointers = new Node[4];
+		startPointers = new Node[4];
+		cornerPointers[0] = new Node(null, null);
+		cornerPointers[1] = buildQuarterBoard(cornerPointers[0],
+				Piece.COLOR.red, 0);
+		cornerPointers[2] = buildQuarterBoard(cornerPointers[1],
+				Piece.COLOR.blue, 1);
+		cornerPointers[3] = buildQuarterBoard(cornerPointers[2],
+				Piece.COLOR.yellow, 2);
+		Node ret = buildQuarterBoard(cornerPointers[3], Piece.COLOR.green, 3);
+		cornerPointers[0].setPrevious(ret.getPrevious());
+		ret.getPrevious().setNext(cornerPointers[0]);
+		String[] nodes = load.split("\\|");
+		Node start = cornerPointers[0].getNext();
+		Node temp = null;
+		for (int i = 0; i < nodes.length; i++) {
+			String num = nodes[i].substring(nodes[i].length() - 1);
+			int numb = 0;
+			try {
+				numb = (Integer.parseInt(num));
+			} catch (Exception e) {
+			}
+			Piece.COLOR col;
+			col = getColor(nodes[i]);
+			Piece[] pieces = new Piece[1];
+			if (numb > 0) {
+				pieces = new Piece[numb];
+			}
+			for (; numb > 0; numb--) {
+				pieces[numb - 1] = new Piece(col);
+			}
+			if (start instanceof SlideNode) {
+				start.setPieces(pieces);
+				if (((SlideNode) start).getSafeNode() != null) {
+					temp = start;
+					start = ((SlideNode) start).getSafeNode();
+				} else {
+					start = start.getNext();
+				}
+			} else if (start.getNext() == null || start.getPrevious() == null) {
+				if (pieces.length == 1) {
+					pieces = new Piece[4];
+				}
+				((MultiNode) start).setPieces(pieces);
+				start = temp.getNext();
+			} else {
+				start.setPieces(pieces);
+				start = start.getNext();
+			}
+		}
+	}
+
+	protected Piece.COLOR getColor(String s) {
+		Piece.COLOR col = Piece.COLOR.colorless;
+		switch (s.charAt(0)) {
+		case 'r':
+			col = Piece.COLOR.red;
+			break;
+		case 'g':
+			col = Piece.COLOR.green;
+			break;
+		case 'h':
+			switch (s.charAt(1)) {
+			case 'r':
+				col = Piece.COLOR.red;
+				break;
+			case 'g':
+				col = Piece.COLOR.green;
+				break;
+			case 'b':
+				col = Piece.COLOR.blue;
+				break;
+			case 'y':
+				col = Piece.COLOR.yellow;
+				break;
+			}
+			break;
+		case 'b':
+			col = Piece.COLOR.blue;
+			break;
+		case 'y':
+			col = Piece.COLOR.yellow;
+			break;
+		default:
+			col = Piece.COLOR.colorless;
+			break;
+		}
+		return col;
+	}
+
 	public Piece[] newGame() {
 		int j = 0;
 		Piece[] ret = new Piece[16];
@@ -71,7 +163,7 @@ public class BoardList {
 	}
 
 	/**
-	 *  Creates a copy of this board and returns it.
+	 * Creates a copy of this board and returns it.
 	 */
 	public BoardList clone() {
 		return new BoardList();
