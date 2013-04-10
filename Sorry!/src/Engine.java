@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class Engine {
 	public static final int NODE_NOT_FOUND = -128;
 	public static final int SAME_NODE_SELECTED = 0;
+	public static final int NO_PIECE_SELECTED = -256;
 	public static final int INVALID_MOVE = -512;
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
 	private int remainingMoves = 0;
@@ -178,9 +179,11 @@ public class Engine {
 			return error;
 
 		try {
-			start.move(moves, pawn);
+			move(moves, pawn, start);
 		} catch (InvalidMoveException e) {
 			return INVALID_MOVE;
+		} catch (Unstarted e){
+			e.printStackTrace();
 		}
 
 		return moves;
@@ -201,7 +204,13 @@ public class Engine {
 			return SAME_NODE_SELECTED;
 
 		int nodeCountForward = first.countTo(second);
-		int nodeCountBackward = 0; // first.countBack(second);
+		int nodeCountBackward = 0;
+		try {
+			nodeCountBackward = first.countBack(second);
+
+		} catch (Exception e) {
+			nodeCountBackward = 0;
+		}
 		if (!isValidMove(first.firstPiece(), nodeCountForward,
 				this.activePlayer)) {
 			return INVALID_MOVE;
@@ -500,7 +509,16 @@ public class Engine {
 
 		return hasWon();
 	}
-
+	/**
+	 * 
+	 * Reverts the current board to the state prior to starting the current
+	 * player's turn. Used in the event of a turn forfeit.
+	 * 
+	 */
+	public void revertBoard() {
+		// TODO implement once a board can be read from a file.
+		return;
+	}
 	public boolean hasWon() {
 		int spot = 0;
 		switch (this.activePlayer.getColor()) {

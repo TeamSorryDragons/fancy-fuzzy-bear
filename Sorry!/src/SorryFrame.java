@@ -101,6 +101,20 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 	/**
 	 * 
+	 * Informs the player that something bad has happened and let's them fix
+	 * their problem. Stupid users always screwing stuff up, no wonder Clue
+	 * wanted them dead.
+	 * 
+	 * @param msg
+	 */
+	private void informPlayerError(String msg) {
+		this.notifyPlayer(msg);
+		this.awaitUserInteraction();
+		this.performTurn();
+	}
+
+	/**
+	 * 
 	 * Asks engine for a card, displays that card. Instructs engine to swap
 	 * active player. Begins listening to mouse input.
 	 * 
@@ -126,34 +140,21 @@ public class SorryFrame extends JFrame implements ActionListener {
 		int result = this.engine.pawnMove(this.clicks.get(0),
 				this.clicks.get(1));
 		if (result == Engine.SAME_NODE_SELECTED) {
-			this.notifyPlayer("You picked the same node twice.");
-			this.awaitUserInteraction();
-			this.performTurn();
+			this.informPlayerError("You picked the same node twice.");
 		} else if (result == Engine.INVALID_MOVE) {
-			this.notifyPlayer("That move is illegal.");
-			this.awaitUserInteraction();
-			this.performTurn();
+			this.informPlayerError("That move is illegal.");
 		} else if (result == Engine.NODE_NOT_FOUND) {
-			this.notifyPlayer("That move is illegal.");
-			this.awaitUserInteraction();
-			this.performTurn();
-
+			this.informPlayerError("You appear to have clicked off of the board.");
+		} else if (result == Engine.NO_PIECE_SELECTED) {
+			this.informPlayerError("There is no pawn on the first selected node.");
 		} else {
-			if (this.currentCard.cardNum == result) {
-				// turn is over, rotate
-				if (this.engine.finalizeTurn()) {
-					this.repaint();
-					this.notifyPlayer(" you have won!");
-				} else {
-					this.repaint();
-					this.initiateTurn();
-				}
+			// turn is over, rotate
+			if (this.engine.finalizeTurn()) {
+				this.repaint();
+				this.notifyPlayer(" you have won!");
 			} else {
-				// player had a 7, let them go again
-				this.resetClickDetection();
-				this.awaitUserInteraction();
-				this.notifyPlayer(" this shouldn't happen, what'd you do?");
-				this.performTurn();
+				this.repaint();
+				this.initiateTurn();
 			}
 		}
 
