@@ -148,21 +148,13 @@ public class SorryFrame extends JFrame implements ActionListener {
 		} else if (result == Engine.NO_PIECE_SELECTED) {
 			this.informPlayerError("There is no pawn on the first selected node.");
 		} else {
-			if (this.currentCard.cardNum == result) {
-				// turn is over, rotate
-				if (this.engine.finalizeTurn()) {
-					this.repaint();
-					this.notifyPlayer(" you have won!");
-				} else {
-					this.repaint();
-					this.initiateTurn();
-				}
+			// turn is over, rotate
+			if (this.engine.finalizeTurn()) {
+				this.repaint();
+				this.notifyPlayer(" you have won!");
 			} else {
-				// player had a 7, let them go again
-				this.resetClickDetection();
-				this.awaitUserInteraction();
-				this.notifyPlayer(" this shouldn't happen, what'd you do?");
-				this.performTurn();
+				this.repaint();
+				this.initiateTurn();
 			}
 		}
 

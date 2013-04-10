@@ -636,7 +636,7 @@ public class EngineNonGUITest {
 		createNodeChain(start, end, 3);
 		assertEquals(2, start.countTo(end));
 		assertEquals(2, end.countBack(start));
-		
+		e.board = new BoardList();
 		e.currentCard = new Card(2, "Test");
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 2, 0), 2);
 		
