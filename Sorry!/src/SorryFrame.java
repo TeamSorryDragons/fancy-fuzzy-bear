@@ -5,6 +5,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.SampleModel;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
@@ -201,7 +205,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	public void quitGame() {
 		System.out.println("You want to quit do you?  Too bad loser.");
-
 	}
 
 	/**
@@ -210,9 +213,19 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	public void saveGame() {
 		System.out.println("You want to save?  Better win faster.");
-
+		File writehere = new File("save.txt");
+		FileWriter write;
+		try {
+			write = new FileWriter(writehere);
+			BufferedWriter outstream = new BufferedWriter(write);
+			outstream.write(this.board.toString());
+			outstream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
+	
 	/**
 	 * Forfeit the current player's turn.
 	 * 

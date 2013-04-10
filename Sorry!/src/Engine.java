@@ -25,13 +25,7 @@ public class Engine {
 		this.board = board;
 		this.actualBoard = board.clone();
 		this.players = new CircularLinkedList<Player>();
-		try {
-			this.deck = new Deck("eng");
-		} catch (FileNotFoundException exception) {
-			System.out
-					.println("Language was not found and It's crashing cause you be not dare.");
-			exception.printStackTrace();
-		}
+		this.deck = new Deck("english");
 	}
 
 	public void insertPlayer(Player bigP) {
@@ -164,7 +158,7 @@ public class Engine {
 		// break;
 		case 13:
 			// Sorry card
-			if (end.hasPiece())
+			if (end.hasPiece() && start.getPrevious() == null)
 				moves = numberMovesForward;
 			else
 				error = INVALID_MOVE;
@@ -180,7 +174,14 @@ public class Engine {
 
 		if (error < 1)
 			return error;
-
+		if(this.currentCard.cardNum == 13){
+			try{
+				end.swap(start);
+			} catch(InvalidMoveException e){
+				return INVALID_MOVE;
+			}
+			return moves;
+		}
 		try {
 			move(moves, pawn, start);
 		} catch (InvalidMoveException e) {

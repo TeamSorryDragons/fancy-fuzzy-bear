@@ -61,10 +61,11 @@ public class BoardList {
 					start = start.getNext();
 				}
 			} else if (start.getNext() == null || start.getPrevious() == null) {
-				if (pieces.length == 1) {
-					pieces = new Piece[4];
+				Piece[] tempPiece = new Piece[4];
+				for(int j = 0; j < pieces.length; j++){
+					tempPiece[j] = pieces[j];
 				}
-				((MultiNode) start).setPieces(pieces);
+				((MultiNode) start).setPieces(tempPiece);
 				start = temp.getNext();
 			} else {
 				start.setPieces(pieces);

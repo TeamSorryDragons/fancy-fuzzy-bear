@@ -1,0 +1,18 @@
+Déplace un pion de début ou de déplacer un pion 1 place de l'avant.
+Déplace un pion de début ou de déplacer un pion 2 places. Dessin d'un 2 donne au joueur de tirer à nouveau à la fin de son tour. Si vous ne pouvez pas utiliser 2, vous pouvez toujours tirer à nouveau.
+Déplace un pion 3 places avant.
+Déplace un pion 4 places arrière.
+Déplace un pion 5 places avant.
+Déplace un pion 7 places vers l'avant ou diviser le 7 places entre deux pions (comme quatre places pour un pion et trois pour l'autre). Il est donc possible que deux pions pour entrer dans Accueil le même tour, par exemple. Le 7 ne peut pas être fractionné en 6 et 1 ou 5 et 2 aux fins de sortir de démarrage. Les sept places entiers doivent être utilisés d'une manière ou l'autre, ou le tour est perdu.
+Déplace un pion 8 places avant.
+Déplace un pion 10 places vers l'avant ou vers l'arrière 1 place. Si un joueur ne peut pas aller de l'avant dix places, puis un pion doit reculer d'un place.
+Déplace 11 places à terme ou permutent avec un pion adverse. Un joueur qui ne peut pas passer 11 places n'est pas obligé de changer de lieu et peut être déchu de la tour.
+Déplace un pion 12 places avant.
+Déplace aucun pion celle de démarrage sur une case occupée par un adversaire, l'envoi de ce pion à son propre départ. S'il n'ya pas de pions sur Démarrer du joueur, ou des pions de l'adversaire sur aucune des cases, le tour est perdu.
+
+, vous avez gagné!
+, vous avez choisi le même nœud deux fois.
+, ce déménagement est illégal.
+, vous semblez avoir cliqué hors de la carte.
+, il n'ya pas de pion sur le premier nœud sélectionné.
+, c'est à votre tour!

@@ -211,4 +211,19 @@ public class SlideNode extends Node {
 		}
 		return 1 + this.getPrevious().countBack(node);
 	}
+	
+	public Piece swap(Node node) throws InvalidMoveException{
+		Piece piece = node.firstPiece();
+		node.removePieceFromPieces(piece);
+		Piece piece2 = firstPiece();
+		removePieceFromPieces(piece2);
+		Node temp = this;
+		if(piece.col != this.getColor() && this.head){
+			while(temp.getNext() instanceof SlideNode){
+				temp = temp.getNext();
+			}
+		}
+		temp.addPieceToPieces(piece);
+		return piece2;
+	}
 }

@@ -11,11 +11,14 @@ import java.util.Scanner;
  */
 public class Deck {
 	
-	protected Card[] cards;
+	public Card[] cards;
 	protected int topCard;
 	
-	public Deck(String lang) throws FileNotFoundException{
-		FileReader fr=new FileReader(lang+".txt");
+	public Deck(String lang) {
+		FileReader fr;
+		try {
+			fr = new FileReader(lang+".txt");
+		
 		cards=new Card[45];
 		Scanner in= new Scanner(fr);
 		in.reset();
@@ -24,13 +27,13 @@ public class Deck {
 		for(int i =0; i<5;i++)
 			cards[i*11+0]=t;
 		
-		t=new Card(2,in.nextLine());
+		t=new Card(2, in.nextLine());
 		for(int i =0; i<4;i++)
 			cards[i*11+1]=t;
-		t=new Card(3,in.nextLine());
+		t=new Card(3, in.nextLine());
 		for(int i =0; i<4;i++)
 			cards[i*11+2]=t;
-		t=new Card(4,in.nextLine());
+		t=new Card(4, in.nextLine());
 		for(int i =0; i<4;i++)
 			cards[i*11+3]=t;
 		t=new Card(5,in.nextLine());
@@ -56,6 +59,10 @@ public class Deck {
 			cards[i*11+10]=t;
 
 		this.shuffle();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public Card getTopCard(){
 		Card c= cards[topCard];
@@ -81,6 +88,7 @@ public class Deck {
 		String s="";
 		for(Card c: cards)
 			s+=c.cardNum + " ";
+		//System.out.println(s);
 		return s;
 	}
 }
