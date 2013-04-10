@@ -12,6 +12,7 @@ public class Engine {
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
 	private int remainingMoves = 0;
 	protected BoardList board;
+	protected BoardList actualBoard;
 	protected Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue,
 								// Indices 8-11
 	// are Yellow, Indices 12-15 are green
@@ -22,6 +23,7 @@ public class Engine {
 
 	public Engine(BoardList board) {
 		this.board = board;
+		this.actualBoard = board.clone();
 		this.players = new CircularLinkedList<Player>();
 		this.deck = new Deck("english");
 	}
@@ -46,6 +48,7 @@ public class Engine {
 
 	public void newGame() {
 		this.pieces = this.board.newGame();
+		this.actualBoard = this.board.clone();
 	}
 
 	public boolean isValidMove(Piece pawn, int numberMovesForward, Player player) {
@@ -74,15 +77,22 @@ public class Engine {
 		int error = 1;
 		switch (this.currentCard.cardNum) {
 		// case 1:
-		// break;
+		// if (numberMovesForward == this.currentCard.cardNum)
+		// moves = numberMovesForward;
+		// else
+		// error = INVALID_MOVE;
 		case 2:
 			// 2 forward, get another turn
 			// for now, same rules as the default, but we might need a way to
 			// instruct the GUI to give them another turn
 			if (numberMovesForward != this.currentCard.cardNum)
 				error = INVALID_MOVE;
-			else
+			else {
 				moves = 2;
+				for (int j = 0; j < players.getNumberOfElements() - 1; j++) {
+					players.goToNextElement();
+				}
+			}
 			break;
 		// case 3:
 		// break;
@@ -97,6 +107,9 @@ public class Engine {
 		// break;
 		case 7:
 			// 7 forward, or a split
+			if (start instanceof MultiNode && start.getPrevious() == null) {
+				error = INVALID_MOVE;
+			}
 			if (this.remainingMoves != 0) {
 				// player is finishing a split
 				if (numberMovesForward == this.remainingMoves) {
@@ -166,7 +179,7 @@ public class Engine {
 			move(moves, pawn, start);
 		} catch (InvalidMoveException e) {
 			return INVALID_MOVE;
-		} catch (Unstarted e){
+		} catch (Unstarted e) {
 			e.printStackTrace();
 		}
 
@@ -186,9 +199,6 @@ public class Engine {
 
 		if (first == second)
 			return SAME_NODE_SELECTED;
-
-		if (!first.hasPiece())
-			return INVALID_MOVE;
 
 		int nodeCountForward = first.countTo(second);
 		int nodeCountBackward = 0;
@@ -487,16 +497,29 @@ public class Engine {
 	}
 
 	/**
+	 * 
+	 * Obtain the actual board for the current game session in which this game
+	 * driving engine is in use. Likely to draw it for the player to witness the
+	 * magnificence of this computerized Sorry! board game, which they are now
+	 * playing for entertainment purposes.
+	 * 
+	 * @return board
+	 */
+	public BoardList getActualBoard() {
+		return this.board;  //actualBoard;
+	}
+
+	/**
 	 * Finalize the player's turn by setting the temporary movement board to the
 	 * real board. Reset the temp board.
 	 * 
 	 */
 	public boolean finalizeTurn() {
 		// TODO implement it, when the time comes
-
+		//this.actualBoard = this.board;
+		//this.board = this.actualBoard.clone();
 		return hasWon();
 	}
-
 	/**
 	 * 
 	 * Reverts the current board to the state prior to starting the current
@@ -505,9 +528,9 @@ public class Engine {
 	 */
 	public void revertBoard() {
 		// TODO implement once a board can be read from a file.
+		//this.board = this.actualBoard.clone();
 		return;
 	}
-
 	public boolean hasWon() {
 		int spot = 0;
 		switch (this.activePlayer.getColor()) {

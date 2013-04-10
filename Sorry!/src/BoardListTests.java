@@ -69,5 +69,8 @@ public class BoardListTests {
 				"|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0" +
 				"|gsn|gsn|gmn0|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|",
 				board.toString());
+		board.newGame();
+		BoardList board2 = new BoardList(board.toString());
+		assertEquals(board.toString(),board2.toString());
 	}
 }

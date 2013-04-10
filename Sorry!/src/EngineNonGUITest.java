@@ -144,7 +144,8 @@ public class EngineNonGUITest {
 						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
-		movePawn(16, e.pieces[1], e);
+		movePawn(1, e.pieces[1], e);
+		movePawn(15, e.pieces[1], e);
 		assertEquals(
 				board.toString(),
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
@@ -202,7 +203,8 @@ public class EngineNonGUITest {
 		BoardList board = new BoardList();
 		Engine e = new Engine(board);
 		e.newGame();
-		movePawn(13, e.pieces[0], e);
+		movePawn(1, e.pieces[0], e);
+		movePawn(12, e.pieces[0], e);
 		assertEquals(
 				board.toString(),
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
@@ -715,6 +717,21 @@ public class EngineNonGUITest {
 		end.removePieceFromPieces(pawn);
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 4, 0),
 				Engine.INVALID_MOVE);
+
+		start = new Node();
+		end = new Node();
+		start.addPieceToPieces(pawn);
+		createNodeChain(start, end, 3);
+		Player phil = new Player(Piece.COLOR.red, "Phil");
+		Player phillis = new Player(Piece.COLOR.green, "Phillis");
+		e.currentCard = new Card(2, "Things to do");
+		e.insertPlayer(phil);
+		e.insertPlayer(phillis);
+		e.rotatePlayers();
+		assertEquals(e.activePlayer,phil);
+		e.checkValidityOriginalRules(pawn,start,end,2,0);
+		e.rotatePlayers();
+		assertEquals(e.activePlayer,phil);
 
 	}
 
