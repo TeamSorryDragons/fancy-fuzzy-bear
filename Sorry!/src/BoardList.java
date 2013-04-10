@@ -18,31 +18,35 @@ public class BoardList {
 		cornerPointers[0].setPrevious(ret.getPrevious());
 		ret.getPrevious().setNext(cornerPointers[0]);
 	}
-	public Piece[] newGame(){
+
+	public Piece[] newGame() {
 		int j = 0;
 		Piece[] ret = new Piece[16];
-		for(int i=0;i<4;i++){
-			Piece[] pieces= new Piece[4];
-			for(int n=0; n<4; n++){
-				pieces[n]=new Piece(startPointers[i].getColor());
+		for (int i = 0; i < 4; i++) {
+			Piece[] pieces = new Piece[4];
+			for (int n = 0; n < 4; n++) {
+				pieces[n] = new Piece(startPointers[i].getColor());
 				ret[j++] = pieces[n];
 			}
 			startPointers[i].setPieces(pieces);
 		}
 		return ret;
 	}
+
 	public String toString() {
 		return toString(cornerPointers[0], cornerPointers[0].getNext())
 				.toString();
 	}
-	public Node[] getHomePointers(){
+
+	public Node[] getHomePointers() {
 		return homePointers;
 	}
-	
-	public Node[] getStartPointers(){
+
+	public Node[] getStartPointers() {
 		return startPointers;
 	}
-	public Node[] getCornerPointers(){
+
+	public Node[] getCornerPointers() {
 		return cornerPointers;
 	}
 
@@ -64,6 +68,13 @@ public class BoardList {
 		}
 		return ret.append(toString(start, next.getNext()));
 
+	}
+
+	/**
+	 *  Creates a copy of this board and returns it.
+	 */
+	public BoardList clone() {
+		return new BoardList();
 	}
 
 	/*

@@ -7,12 +7,12 @@ import javax.swing.JComponent;
 
 public class DisplayableBoard extends JComponent {
 	private static final long serialVersionUID = 1L;
-	BoardList board;
+	Engine gameEngine;
 	private static BufferedImage image;
 
-	public DisplayableBoard(BoardList board) {
+	public DisplayableBoard(Engine eng) {
 		super();
-		this.board = board;
+		this.gameEngine = eng;
 		try {
 			image = ImageIO.read(this.getClass().getResource(
 					"/images/Board.jpg"));
@@ -27,7 +27,8 @@ public class DisplayableBoard extends JComponent {
 	}
 
 	public void draw(Graphics g) {
-		Node[] cornerPointers = board.getCornerPointers();
+		Node[] cornerPointers = this.gameEngine.getActualBoard()
+				.getCornerPointers();
 		int size = image.getWidth() / 16;
 		Graphics2D g2 = (Graphics2D) g;
 		draw(cornerPointers[0], cornerPointers[0].getNext(), Math.PI,

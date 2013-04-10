@@ -1,3 +1,5 @@
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -26,6 +28,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 	private volatile int clickCount = 0;
 	private volatile ArrayList<Coordinate> clicks = new ArrayList<Coordinate>();
+	private volatile boolean desiresForfeit;
 
 	private static final long serialVersionUID = 1L;
 	private BoardList board;
@@ -46,11 +49,15 @@ public class SorryFrame extends JFrame implements ActionListener {
 		super("Sorry!");
 		this.board = board;
 		this.engine = engine;
-		this.setSize(1015, 1040);
+		this.setSize(1330, 1040);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JComponent displayBoard = new DisplayableBoard(this.board);
-		this.add(displayBoard);
+		JComponent displayBoard = new DisplayableBoard(this.engine);
+		this.add(displayBoard, BorderLayout.CENTER);
 		// displayBoard.setSize(width, height)
+		UIComponent gui = new UIComponent(300, 1000, this);
+		this.add(gui, BorderLayout.EAST);
+		gui.repaint();
+
 		this.setVisible(true);
 		this.repaint();
 		this.addMouseListener(new BoardMouseListener(this));
@@ -94,9 +101,13 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 	private void awaitUserInteraction() {
 		this.resetClickDetection();
-		while (this.clickCount < 2)
+		while (this.clickCount < 2) {
 			// wait for it
-			;
+			if (this.desiresForfeit)
+				return;
+
+		}
+
 	}
 
 	/**
@@ -120,6 +131,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private void initiateTurn() {
+		this.desiresForfeit = false;
 		this.currentCard = this.engine.getNextCard();
 		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
@@ -137,6 +149,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private void performTurn() {
+		if (this.desiresForfeit)
+			this.initiateTurn();
 		int result = this.engine.pawnMove(this.clicks.get(0),
 				this.clicks.get(1));
 		if (result == Engine.SAME_NODE_SELECTED) {
@@ -179,6 +193,32 @@ public class SorryFrame extends JFrame implements ActionListener {
 	private void notifyPlayer(String message) {
 		JOptionPane.showMessageDialog(this, this.engine.activePlayer.getName()
 				+ message);
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 * 
+	 */
+	public void quitGame() {
+		System.out.println("You want to quit do you?  Too bad loser.");
+
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 * 
+	 */
+	public void saveGame() {
+		System.out.println("You want to save?  Better win faster.");
+
+	}
+
+	/**
+	 * Forfeit the current player's turn.
+	 * 
+	 */
+	public void forfeitTurn() {
+		this.desiresForfeit = true;
 	}
 
 	/**
@@ -307,5 +347,4 @@ public class SorryFrame extends JFrame implements ActionListener {
 		}
 
 	}
-
 }

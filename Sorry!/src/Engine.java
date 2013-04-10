@@ -12,6 +12,7 @@ public class Engine {
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
 	private int remainingMoves = 0;
 	protected BoardList board;
+	protected BoardList actualBoard;
 	protected Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue,
 								// Indices 8-11
 	// are Yellow, Indices 12-15 are green
@@ -22,6 +23,7 @@ public class Engine {
 
 	public Engine(BoardList board) {
 		this.board = board;
+		this.actualBoard = board.clone();
 		this.players = new CircularLinkedList<Player>();
 		try {
 			this.deck = new Deck("eng");
@@ -52,6 +54,7 @@ public class Engine {
 
 	public void newGame() {
 		this.pieces = this.board.newGame();
+		this.actualBoard = this.board.clone();
 	}
 
 	public boolean isValidMove(Piece pawn, int numberMovesForward, Player player) {
@@ -172,7 +175,7 @@ public class Engine {
 			move(moves, pawn, start);
 		} catch (InvalidMoveException e) {
 			return INVALID_MOVE;
-		} catch (Unstarted e){
+		} catch (Unstarted e) {
 			e.printStackTrace();
 		}
 
@@ -493,13 +496,27 @@ public class Engine {
 	}
 
 	/**
+	 * 
+	 * Obtain the actual board for the current game session in which this game
+	 * driving engine is in use. Likely to draw it for the player to witness the
+	 * magnificence of this computerized Sorry! board game, which they are now
+	 * playing for entertainment purposes.
+	 * 
+	 * @return board
+	 */
+	public BoardList getActualBoard() {
+		return this.board;  //actualBoard;
+	}
+
+	/**
 	 * Finalize the player's turn by setting the temporary movement board to the
 	 * real board. Reset the temp board.
 	 * 
 	 */
 	public boolean finalizeTurn() {
 		// TODO implement it, when the time comes
-
+		//this.actualBoard = this.board;
+		//this.board = this.actualBoard.clone();
 		return hasWon();
 	}
 
@@ -511,6 +528,7 @@ public class Engine {
 	 */
 	public void revertBoard() {
 		// TODO implement once a board can be read from a file.
+		//this.board = this.actualBoard.clone();
 		return;
 	}
 
