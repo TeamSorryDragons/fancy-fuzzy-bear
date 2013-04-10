@@ -25,13 +25,7 @@ public class Engine {
 		this.board = board;
 		this.actualBoard = board.clone();
 		this.players = new CircularLinkedList<Player>();
-		try {
-			this.deck = new Deck("eng");
-		} catch (FileNotFoundException exception) {
-			System.out
-					.println("Language was not found and It's crashing cause you be not dare.");
-			exception.printStackTrace();
-		}
+		this.deck = new Deck("english");
 	}
 
 	public void insertPlayer(Player bigP) {
