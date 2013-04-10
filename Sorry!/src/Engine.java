@@ -78,19 +78,23 @@ public class Engine {
 		int moves = 0;
 		int error = 1;
 		switch (this.currentCard.cardNum) {
-//		case 1:
-//			if (numberMovesForward == this.currentCard.cardNum)
-//				moves = numberMovesForward;
-//			else
-//				error = INVALID_MOVE;
+		// case 1:
+		// if (numberMovesForward == this.currentCard.cardNum)
+		// moves = numberMovesForward;
+		// else
+		// error = INVALID_MOVE;
 		case 2:
 			// 2 forward, get another turn
 			// for now, same rules as the default, but we might need a way to
 			// instruct the GUI to give them another turn
 			if (numberMovesForward != this.currentCard.cardNum)
 				error = INVALID_MOVE;
-			else
+			else {
 				moves = 2;
+				for (int j = 0; j < players.getNumberOfElements() - 1; j++) {
+					players.goToNextElement();
+				}
+			}
 			break;
 		// case 3:
 		// break;
@@ -101,11 +105,11 @@ public class Engine {
 			else
 				moves = -4;
 			break;
-			// case 5:
-			// break;
+		// case 5:
+		// break;
 		case 7:
 			// 7 forward, or a split
-			if(start instanceof MultiNode && start.getPrevious() == null){
+			if (start instanceof MultiNode && start.getPrevious() == null) {
 				error = INVALID_MOVE;
 			}
 			if (this.remainingMoves != 0) {
@@ -197,7 +201,7 @@ public class Engine {
 			return SAME_NODE_SELECTED;
 
 		int nodeCountForward = first.countTo(second);
-		int nodeCountBackward = 0; //first.countBack(second);
+		int nodeCountBackward = 0; // first.countBack(second);
 		if (!isValidMove(first.firstPiece(), nodeCountForward,
 				this.activePlayer)) {
 			return INVALID_MOVE;

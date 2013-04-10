@@ -706,6 +706,21 @@ public class EngineNonGUITest {
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 4, 0),
 				Engine.INVALID_MOVE);
 
+		start = new Node();
+		end = new Node();
+		start.addPieceToPieces(pawn);
+		createNodeChain(start, end, 3);
+		Player phil = new Player(Piece.COLOR.red, "Phil");
+		Player phillis = new Player(Piece.COLOR.green, "Phillis");
+		e.currentCard = new Card(2, "Things to do");
+		e.insertPlayer(phil);
+		e.insertPlayer(phillis);
+		e.rotatePlayers();
+		assertEquals(e.activePlayer,phil);
+		e.checkValidityOriginalRules(pawn,start,end,2,0);
+		e.rotatePlayers();
+		assertEquals(e.activePlayer,phil);
+
 	}
 
 	@Test
