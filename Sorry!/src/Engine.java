@@ -180,7 +180,14 @@ public class Engine {
 
 		if (error < 1)
 			return error;
-
+		if(this.currentCard.cardNum == 13){
+			try{
+				end.swap(start);
+			} catch(InvalidMoveException e){
+				return INVALID_MOVE;
+			}
+			return moves;
+		}
 		try {
 			move(moves, pawn, start);
 		} catch (InvalidMoveException e) {

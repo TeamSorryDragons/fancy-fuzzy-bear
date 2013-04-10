@@ -165,4 +165,7 @@ public class MultiNode extends Node {
 			throw new IllegalArgumentException();
 		}
 	}
+	public Piece swap(Node node) throws InvalidMoveException{
+		throw new InvalidMoveException("You can't swap into home");
+	}
 }

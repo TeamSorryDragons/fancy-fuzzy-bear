@@ -216,4 +216,15 @@ public class Node {
 			return 1+this.previous.countBack(node);
 		}
 	}
+	public Piece swap(Node node) throws InvalidMoveException{
+		if(this.col != Piece.COLOR.colorless){
+			throw new InvalidMoveException("You swapped into safe");
+		}
+		Piece piece = node.firstPiece();
+		node.removePieceFromPieces(piece);
+		Piece piece2 = firstPiece();
+		removePieceFromPieces(piece2);
+		addPieceToPieces(piece);
+		return piece2;
+	}
 }
