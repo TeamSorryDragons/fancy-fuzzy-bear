@@ -146,7 +146,10 @@ public class MultiNode extends Node {
 		}
 		else{
 			if(moves < 0){
-				return null;
+				throw new InvalidMoveException("You tried to move backwards from start");
+			}
+			if(moves != 1 && moves != 2){
+				throw new InvalidMoveException("You tried to leave home without a 1 or a 2");
 			}
 			return direction(moves).move(goTo(moves), p);
 		}

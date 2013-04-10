@@ -78,8 +78,11 @@ public class Engine {
 		int moves = 0;
 		int error = 1;
 		switch (this.currentCard.cardNum) {
-		// case 1:
-		// break;
+//		case 1:
+//			if (numberMovesForward == this.currentCard.cardNum)
+//				moves = numberMovesForward;
+//			else
+//				error = INVALID_MOVE;
 		case 2:
 			// 2 forward, get another turn
 			// for now, same rules as the default, but we might need a way to
@@ -102,6 +105,9 @@ public class Engine {
 			// break;
 		case 7:
 			// 7 forward, or a split
+			if(start instanceof MultiNode && start.getPrevious() == null){
+				error = INVALID_MOVE;
+			}
 			if (this.remainingMoves != 0) {
 				// player is finishing a split
 				if (numberMovesForward == this.remainingMoves) {
