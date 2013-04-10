@@ -312,14 +312,15 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 		@Override
 		public void mouseClicked(MouseEvent click) {
+			Coordinate coord = null;
 			try {
-				this.myFrame.registerMouseClick(SorryFrame
-						.convertClickToCoordinate(click.getX() - FRAME_X_PAD,
-								click.getY() - FRAME_Y_PAD));
+				coord = SorryFrame.convertClickToCoordinate(click.getX()
+						- FRAME_X_PAD, click.getY() - FRAME_Y_PAD);
 			} catch (CoordinateOffOfBoardException e) {
-				e.printStackTrace();
+				System.out.println("Clicked off board, probably ok.");
 			}
-
+			if (coord != null)
+				this.myFrame.registerMouseClick(coord);
 		}
 
 		@Override

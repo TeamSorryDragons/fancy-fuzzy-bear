@@ -166,7 +166,7 @@ public class BoardList {
 	 * Creates a copy of this board and returns it.
 	 */
 	public BoardList clone() {
-		return new BoardList();
+		return new BoardList(this.toString());
 	}
 
 	/*
