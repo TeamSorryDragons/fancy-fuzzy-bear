@@ -523,8 +523,7 @@ public class Engine {
 	 */
 	public boolean finalizeTurn() {
 		// TODO implement it, when the time comes
-		this.actualBoard = this.board;
-		this.board = this.actualBoard.clone();
+		this.actualBoard = this.board.clone();
 		return hasWon();
 	}
 	/**
