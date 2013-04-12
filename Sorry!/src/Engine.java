@@ -26,6 +26,7 @@ public class Engine {
 		this.actualBoard = board.clone();
 		this.players = new CircularLinkedList<Player>();
 		this.deck = new Deck("english");
+		
 	}
 
 	public void insertPlayer(Player bigP) {

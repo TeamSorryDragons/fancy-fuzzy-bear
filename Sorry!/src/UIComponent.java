@@ -4,7 +4,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -33,6 +36,7 @@ public class UIComponent extends JPanel {
 	private Card currentCard;
 	private Player activePlayer;
 	private SorryFrame gameFrame;
+	private String[] buttonLabels;
 	ArrayList<JButton> interfaceButtons;
 	JPanel cardHolder;
 	JPanel playerInformation;
@@ -40,12 +44,12 @@ public class UIComponent extends JPanel {
 	
 	JLabel playerNameText;
 	JLabel playerPiecesInStart;
+	private FileReader fr;
 	
 	public UIComponent(int width, int height, SorryFrame frame){
 		this.gameFrame = frame;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setSize(width, height);
-		
 		this.setBackground(Color.CYAN);
 		
 		this.cardHolder = new JPanel();
@@ -59,13 +63,22 @@ public class UIComponent extends JPanel {
 		this.buttonPane = new JPanel();
 		this.buttonPane.setSize(width - HORIZONTAL_PAD, BUTTON_PANE_HEIGHT);
 		this.add(this.buttonPane);
-		
+		try {
+			fr = new FileReader("english.txt");
+		} catch (FileNotFoundException e) {}
+		Scanner in=new Scanner(fr);
+		for(int i=0; i<22;i++)
+			in.nextLine();
+		buttonLabels=new String[3];
+		for(int i=0; i<3;i++)
+			buttonLabels[i]=in.nextLine();
 		this.initializeCardHolder();
 		this.initializePlayerInfo();
 		this.initializeButtonPane();
 		
 		this.setVisible(true);
 		this.repaint();
+		
 		
 	}
 	
@@ -84,9 +97,9 @@ public class UIComponent extends JPanel {
 	}
 	
 	private void initializeButtonPane(){
-		JButton exitButton = new JButton("Exit");
-		JButton saveButton = new JButton("Save");
-		JButton forfeitButton = new JButton("Forfeit Turn");
+		JButton exitButton = new JButton(buttonLabels[0]);
+		JButton saveButton = new JButton(buttonLabels[1]);
+		JButton forfeitButton = new JButton(buttonLabels[2]);
 		
 		exitButton.addActionListener(new ActionListener() {	
 			@Override

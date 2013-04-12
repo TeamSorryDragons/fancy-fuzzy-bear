@@ -1,15 +1,18 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.SampleModel;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -38,6 +41,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 	private BoardList board;
 	private Engine engine;
 	private Card currentCard;
+	private FileReader fr;
+	private String[] userMessages;
+	private UIComponent gui;
 
 	/*
 	 * Indices 0-3 are red, Indices 4-7 are blue, Indices 8-11 are Yellow,
@@ -53,12 +59,22 @@ public class SorryFrame extends JFrame implements ActionListener {
 		super("Sorry!");
 		this.board = board;
 		this.engine = engine;
+		try {
+			fr = new FileReader("english.txt");
+		} catch (FileNotFoundException e) {}
+		Scanner in=new Scanner(fr);
+		for(int x=0; x<12;x++)
+			in.nextLine();
+		userMessages=new String[9];
+		for(int x=0; x<9;x++)
+			userMessages[x]=in.nextLine();
 		this.setSize(1330, 1040);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JComponent displayBoard = new DisplayableBoard(this.engine);
 		this.add(displayBoard, BorderLayout.CENTER);
 		// displayBoard.setSize(width, height)
-		UIComponent gui = new UIComponent(300, 1000, this);
+		this.insertTestPlayers();
+		gui = new UIComponent(300, 1000, this);
 		this.add(gui, BorderLayout.EAST);
 		gui.repaint();
 
@@ -67,6 +83,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.addMouseListener(new BoardMouseListener(this));
 		this.insertTestPlayers();
 		this.initiateTurn();
+		
 	}
 
 	private void insertTestPlayers() {
@@ -139,7 +156,15 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.currentCard = this.engine.getNextCard();
 		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
-		this.notifyPlayer(" it is your turn!");
+		if(this.engine.activePlayer.getColor()==Piece.COLOR.blue)
+			gui.playerInformation.setBackground(Color.BLUE);
+		else if(this.engine.activePlayer.getColor()==Piece.COLOR.green)
+			gui.playerInformation.setBackground(Color.GREEN);
+		else if(this.engine.activePlayer.getColor()==Piece.COLOR.yellow)
+			gui.playerInformation.setBackground(Color.YELLOW);
+		else
+			gui.playerInformation.setBackground(Color.RED);
+		this.notifyPlayer(userMessages[0]);
 		this.awaitUserInteraction();
 		this.performTurn();
 	}
@@ -158,24 +183,24 @@ public class SorryFrame extends JFrame implements ActionListener {
 		int result = this.engine.pawnMove(this.clicks.get(0),
 				this.clicks.get(1));
 		if (result == Engine.SAME_NODE_SELECTED) {
-			this.informPlayerError("You picked the same node twice.");
-		} else if (result == Engine.INVALID_MOVE) {
-			this.informPlayerError("That move is illegal.");
+			this.informPlayerError(userMessages[1]);
+		} 
+		else if (result == Engine.INVALID_MOVE) {
+			this.informPlayerError(userMessages[2]);
 		} else if (result == Engine.NODE_NOT_FOUND) {
-			this.informPlayerError("You appear to have clicked off of the board.");
+			this.informPlayerError(userMessages[3]);
 		} else if (result == Engine.NO_PIECE_SELECTED) {
-			this.informPlayerError("There is no pawn on the first selected node.");
+			this.informPlayerError(userMessages[4]);
 		} else {
 			// turn is over, rotate
 			if (this.engine.finalizeTurn()) {
 				this.repaint();
-				this.notifyPlayer(" you have won!");
+				this.notifyPlayer(userMessages[5]);
 			} else {
 				this.repaint();
 				this.initiateTurn();
 			}
 		}
-
 	}
 
 	private void resetClickDetection() {
@@ -196,7 +221,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 	private void notifyPlayer(String message) {
 		JOptionPane.showMessageDialog(this, this.engine.activePlayer.getName()
-				+ message);
+				+ message, userMessages[8], JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**
@@ -204,7 +229,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void quitGame() {
-		System.out.println("You want to quit do you?  Too bad loser.");
+		System.out.println(userMessages[6]);
+
 	}
 
 	/**
@@ -212,18 +238,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void saveGame() {
-		System.out.println("You want to save?  Better win faster.");
-		File writehere = new File("save.txt");
-		FileWriter write;
-		try {
-			write = new FileWriter(writehere);
-			BufferedWriter outstream = new BufferedWriter(write);
-			outstream.write(this.board.toString());
-			outstream.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println(userMessages[7]);
 	}
 	
 	/**

@@ -9,3 +9,17 @@ Move a pawn 10 spaces forward or 1 space backward. If a player cannot go forward
 Move 11 spaces forward or switch places with one opposing pawn. A player that cannot move 11 spaces is not forced to switch and instead can forfeit the turn. 
 Move a pawn 12 spaces forward. 
 Move any one pawn from Start to a square occupied by any opponent, sending that pawn back to its own Start. If there are no pawns on the player's Start, or no opponent's pawns on any squares, the turn is lost. 
+
+, it is your turn!
+, you picked the same node twice.
+, that move is illegal.
+, you appear to have clicked off of the board.
+, there is no pawn on the first selected node.
+, you have won!
+You want to quit do you?  Too bad loser.
+You want to save?  Better win faster.
+Message
+
+Exit
+Save
+Forfeit Turn
