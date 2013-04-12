@@ -10,9 +10,11 @@ Déplace 11 places à terme ou permutent avec un pion adverse. Un joueur qui ne pe
 Déplace un pion 12 places avant.
 Déplace aucun pion celle de démarrage sur une case occupée par un adversaire, l'envoi de ce pion à son propre départ. S'il n'ya pas de pions sur Démarrer du joueur, ou des pions de l'adversaire sur aucune des cases, le tour est perdu.
 
-, vous avez gagné!
+, c'est à votre tour!
 , vous avez choisi le même nœud deux fois.
 , ce déménagement est illégal.
 , vous semblez avoir cliqué hors de la carte.
 , il n'ya pas de pion sur le premier nœud sélectionné.
-, c'est à votre tour!
+, vous avez gagné!
+Vous voulez arrêter de vous? Trop mauvais perdant.
+Vous voulez économiser? Mieux gagner plus rapidement.

@@ -5,7 +5,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.SampleModel;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -34,6 +38,16 @@ public class SorryFrame extends JFrame implements ActionListener {
 	private BoardList board;
 	private Engine engine;
 	private Card currentCard;
+	protected FileReader fr;
+	private String[] userMessages;
+	private String turnStart;
+	private String sameNode;
+	private String illegal;
+	private String offBoard;
+	private String noPawn;
+	private String won;
+	private String quit;
+	private String save;
 
 	/*
 	 * Indices 0-3 are red, Indices 4-7 are blue, Indices 8-11 are Yellow,
@@ -49,6 +63,25 @@ public class SorryFrame extends JFrame implements ActionListener {
 		super("Sorry!");
 		this.board = board;
 		this.engine = engine;
+		try {
+			fr = new FileReader("french.txt");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		Scanner in=new Scanner(fr);
+		for(int x=0; x<12;x++)
+			in.nextLine();
+		userMessages=new String[8];
+		for(int x=0; x<8;x++)
+			userMessages[x]=in.nextLine();
+//		turnStart=in.nextLine();
+//		sameNode=in.nextLine();
+//		illegal=in.nextLine();
+//		offBoard=in.nextLine();
+//		noPawn=in.nextLine();
+//		won=in.nextLine();
+//		quit=in.nextLine();
+//		save=in.nextLine();
 		this.setSize(1330, 1040);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JComponent displayBoard = new DisplayableBoard(this.engine);
@@ -63,6 +96,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.addMouseListener(new BoardMouseListener(this));
 		this.insertTestPlayers();
 		this.initiateTurn();
+		
 	}
 
 	private void insertTestPlayers() {
@@ -135,7 +169,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.currentCard = this.engine.getNextCard();
 		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
-		this.notifyPlayer(" it is your turn!");
+		this.notifyPlayer(userMessages[0]);
 		this.awaitUserInteraction();
 		this.performTurn();
 	}
@@ -154,24 +188,24 @@ public class SorryFrame extends JFrame implements ActionListener {
 		int result = this.engine.pawnMove(this.clicks.get(0),
 				this.clicks.get(1));
 		if (result == Engine.SAME_NODE_SELECTED) {
-			this.informPlayerError("You picked the same node twice.");
-		} else if (result == Engine.INVALID_MOVE) {
-			this.informPlayerError("That move is illegal.");
+			this.informPlayerError(userMessages[1]);
+		} 
+		else if (result == Engine.INVALID_MOVE) {
+			this.informPlayerError(userMessages[2]);
 		} else if (result == Engine.NODE_NOT_FOUND) {
-			this.informPlayerError("You appear to have clicked off of the board.");
+			this.informPlayerError(userMessages[3]);
 		} else if (result == Engine.NO_PIECE_SELECTED) {
-			this.informPlayerError("There is no pawn on the first selected node.");
+			this.informPlayerError(userMessages[4]);
 		} else {
 			// turn is over, rotate
 			if (this.engine.finalizeTurn()) {
 				this.repaint();
-				this.notifyPlayer(" you have won!");
+				this.notifyPlayer(userMessages[5]);
 			} else {
 				this.repaint();
 				this.initiateTurn();
 			}
 		}
-
 	}
 
 	private void resetClickDetection() {
@@ -200,7 +234,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void quitGame() {
-		System.out.println("You want to quit do you?  Too bad loser.");
+		System.out.println(userMessages[6]);
 
 	}
 
@@ -209,7 +243,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void saveGame() {
-		System.out.println("You want to save?  Better win faster.");
+		System.out.println(userMessages[7]);
 
 	}
 

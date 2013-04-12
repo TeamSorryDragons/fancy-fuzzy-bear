@@ -21,8 +21,6 @@ public class Deck {
 		
 		cards=new Card[45];
 		Scanner in= new Scanner(fr);
-		in.reset();
-
 		Card t=new Card(1,in.nextLine());
 		for(int i =0; i<5;i++)
 			cards[i*11+0]=t;

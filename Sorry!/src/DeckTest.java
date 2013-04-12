@@ -24,14 +24,11 @@ public class DeckTest {
 		String s="";
 		for(Card c: e.cards)
 			s+=c.cardNum + " ";
-		
 		assertEquals(e.toString(),s);
-		System.out.println(s);
 	}
 	@Test
 	public void testGetTopCardEnglish() {
 		Deck e=new Deck("english");
-		System.out.println(e.getTopCard());
 		assertEquals(e.cards[e.topCard],e.getTopCard());
 	}
 	
@@ -40,7 +37,6 @@ public class DeckTest {
 		Deck e=new Deck("english");
 		for(int i=0; i<e.cards.length;i++)
 			e.getTopCard();
-		System.out.println(e.getTopCard());
 		assertEquals(e.cards[e.topCard],e.getTopCard());
 	}
 	@Test
@@ -51,14 +47,11 @@ public class DeckTest {
 			s+=c.cardNum + " ";
 		
 		assertEquals(f.toString(), s);
-		System.out.println(s);
 	}
 	
 	@Test
 	public void testGetTopCardFrench(){
 		Deck f=new Deck("french");
-		System.out.println(f.getTopCard()+" "+ f.toString());
-		
 		assertEquals(f.cards[f.topCard],f.getTopCard());
 	}
 	@Test
@@ -66,7 +59,6 @@ public class DeckTest {
 		Deck f=new Deck("french");
 		for(int i=0; i<f.cards.length;i++)
 			f.getTopCard();
-		System.out.println(f.getTopCard());
 		assertEquals(f.cards[f.topCard],f.getTopCard());
 	}
 	@Test
