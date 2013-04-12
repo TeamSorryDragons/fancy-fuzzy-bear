@@ -7,6 +7,9 @@ import java.awt.event.MouseListener;
 import java.awt.image.SampleModel;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -40,14 +43,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 	private Card currentCard;
 	protected FileReader fr;
 	private String[] userMessages;
-	private String turnStart;
-	private String sameNode;
-	private String illegal;
-	private String offBoard;
-	private String noPawn;
-	private String won;
-	private String quit;
-	private String save;
 
 	/*
 	 * Indices 0-3 are red, Indices 4-7 are blue, Indices 8-11 are Yellow,
@@ -64,7 +59,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.board = board;
 		this.engine = engine;
 		try {
-			fr = new FileReader("french.txt");
+			fr = new FileReader("english.txt");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -74,14 +69,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 		userMessages=new String[8];
 		for(int x=0; x<8;x++)
 			userMessages[x]=in.nextLine();
-//		turnStart=in.nextLine();
-//		sameNode=in.nextLine();
-//		illegal=in.nextLine();
-//		offBoard=in.nextLine();
-//		noPawn=in.nextLine();
-//		won=in.nextLine();
-//		quit=in.nextLine();
-//		save=in.nextLine();
 		this.setSize(1330, 1040);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JComponent displayBoard = new DisplayableBoard(this.engine);
@@ -244,9 +231,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	public void saveGame() {
 		System.out.println(userMessages[7]);
-
 	}
-
+	
 	/**
 	 * Forfeit the current player's turn.
 	 * 
@@ -346,14 +332,15 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 		@Override
 		public void mouseClicked(MouseEvent click) {
+			Coordinate coord = null;
 			try {
-				this.myFrame.registerMouseClick(SorryFrame
-						.convertClickToCoordinate(click.getX() - FRAME_X_PAD,
-								click.getY() - FRAME_Y_PAD));
+				coord = SorryFrame.convertClickToCoordinate(click.getX()
+						- FRAME_X_PAD, click.getY() - FRAME_Y_PAD);
 			} catch (CoordinateOffOfBoardException e) {
-				e.printStackTrace();
+				System.out.println("Clicked off board, probably ok.");
 			}
-
+			if (coord != null)
+				this.myFrame.registerMouseClick(coord);
 		}
 
 		@Override

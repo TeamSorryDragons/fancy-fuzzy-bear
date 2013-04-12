@@ -159,7 +159,7 @@ public class Engine {
 		// break;
 		case 13:
 			// Sorry card
-			if (end.hasPiece())
+			if (end.hasPiece() && start.getPrevious() == null)
 				moves = numberMovesForward;
 			else
 				error = INVALID_MOVE;
@@ -175,7 +175,14 @@ public class Engine {
 
 		if (error < 1)
 			return error;
-
+		if(this.currentCard.cardNum == 13){
+			try{
+				end.swap(start);
+			} catch(InvalidMoveException e){
+				return INVALID_MOVE;
+			}
+			return moves;
+		}
 		try {
 			move(moves, pawn, start);
 		} catch (InvalidMoveException e) {
@@ -517,8 +524,8 @@ public class Engine {
 	 */
 	public boolean finalizeTurn() {
 		// TODO implement it, when the time comes
-		//this.actualBoard = this.board;
-		//this.board = this.actualBoard.clone();
+		this.actualBoard = this.board;
+		this.board = this.actualBoard.clone();
 		return hasWon();
 	}
 	/**
@@ -529,7 +536,7 @@ public class Engine {
 	 */
 	public void revertBoard() {
 		// TODO implement once a board can be read from a file.
-		//this.board = this.actualBoard.clone();
+		this.board = this.actualBoard.clone();
 		return;
 	}
 	public boolean hasWon() {
