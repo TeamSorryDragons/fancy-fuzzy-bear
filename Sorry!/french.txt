@@ -18,3 +18,8 @@ Déplace aucun pion celle de démarrage sur une case occupée par un adversaire, l'
 , vous avez gagné!
 Vous voulez arrêter de vous? Trop mauvais perdant.
 Vous voulez économiser? Mieux gagner plus rapidement.
+Message
+
+Sortie
+Économise
+Déchu la tour

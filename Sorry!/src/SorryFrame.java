@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +11,6 @@ import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,8 +41,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 	private BoardList board;
 	private Engine engine;
 	private Card currentCard;
-	protected FileReader fr;
+	private FileReader fr;
 	private String[] userMessages;
+	private UIComponent gui;
 
 	/*
 	 * Indices 0-3 are red, Indices 4-7 are blue, Indices 8-11 are Yellow,
@@ -60,21 +61,20 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.engine = engine;
 		try {
 			fr = new FileReader("english.txt");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		} catch (FileNotFoundException e) {}
 		Scanner in=new Scanner(fr);
 		for(int x=0; x<12;x++)
 			in.nextLine();
-		userMessages=new String[8];
-		for(int x=0; x<8;x++)
+		userMessages=new String[9];
+		for(int x=0; x<9;x++)
 			userMessages[x]=in.nextLine();
 		this.setSize(1330, 1040);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JComponent displayBoard = new DisplayableBoard(this.engine);
 		this.add(displayBoard, BorderLayout.CENTER);
 		// displayBoard.setSize(width, height)
-		UIComponent gui = new UIComponent(300, 1000, this);
+		this.insertTestPlayers();
+		gui = new UIComponent(300, 1000, this);
 		this.add(gui, BorderLayout.EAST);
 		gui.repaint();
 
@@ -156,6 +156,14 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.currentCard = this.engine.getNextCard();
 		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
+		if(this.engine.activePlayer.getColor()==Piece.COLOR.blue)
+			gui.playerInformation.setBackground(Color.BLUE);
+		else if(this.engine.activePlayer.getColor()==Piece.COLOR.green)
+			gui.playerInformation.setBackground(Color.GREEN);
+		else if(this.engine.activePlayer.getColor()==Piece.COLOR.yellow)
+			gui.playerInformation.setBackground(Color.YELLOW);
+		else
+			gui.playerInformation.setBackground(Color.RED);
 		this.notifyPlayer(userMessages[0]);
 		this.awaitUserInteraction();
 		this.performTurn();
@@ -213,7 +221,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 	private void notifyPlayer(String message) {
 		JOptionPane.showMessageDialog(this, this.engine.activePlayer.getName()
-				+ message);
+				+ message, userMessages[8], JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**

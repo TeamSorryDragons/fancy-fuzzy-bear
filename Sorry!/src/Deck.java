@@ -11,17 +11,18 @@ import java.util.Scanner;
  */
 public class Deck {
 	
-	public Card[] cards;
+	protected Card[] cards;
 	protected int topCard;
 	
 	public Deck(String lang) {
 		FileReader fr;
 		try {
 			fr = new FileReader(lang+".txt");
-		
+			
 		cards=new Card[45];
 		Scanner in= new Scanner(fr);
 		Card t=new Card(1,in.nextLine());
+		
 		for(int i =0; i<5;i++)
 			cards[i*11+0]=t;
 		
@@ -58,17 +59,14 @@ public class Deck {
 
 		this.shuffle();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	public Card getTopCard(){
 		Card c= cards[topCard];
 		topCard++;
-		if(topCard==cards.length){
+		if(topCard==cards.length)
 			this.shuffle();
-		}
-
 		return c;
 	}
 	private void shuffle(){
@@ -86,7 +84,6 @@ public class Deck {
 		String s="";
 		for(Card c: cards)
 			s+=c.cardNum + " ";
-		//System.out.println(s);
 		return s;
 	}
 }

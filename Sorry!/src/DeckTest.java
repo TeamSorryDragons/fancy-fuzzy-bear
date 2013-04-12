@@ -62,6 +62,11 @@ public class DeckTest {
 		assertEquals(f.cards[f.topCard],f.getTopCard());
 	}
 	@Test
+	public void testThrowFileNotFoundException() throws FileNotFoundException{
+		
+		Deck bad = new Deck("spanish");
+	}
+	@Test
 	public void testCardToString(){
 		Card test = new Card(1,"This is a card");
 		assertEquals("1 - This is a card", test.toString());
