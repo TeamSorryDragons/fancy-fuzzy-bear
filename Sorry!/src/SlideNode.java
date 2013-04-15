@@ -60,7 +60,6 @@ public class SlideNode extends Node {
 			break;
 		case green:
 			ret.append("g");
-			break;
 		}
 
 		ret.append("sn");
@@ -78,7 +77,7 @@ public class SlideNode extends Node {
 				break;
 			case green:
 				ret.append("g");
-				break;
+			
 			}
 		}
 		ret.append("|");
@@ -106,6 +105,7 @@ public class SlideNode extends Node {
 			} else if (this.safe instanceof MultiNode) {
 				i -= 1;
 			} else {
+				
 				i -= 6;
 			}
 		}
