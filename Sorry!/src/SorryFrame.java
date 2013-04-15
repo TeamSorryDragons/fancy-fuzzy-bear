@@ -39,8 +39,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private BoardList board;
-	private Engine engine;
-	private Card currentCard;
+	protected Engine engine;
+	protected Card currentCard;
 	private FileReader fr;
 	private String[] userMessages;
 	private UIComponent gui;
@@ -156,14 +156,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.currentCard = this.engine.getNextCard();
 		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
-		if(this.engine.activePlayer.getColor()==Piece.COLOR.blue)
-			gui.playerInformation.setBackground(Color.BLUE);
-		else if(this.engine.activePlayer.getColor()==Piece.COLOR.green)
-			gui.playerInformation.setBackground(Color.GREEN);
-		else if(this.engine.activePlayer.getColor()==Piece.COLOR.yellow)
-			gui.playerInformation.setBackground(Color.YELLOW);
-		else
-			gui.playerInformation.setBackground(Color.RED);
+		this.gui.update();
 		this.notifyPlayer(userMessages[0]);
 		this.awaitUserInteraction();
 		this.performTurn();

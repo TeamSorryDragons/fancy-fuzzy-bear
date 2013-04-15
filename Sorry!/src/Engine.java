@@ -26,7 +26,7 @@ public class Engine {
 		this.actualBoard = board.clone();
 		this.players = new CircularLinkedList<Player>();
 		this.deck = new Deck("english");
-		
+
 	}
 
 	public void insertPlayer(Player bigP) {
@@ -173,17 +173,17 @@ public class Engine {
 				error = INVALID_MOVE;
 		}
 
-		if (error < 1)
-			return error;
-		if(this.currentCard.cardNum == 13){
-			try{
-				end.swap(start);
-			} catch(InvalidMoveException e){
-				return INVALID_MOVE;
-			}
-			return moves;
-		}
 		try {
+			if (error < 1)
+				return error;
+			if (this.currentCard.cardNum == 13) {
+				end.swap(start);
+				return moves;
+			}
+			if (this.currentCard.cardNum == 11 && moves != 11) {
+				end.swap(start);
+				return moves;
+			}
 			move(moves, pawn, start);
 		} catch (InvalidMoveException e) {
 			return INVALID_MOVE;
@@ -514,7 +514,7 @@ public class Engine {
 	 * @return board
 	 */
 	public BoardList getActualBoard() {
-		return this.board;  //actualBoard;
+		return this.board; // actualBoard;
 	}
 
 	/**
@@ -527,6 +527,7 @@ public class Engine {
 		this.actualBoard = this.board.clone();
 		return hasWon();
 	}
+
 	/**
 	 * 
 	 * Reverts the current board to the state prior to starting the current
@@ -538,6 +539,7 @@ public class Engine {
 		this.board = this.actualBoard.clone();
 		return;
 	}
+
 	public boolean hasWon() {
 		int spot = 0;
 		switch (this.activePlayer.getColor()) {
