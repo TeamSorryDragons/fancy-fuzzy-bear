@@ -53,6 +53,8 @@ public class UIComponent extends JPanel {
 	JTextArea card;
 	JTextArea card2;
 	JTextArea card3;
+	
+	JTextArea playerHolder;
 
 	public UIComponent(int width, int height, SorryFrame frame) {
 		this.gameFrame = frame;
@@ -102,16 +104,25 @@ public class UIComponent extends JPanel {
 		} else {
 			this.card.setText("Sorry!");
 			this.card2.setText("" + this.currentCard.desc);
-			this.card3.setText("Sorry!");
+			this.card3.setText("!Sorry");
 		}
-		if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.blue)
+		if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.blue){
 			this.playerInformation.setBackground(Color.BLUE);
-		else if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.green)
+			this.playerHolder.setBackground(Color.BLUE);
+		}
+		else if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.green){
 			this.playerInformation.setBackground(Color.GREEN);
-		else if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.yellow)
+			this.playerHolder.setBackground(Color.GREEN);
+		}
+		else if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.yellow){
 			this.playerInformation.setBackground(Color.YELLOW);
-		else
+			this.playerHolder.setBackground(Color.YELLOW);
+		}
+		else{
 			this.playerInformation.setBackground(Color.RED);
+			this.playerHolder.setBackground(Color.RED);
+		}
+		this.playerHolder.setText(this.gameFrame.engine.activePlayer.getName());
 	}
 
 	private void initializeCardHolder() {
@@ -153,8 +164,15 @@ public class UIComponent extends JPanel {
 	}
 
 	private void initializePlayerInfo() {
-		this.playerInformation.add(Box.createRigidArea(new Dimension(this
-				.getWidth(), PLAYER_INFO_HEIGHT)));
+		this.playerHolder = new JTextArea();
+		this.playerHolder.setPreferredSize(new Dimension(this.getWidth(),PLAYER_INFO_HEIGHT));
+		this.playerHolder.setFont(new Font(this.playerHolder.getFont().getName(), Font.PLAIN, 60));
+		this.playerHolder.setLineWrap(true);
+		this.playerHolder.setWrapStyleWord(true);
+		this.playerHolder.setBackground(Color.RED);
+//		this.playerInformation.add(Box.createRigidArea(new Dimension(this
+//				.getWidth(), PLAYER_INFO_HEIGHT)));
+		this.playerInformation.add(this.playerHolder);
 		this.playerInformation.setBackground(Color.RED);
 	}
 
