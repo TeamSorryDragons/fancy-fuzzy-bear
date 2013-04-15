@@ -18,7 +18,7 @@ public class CoordinateOffOfBoardException extends IllegalArgumentException {
 	 * Pretty standard empty constructor. For reasons.
 	 * 
 	 */
-	public CoordinateOffOfBoardException() {
-		super();
-	}
+//	public CoordinateOffOfBoardException() {
+//		super();
+//	}
 }

@@ -156,6 +156,17 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.currentCard = this.engine.getNextCard();
 		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
+
+		if(this.engine.activePlayer.getColor()==Piece.COLOR.blue){
+			gui.playerInformation.setBackground(Color.CYAN);
+		}
+		else if(this.engine.activePlayer.getColor()==Piece.COLOR.green)
+			gui.playerInformation.setBackground(Color.GREEN);
+		else if(this.engine.activePlayer.getColor()==Piece.COLOR.yellow)
+			gui.playerInformation.setBackground(Color.YELLOW);
+		else
+			gui.playerInformation.setBackground(Color.RED);
+		this.gui.playerNameText.setText(this.engine.activePlayer.getName());
 		this.gui.update();
 		this.notifyPlayer(userMessages[0]);
 		this.awaitUserInteraction();

@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 
 /**
@@ -70,7 +71,14 @@ public class UIComponent extends JPanel {
 		this.playerInformation.setSize(width - HORIZONTAL_PAD,
 				PLAYER_INFO_HEIGHT);
 		this.add(this.playerInformation);
-
+		this.playerNameText=new JLabel();
+		this.playerInformation.add(this.playerNameText);
+	//	this.playerInformation.s
+		this.playerNameText.setVerticalAlignment(SwingConstants.TOP);
+		this.playerNameText.setPreferredSize(new Dimension(width-HORIZONTAL_PAD, PLAYER_INFO_HEIGHT));
+		//his.playerNameText.setSize(this.playerInformation.WIDTH-10, this.PLAYER_INFO_HEIGHT);
+		
+		
 		this.buttonPane = new JPanel();
 		this.buttonPane.setSize(width - HORIZONTAL_PAD, BUTTON_PANE_HEIGHT);
 		this.add(this.buttonPane);
@@ -162,6 +170,8 @@ public class UIComponent extends JPanel {
 		this.cardHolder.setBackground(Color.YELLOW);
 
 	}
+
+	
 
 	private void initializePlayerInfo() {
 		this.playerHolder = new JTextArea();
