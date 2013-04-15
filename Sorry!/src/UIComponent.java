@@ -18,11 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-<<<<<<< HEAD
 import javax.swing.SwingConstants;
-=======
 import javax.swing.JTextArea;
->>>>>>> 4a5735d50096fb783663733612addf43b47927ae
 
 /**
  * Contains the graphic user interface portion of the graphical user interface
@@ -72,7 +69,6 @@ public class UIComponent extends JPanel {
 		this.playerInformation.setSize(width - HORIZONTAL_PAD,
 				PLAYER_INFO_HEIGHT);
 		this.add(this.playerInformation);
-<<<<<<< HEAD
 		this.playerNameText=new JLabel();
 		this.playerInformation.add(this.playerNameText);
 	//	this.playerInformation.s
@@ -81,9 +77,6 @@ public class UIComponent extends JPanel {
 		//his.playerNameText.setSize(this.playerInformation.WIDTH-10, this.PLAYER_INFO_HEIGHT);
 		
 		
-=======
-
->>>>>>> 4a5735d50096fb783663733612addf43b47927ae
 		this.buttonPane = new JPanel();
 		this.buttonPane.setSize(width - HORIZONTAL_PAD, BUTTON_PANE_HEIGHT);
 		this.add(this.buttonPane);
@@ -166,16 +159,12 @@ public class UIComponent extends JPanel {
 		this.cardHolder.setBackground(Color.YELLOW);
 
 	}
-<<<<<<< HEAD
+
 	
-	private void initializePlayerInfo(){
-		//this.playerInformation.add(Box.createRigidArea(new Dimension(this.getWidth()-this.playerNameText.getWidth(), PLAYER_INFO_HEIGHT)));
-=======
 
 	private void initializePlayerInfo() {
 		this.playerInformation.add(Box.createRigidArea(new Dimension(this
 				.getWidth(), PLAYER_INFO_HEIGHT)));
->>>>>>> 4a5735d50096fb783663733612addf43b47927ae
 		this.playerInformation.setBackground(Color.RED);
 	}
 
