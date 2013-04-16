@@ -177,11 +177,19 @@ public class Engine {
 			if (error < 1)
 				return error;
 			if (this.currentCard.cardNum == 13) {
-				end.swap(start);
+				toStart(end.swap(start));
 				return moves;
 			}
 			if (this.currentCard.cardNum == 11 && moves != 11) {
-				end.swap(start);
+				Piece temp = end.swap(start);
+				if(start.getPrevious() != null || start.getNext() != null || start.getColor() != Piece.COLOR.colorless)
+					start.addPieceToPieces(temp);
+				else if(start.getPrevious() == null){
+					throw new InvalidMoveException("you cannot swap out of start with an 11");
+				}
+				else{
+					toStart(temp);
+				}
 				return moves;
 			}
 			move(moves, pawn, start);
