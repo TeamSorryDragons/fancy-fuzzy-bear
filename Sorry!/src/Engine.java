@@ -21,11 +21,11 @@ public class Engine {
 	protected CircularLinkedList<Player> players;
 	protected Card currentCard;
 
-	public Engine(BoardList board) {
+	public Engine(BoardList board, String lang) {
 		this.board = board;
 		this.actualBoard = board.clone();
 		this.players = new CircularLinkedList<Player>();
-		this.deck = new Deck("english");
+		this.deck = new Deck(lang);
 
 	}
 

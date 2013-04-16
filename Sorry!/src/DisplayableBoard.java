@@ -31,6 +31,7 @@ public class DisplayableBoard extends JComponent {
 				.getCornerPointers();
 		int size = image.getWidth() / 16;
 		Graphics2D g2 = (Graphics2D) g;
+		g.setFont(new Font(g.getFont().getName(),Font.PLAIN,40));
 		draw(cornerPointers[0], cornerPointers[0].getNext(), Math.PI,
 				image.getWidth() - 2 * size, image.getHeight() - size, size,
 				g2, Piece.COLOR.red);
@@ -62,6 +63,8 @@ public class DisplayableBoard extends JComponent {
 				g.drawOval((int) Math.round(x + size * Math.cos(angle)),
 						(int) Math.round(y - size * Math.sin(angle)), size,
 						size);
+				g.drawString(((MultiNode) next).numberOfPieces() + "",(int) Math.round(x + size * Math.cos(angle)),
+						(int) Math.round(y - size * Math.sin(angle)));
 			} else {
 				g.fillOval(x, y, size, size);
 				g.setColor(Color.black);

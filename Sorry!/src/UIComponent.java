@@ -57,7 +57,7 @@ public class UIComponent extends JPanel {
 	
 	JTextArea playerHolder;
 
-	public UIComponent(int width, int height, SorryFrame frame) {
+	public UIComponent(int width, int height, SorryFrame frame, String lang) {
 		this.gameFrame = frame;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setSize(width, height);
@@ -72,10 +72,10 @@ public class UIComponent extends JPanel {
 				PLAYER_INFO_HEIGHT);
 		this.add(this.playerInformation);
 		this.playerNameText=new JLabel();
-		this.playerInformation.add(this.playerNameText);
-	//	this.playerInformation.s
-		this.playerNameText.setVerticalAlignment(SwingConstants.TOP);
-		this.playerNameText.setPreferredSize(new Dimension(width-HORIZONTAL_PAD, PLAYER_INFO_HEIGHT));
+//		this.playerInformation.add(this.playerNameText);
+//	//	this.playerInformation.s
+//		this.playerNameText.setVerticalAlignment(SwingConstants.TOP);
+//		this.playerNameText.setPreferredSize(new Dimension(width-HORIZONTAL_PAD, PLAYER_INFO_HEIGHT));
 		//his.playerNameText.setSize(this.playerInformation.WIDTH-10, this.PLAYER_INFO_HEIGHT);
 		
 		
@@ -83,7 +83,7 @@ public class UIComponent extends JPanel {
 		this.buttonPane.setSize(width - HORIZONTAL_PAD, BUTTON_PANE_HEIGHT);
 		this.add(this.buttonPane);
 		try {
-			fr = new FileReader("english.txt");
+			fr = new FileReader(lang + ".txt");
 		} catch (FileNotFoundException e) {
 		}
 		Scanner in = new Scanner(fr);
@@ -115,18 +115,22 @@ public class UIComponent extends JPanel {
 			this.card3.setText("!Sorry");
 		}
 		if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.blue){
+			this.playerHolder.setForeground(Color.WHITE);
 			this.playerInformation.setBackground(Color.BLUE);
 			this.playerHolder.setBackground(Color.BLUE);
 		}
 		else if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.green){
+			this.playerHolder.setForeground(Color.BLACK);
 			this.playerInformation.setBackground(Color.GREEN);
 			this.playerHolder.setBackground(Color.GREEN);
 		}
 		else if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.yellow){
+			this.playerHolder.setForeground(Color.BLACK);
 			this.playerInformation.setBackground(Color.YELLOW);
 			this.playerHolder.setBackground(Color.YELLOW);
 		}
 		else{
+			this.playerHolder.setForeground(Color.WHITE);
 			this.playerInformation.setBackground(Color.RED);
 			this.playerHolder.setBackground(Color.RED);
 		}

@@ -55,26 +55,28 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * @param board
 	 * @param engine
 	 */
-	public SorryFrame(BoardList board, Engine engine) {
+	public SorryFrame() {
 		super("Sorry!");
-		this.board = board;
-		this.engine = engine;
+		this.board = new BoardList();
 		try {
 			fr = new FileReader("english.txt");
-		} catch (FileNotFoundException e) {}
-		Scanner in=new Scanner(fr);
-		for(int x=0; x<12;x++)
+		} catch (FileNotFoundException e) {
+		}
+		this.engine = new Engine(this.board, "english");
+		engine.newGame();
+		Scanner in = new Scanner(fr);
+		for (int x = 0; x < 12; x++)
 			in.nextLine();
-		userMessages=new String[9];
-		for(int x=0; x<9;x++)
-			userMessages[x]=in.nextLine();
+		userMessages = new String[9];
+		for (int x = 0; x < 9; x++)
+			userMessages[x] = in.nextLine();
 		this.setSize(1330, 1040);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JComponent displayBoard = new DisplayableBoard(this.engine);
 		this.add(displayBoard, BorderLayout.CENTER);
 		// displayBoard.setSize(width, height)
 		this.insertTestPlayers();
-		gui = new UIComponent(300, 1000, this);
+		gui = new UIComponent(300, 1000, this, "english");
 		this.add(gui, BorderLayout.EAST);
 		gui.repaint();
 
@@ -83,7 +85,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.addMouseListener(new BoardMouseListener(this));
 		this.insertTestPlayers();
 		this.initiateTurn();
-		
+
 	}
 
 	private void insertTestPlayers() {
@@ -157,12 +159,11 @@ public class SorryFrame extends JFrame implements ActionListener {
 		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
 
-		if(this.engine.activePlayer.getColor()==Piece.COLOR.blue){
+		if (this.engine.activePlayer.getColor() == Piece.COLOR.blue) {
 			gui.playerInformation.setBackground(Color.CYAN);
-		}
-		else if(this.engine.activePlayer.getColor()==Piece.COLOR.green)
+		} else if (this.engine.activePlayer.getColor() == Piece.COLOR.green)
 			gui.playerInformation.setBackground(Color.GREEN);
-		else if(this.engine.activePlayer.getColor()==Piece.COLOR.yellow)
+		else if (this.engine.activePlayer.getColor() == Piece.COLOR.yellow)
 			gui.playerInformation.setBackground(Color.YELLOW);
 		else
 			gui.playerInformation.setBackground(Color.RED);
@@ -188,8 +189,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 				this.clicks.get(1));
 		if (result == Engine.SAME_NODE_SELECTED) {
 			this.informPlayerError(userMessages[1]);
-		} 
-		else if (result == Engine.INVALID_MOVE) {
+		} else if (result == Engine.INVALID_MOVE) {
 			this.informPlayerError(userMessages[2]);
 		} else if (result == Engine.NODE_NOT_FOUND) {
 			this.informPlayerError(userMessages[3]);
@@ -244,7 +244,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	public void saveGame() {
 		System.out.println(userMessages[7]);
 	}
-	
+
 	/**
 	 * Forfeit the current player's turn.
 	 * 

@@ -179,4 +179,19 @@ public class MultiNodeTest {
 			test.countBack(test2);
 		}catch(Exception e){}
 	}
+	
+	@Test
+	public void testNumberOfPieces(){
+		MultiNode test = new MultiNode();
+		assertEquals(0,test.numberOfPieces());
+		test.addPieceToPieces(new Piece());
+		assertEquals(1,test.numberOfPieces());
+		test.addPieceToPieces(new Piece());
+		assertEquals(2,test.numberOfPieces());
+		test.addPieceToPieces(new Piece());
+		assertEquals(3,test.numberOfPieces());
+		test.addPieceToPieces(new Piece());
+		assertEquals(4,test.numberOfPieces());
+		
+	}
 }

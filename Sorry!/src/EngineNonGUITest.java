@@ -13,14 +13,14 @@ public class EngineNonGUITest {
 	@SuppressWarnings("javadoc")
 	@Test
 	public void test() {
-		assertNotNull(new Engine(new BoardList()));
+		assertNotNull(new Engine(new BoardList(),"english"));
 	}
 
 	@SuppressWarnings("javadoc")
 	@Test
 	public void testMoveOnePieceOnce() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		e.newGame();
 		assertEquals(
 				board.toString(),
@@ -48,7 +48,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testMoveOnePieceToEnd() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 
 		e.newGame();
 
@@ -134,7 +134,7 @@ public class EngineNonGUITest {
 	@Test
 	public void toStartTest() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		e.newGame();
 		movePawn(1, e.pieces[7], e);
 		assertEquals(
@@ -201,7 +201,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testSlideMoves() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		e.newGame();
 		movePawn(1, e.pieces[0], e);
 		movePawn(12, e.pieces[0], e);
@@ -218,7 +218,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testCoordinateToNodeCorners() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		e.newGame();
 
 		// assertEquals(e.convertCoordToNode(new SorryFrame.Coordinate(0, 0)),
@@ -397,7 +397,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testFindNodeWithPiece() {
 		BoardList temp = new BoardList();
-		Engine e = new Engine(temp);
+		Engine e = new Engine(temp,"english");
 		e.newGame();
 		Piece p = temp.getStartPointers()[0].getPieces()[0];
 		assertEquals(e.findNode(p), temp.getStartPointers()[0]);
@@ -412,7 +412,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testFindNodeWithPosition() {
 		BoardList temp = new BoardList();
-		Engine e = new Engine(temp);
+		Engine e = new Engine(temp,"english");
 		e.newGame();
 		assertEquals(e.findNodeByPosition(87),
 				temp.getCornerPointers()[0].getPrevious());
@@ -423,7 +423,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testIsValidMoveNoMove() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		e.newGame();
 		e.getNextCard();
 		assertTrue(e.isValidMove(e.pieces[0], e.currentCard.cardNum,
@@ -433,7 +433,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testPanwMovement() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		e.getNextCard();
 		assertEquals(e.pawnMove(new SorryFrame.Coordinate(0, 0),
 				new SorryFrame.Coordinate(0, 0)), 0);
@@ -442,7 +442,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testCountTo() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		int count = board.cornerPointers[0].countTo(board.cornerPointers[1]);
 		assertEquals(count, 15);
 	}
@@ -450,7 +450,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testIsValidPlayerCheck() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		Player p = new Player(Piece.COLOR.red, "James Bond");
 
 		e.newGame();
@@ -470,7 +470,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testPawnMoveSamePositions() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		e.newGame();
 
 		assertEquals(Engine.SAME_NODE_SELECTED, e.pawnMove(
@@ -489,7 +489,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testPawnMoveInvalidCoordinates() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		e.newGame();
 
 		assertEquals(Engine.NODE_NOT_FOUND, e.pawnMove(
@@ -517,7 +517,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testInsertPlayers() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 
 		Player john = new Player(Piece.COLOR.green, "Johnny Depp");
 		Player bill = new Player(Piece.COLOR.blue, "Bill Gates");
@@ -554,7 +554,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testBackwardsMove() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		e.newGame();
 		movePawn(1, e.pieces[7], e);
 		assertEquals(
@@ -589,7 +589,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testHasWon() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		e.newGame();
 		Player john = new Player(Piece.COLOR.green, "Johnny Depp");
 		Player bill = new Player(Piece.COLOR.blue, "Bill Gates");
@@ -615,7 +615,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testValidMoves() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board);
+		Engine e = new Engine(board,"english");
 		e.newGame();
 
 		Node start = new Node();

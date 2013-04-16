@@ -168,4 +168,13 @@ public class MultiNode extends Node {
 	public Piece swap(Node node) throws InvalidMoveException{
 		throw new InvalidMoveException("You can't swap into home");
 	}
+	public int numberOfPieces(){
+		int count = 0;
+		for(int i = 0; i < pieces.length; i++){
+			if(pieces[i] != null){
+				count++;
+			}
+		}
+		return count;
+	}
 }
