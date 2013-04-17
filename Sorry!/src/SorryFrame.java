@@ -57,14 +57,14 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * @param board
 	 * @param engine
 	 */
-	public SorryFrame() {
+	public SorryFrame(String lang) {
 		super("Sorry!");
 		this.board = new BoardList();
 		try {
-			fr = new FileReader("english.txt");
+			fr = new FileReader(lang + ".txt");
 		} catch (FileNotFoundException e) {
 		}
-		this.engine = new Engine(this.board, "english");
+		this.engine = new Engine(this.board, lang);
 		engine.newGame();
 		Scanner in = new Scanner(fr);
 		for (int x = 0; x < 12; x++)
@@ -279,7 +279,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 	/**
 	 * Container class for mouse-click coordinates. Really just to provide
-	 * convenience, because Java is really horrible at dealing with multiple
+	 * convenience, because Java is really horrible at dealing with multiple3
 	 * return values. If this was a nice language like Python or Scheme or
 	 * really almost anything else then I could just return a tuple but because
 	 * it's Java and whatnot I have to write an entire freaking class just to
