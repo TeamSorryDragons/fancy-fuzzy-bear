@@ -1,4 +1,5 @@
 import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 
 
@@ -17,8 +19,8 @@ public class PickLanguage extends JFrame{
 	public PickLanguage(){
 		super("Pick the language/ Choisissez la langue");
 		JPanel panel= new JPanel();
-		Graphics2D g = (Graphics2D) panel.getGraphics();
-		g.drawString("Pick the language/ Choisissez la langue", 10,20);
+		JLabel title = new JLabel("Pick the language/ Choisissez la langue",JLabel.CENTER);
+		panel.add(title);
 		JRadioButton jrbEng = new JRadioButton("English");
 		JRadioButton jrbFrc = new JRadioButton("Français");
 		ButtonGroup group = new ButtonGroup();
@@ -43,11 +45,12 @@ public class PickLanguage extends JFrame{
 			}
 		});
 		JPanel jplRadio = new JPanel();
-		jplRadio.setLayout(new GridLayout(0, 1));
+		jplRadio.setLayout(new GridLayout(0,1));
+		jplRadio.add(title);
 		jplRadio.add(jrbEng);
 		jplRadio.add(jrbFrc);
 		this.add(jplRadio);
-		this.setSize(200,200);
+		this.setSize(350,200);
 	}
 
 }
