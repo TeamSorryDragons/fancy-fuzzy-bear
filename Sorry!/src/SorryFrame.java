@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -55,14 +57,14 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * @param board
 	 * @param engine
 	 */
-	public SorryFrame() {
+	public SorryFrame(String lang) {
 		super("Sorry!");
 		this.board = new BoardList();
 		try {
-			fr = new FileReader("english.txt");
+			fr = new FileReader(lang + ".txt");
 		} catch (FileNotFoundException e) {
 		}
-		this.engine = new Engine(this.board, "english");
+		this.engine = new Engine(this.board, lang);
 		engine.newGame();
 		Scanner in = new Scanner(fr);
 		for (int x = 0; x < 12; x++)
@@ -184,8 +186,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	private void performTurn() {
 		if (this.desiresForfeit) {
+			this.engine.revertBoard();
 			this.initiateTurn();
-
 		}
 		int result = this.engine.pawnMove(this.clicks.get(0),
 				this.clicks.get(1));
@@ -239,7 +241,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void quitGame() {
-		System.out.println(userMessages[6]);
+		this.saveGame();
+		System.exit(0);
 
 	}
 
@@ -248,7 +251,23 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void saveGame() {
-		System.out.println(userMessages[7]);
+		File save = new File("save.txt");
+		try {
+			PrintWriter output = new PrintWriter(save);
+			output.println(this.engine.activePlayer.getName() + "|" + this.engine.activePlayer.getColor().toString());
+			for(int i = 0; i < (this.engine.players.getNumberOfElements()-1)/2; i++){
+				this.engine.players.goToNextElement();
+				this.engine.activePlayer = this.engine.players.getActualElementData();
+				output.println(this.engine.activePlayer.getName() + "|" + this.engine.activePlayer.getColor().toString());
+			}
+			this.engine.players.goToNextElement();
+			this.engine.activePlayer = this.engine.players.getActualElementData();
+			output.println(this.board.toString());
+			output.close();
+		} catch (IOException e) {
+			System.out.println("IT SPLODED");
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -261,7 +280,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 	/**
 	 * Container class for mouse-click coordinates. Really just to provide
-	 * convenience, because Java is really horrible at dealing with multiple
+	 * convenience, because Java is really horrible at dealing with multiple3
 	 * return values. If this was a nice language like Python or Scheme or
 	 * really almost anything else then I could just return a tuple but because
 	 * it's Java and whatnot I have to write an entire freaking class just to
