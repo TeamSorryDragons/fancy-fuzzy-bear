@@ -146,32 +146,35 @@ public class UIComponent extends JPanel {
 		this.card.setPreferredSize(new Dimension(this.getWidth(), CARD_HOLDER_HEIGHT/4));
 		this.card.setWrapStyleWord(true);
 		this.card.setLineWrap(true);
-		this.card.setBackground(Color.YELLOW);
+		this.card.setBackground(Color.BLACK);
 		this.card.setEditable(false);
+		this.card.setForeground(Color.WHITE);
 		this.card2 = new JTextArea();
 		this.card2.setFont(new Font(this.card2.getFont().getName(), Font.PLAIN,
 				20));
 		this.card2.setPreferredSize(new Dimension(this.getWidth(), CARD_HOLDER_HEIGHT/2));
 		this.card2.setWrapStyleWord(true);
 		this.card2.setLineWrap(true);
-		this.card2.setBackground(Color.YELLOW);
+		this.card2.setBackground(Color.BLACK);
 		this.card2.setEditable(false);
+		this.card2.setForeground(Color.WHITE);
 		this.card3 = new JTextArea();
 		this.card3.setFont(new Font(this.card3.getFont().getName(), Font.PLAIN,
 				40));
 		this.card3.setPreferredSize(new Dimension(this.getWidth(), CARD_HOLDER_HEIGHT/4));
 		this.card3.setWrapStyleWord(true);
 		this.card3.setLineWrap(true);
-		this.card3.setBackground(Color.YELLOW);
+		this.card3.setBackground(Color.BLACK);
 		this.card3.setEditable(false);
 		this.card3.applyComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		this.card3.setForeground(Color.WHITE);
 		this.cardHolder.setLayout(new BorderLayout());
 		this.cardHolder.add(card,BorderLayout.NORTH);
 		this.cardHolder.add(card2,BorderLayout.CENTER);
 		this.cardHolder.add(card3,BorderLayout.SOUTH);
 		// this.cardHolder.add(Box.createRigidArea(new
 		// Dimension(this.getWidth(), CARD_HOLDER_HEIGHT)));
-		this.cardHolder.setBackground(Color.YELLOW);
+		this.cardHolder.setBackground(Color.BLACK);
 
 	}
 
