@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -248,7 +250,23 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void saveGame() {
-		System.out.println(userMessages[7]);
+		File save = new File("save.txt");
+		try {
+			PrintWriter output = new PrintWriter(save);
+			output.println(this.engine.activePlayer.getName() + "|" + this.engine.activePlayer.getColor().toString());
+			for(int i = 0; i < (this.engine.players.getNumberOfElements()-1)/2; i++){
+				this.engine.players.goToNextElement();
+				this.engine.activePlayer = this.engine.players.getActualElementData();
+				output.println(this.engine.activePlayer.getName() + "|" + this.engine.activePlayer.getColor().toString());
+			}
+			this.engine.players.goToNextElement();
+			this.engine.activePlayer = this.engine.players.getActualElementData();
+			output.println(this.board.toString());
+			output.close();
+		} catch (IOException e) {
+			System.out.println("IT SPLODED");
+			e.printStackTrace();
+		}
 	}
 
 	/**
