@@ -227,4 +227,8 @@ public class Node {
 		addPieceToPieces(piece);
 		return piece2;
 	}
+	
+	public boolean canReceivePiece(Piece.COLOR col){
+		return this.col == Piece.COLOR.colorless || this.col == col;
+	}
 }

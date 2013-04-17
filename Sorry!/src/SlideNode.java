@@ -226,4 +226,8 @@ public class SlideNode extends Node {
 		temp.addPieceToPieces(piece);
 		return piece2;
 	}
+	
+	public boolean canReceivePiece(Piece.COLOR col){
+		return true;
+	}
 }

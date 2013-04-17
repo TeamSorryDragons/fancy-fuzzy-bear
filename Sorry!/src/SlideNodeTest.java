@@ -263,4 +263,20 @@ public class SlideNodeTest {
 		} catch(Exception e) {
 		}
 	}
+	
+	@Test
+	public void testCanReceivePawn(){
+		SlideNode target = new SlideNode();
+		target.setColor(Piece.COLOR.yellow);
+		assertTrue(target.canReceivePiece(Piece.COLOR.green));
+		assertTrue(target.canReceivePiece(Piece.COLOR.blue));
+		assertTrue(target.canReceivePiece(Piece.COLOR.yellow));
+		assertTrue(target.canReceivePiece(Piece.COLOR.red));
+		
+		target.setColor(Piece.COLOR.colorless);
+		assertTrue(target.canReceivePiece(Piece.COLOR.green));
+		assertTrue(target.canReceivePiece(Piece.COLOR.blue));
+		assertTrue(target.canReceivePiece(Piece.COLOR.yellow));
+		assertTrue(target.canReceivePiece(Piece.COLOR.red));
+	}
 }

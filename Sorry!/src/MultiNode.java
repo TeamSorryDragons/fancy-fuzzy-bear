@@ -177,4 +177,8 @@ public class MultiNode extends Node {
 		}
 		return count;
 	}
+	
+	public boolean canReceivePiece(Piece.COLOR col){
+		return this.getColor() == col;
+	}
 }

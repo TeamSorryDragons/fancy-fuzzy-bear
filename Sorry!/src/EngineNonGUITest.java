@@ -13,14 +13,14 @@ public class EngineNonGUITest {
 	@SuppressWarnings("javadoc")
 	@Test
 	public void test() {
-		assertNotNull(new Engine(new BoardList(),"english"));
+		assertNotNull(new Engine(new BoardList(), "english"));
 	}
 
 	@SuppressWarnings("javadoc")
 	@Test
 	public void testMoveOnePieceOnce() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		e.newGame();
 		assertEquals(
 				board.toString(),
@@ -48,7 +48,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testMoveOnePieceToEnd() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 
 		e.newGame();
 
@@ -134,7 +134,7 @@ public class EngineNonGUITest {
 	@Test
 	public void toStartTest() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		e.newGame();
 		movePawn(1, e.pieces[7], e);
 		assertEquals(
@@ -201,7 +201,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testSlideMoves() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		e.newGame();
 		movePawn(1, e.pieces[0], e);
 		movePawn(12, e.pieces[0], e);
@@ -218,7 +218,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testCoordinateToNodeCorners() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		e.newGame();
 
 		// assertEquals(e.convertCoordToNode(new SorryFrame.Coordinate(0, 0)),
@@ -397,7 +397,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testFindNodeWithPiece() {
 		BoardList temp = new BoardList();
-		Engine e = new Engine(temp,"english");
+		Engine e = new Engine(temp, "english");
 		e.newGame();
 		Piece p = temp.getStartPointers()[0].getPieces()[0];
 		assertEquals(e.findNode(p), temp.getStartPointers()[0]);
@@ -412,7 +412,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testFindNodeWithPosition() {
 		BoardList temp = new BoardList();
-		Engine e = new Engine(temp,"english");
+		Engine e = new Engine(temp, "english");
 		e.newGame();
 		assertEquals(e.findNodeByPosition(87),
 				temp.getCornerPointers()[0].getPrevious());
@@ -423,7 +423,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testIsValidMoveNoMove() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		e.newGame();
 		e.getNextCard();
 		assertTrue(e.isValidMove(e.pieces[0], e.currentCard.cardNum,
@@ -433,7 +433,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testPanwMovement() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		e.getNextCard();
 		assertEquals(e.pawnMove(new SorryFrame.Coordinate(0, 0),
 				new SorryFrame.Coordinate(0, 0)), 0);
@@ -442,7 +442,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testCountTo() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		int count = board.cornerPointers[0].countTo(board.cornerPointers[1]);
 		assertEquals(count, 15);
 	}
@@ -450,7 +450,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testIsValidPlayerCheck() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		Player p = new Player(Piece.COLOR.red, "James Bond");
 
 		e.newGame();
@@ -465,12 +465,14 @@ public class EngineNonGUITest {
 			assertTrue(e.isValidMove(e.pieces[i], e.currentCard.cardNum, p));
 
 		assertFalse(e.isValidMove(e.pieces[4], e.currentCard.cardNum, p));
+		
+		assertFalse(e.isValidMove(null, e.currentCard.cardNum, p));
 	}
 
 	@Test
 	public void testPawnMoveSamePositions() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		e.newGame();
 
 		assertEquals(Engine.SAME_NODE_SELECTED, e.pawnMove(
@@ -489,7 +491,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testPawnMoveInvalidCoordinates() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		e.newGame();
 
 		assertEquals(Engine.NODE_NOT_FOUND, e.pawnMove(
@@ -517,7 +519,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testInsertPlayers() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 
 		Player john = new Player(Piece.COLOR.green, "Johnny Depp");
 		Player bill = new Player(Piece.COLOR.blue, "Bill Gates");
@@ -554,7 +556,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testBackwardsMove() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		e.newGame();
 		movePawn(1, e.pieces[7], e);
 		assertEquals(
@@ -589,7 +591,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testHasWon() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		e.newGame();
 		Player john = new Player(Piece.COLOR.green, "Johnny Depp");
 		Player bill = new Player(Piece.COLOR.blue, "Bill Gates");
@@ -615,7 +617,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testValidMoves() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board,"english");
+		Engine e = new Engine(board, "english");
 		e.newGame();
 
 		Node start = new Node();
@@ -631,7 +633,7 @@ public class EngineNonGUITest {
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 1, 0), 1);
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 2, 0),
 				Engine.INVALID_MOVE);
-		
+
 		start = new Node();
 		end = new Node();
 		end.addPieceToPieces(pawn);
@@ -641,8 +643,9 @@ public class EngineNonGUITest {
 		e.board = new BoardList();
 		e.currentCard = new Card(2, "Test");
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 2, 0), 2);
-		
-		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 1, 0), Engine.INVALID_MOVE);
+
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 1, 0),
+				Engine.INVALID_MOVE);
 
 		start = new Node();
 		end = new Node();
@@ -711,9 +714,11 @@ public class EngineNonGUITest {
 		end = new Node();
 		createNodeChain(start, end, 13);
 		e.currentCard = new Card(13, "TEST");
-		start.addPieceToPieces(pawn);
+		start.getPrevious().setColor(Piece.COLOR.red);
+		start.getPrevious().addPieceToPieces(pawn);
 		end.addPieceToPieces(new Piece(Piece.COLOR.blue));
-		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 12, 0), 12);
+		assertEquals(e.checkValidityOriginalRules(pawn, start.getPrevious(),
+				end, 12, 0), 12);
 		end.removePieceFromPieces(pawn);
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 4, 0),
 				Engine.INVALID_MOVE);
@@ -728,11 +733,165 @@ public class EngineNonGUITest {
 		e.insertPlayer(phil);
 		e.insertPlayer(phillis);
 		e.rotatePlayers();
-		assertEquals(e.activePlayer,phil);
-		e.checkValidityOriginalRules(pawn,start,end,2,0);
+		assertEquals(e.activePlayer, phil);
+		e.checkValidityOriginalRules(pawn, start, end, 2, 0);
 		e.rotatePlayers();
-		assertEquals(e.activePlayer,phil);
+		assertEquals(e.activePlayer, phil);
 
+	}
+
+	@Test
+	public void testPawnMovementSwapPiecesCardEleven() {
+		String testingBoard = "hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn4|nn|nn|nn|nn|hrsn|rsn|rsn"
+				+ "|rsn|rsn|nn|nn|hbsn|bsnb|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nn|nn|nn|nn"
+				+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+				+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+				+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|";
+		BoardList board = new BoardList();
+		Engine e = new Engine(board, "english");
+		e.newGame();
+		e.insertPlayer(new Player(Piece.COLOR.red, "Dave"));
+		e.insertPlayer(new Player(Piece.COLOR.blue, "Whale Rider"));
+		e.rotatePlayers();
+
+		e.currentCard = new Card(11, "TEST");
+
+		Piece pawn = board.homePointers[0].firstPiece();
+		int test = e.pawnMove(new SorryFrame.Coordinate(11, 14),
+				new SorryFrame.Coordinate(11, 15));
+		assertEquals(test, Engine.INVALID_MOVE);
+
+		test = e.pawnMove(new SorryFrame.Coordinate(11, 14),
+				new SorryFrame.Coordinate(0, 0));
+		assertEquals(test, Engine.INVALID_MOVE);
+
+		e.currentCard = new Card(1, "TEST");
+		test = e.pawnMove(new SorryFrame.Coordinate(11, 14),
+				new SorryFrame.Coordinate(11, 15));
+		assertEquals(test, 1);
+		e.rotatePlayers();
+		test = e.pawnMove(new SorryFrame.Coordinate(1, 11),
+				new SorryFrame.Coordinate(0, 11));
+		assertEquals(test, 1);
+
+		e.currentCard = new Card(11, "Test");
+		test = e.pawnMove(new SorryFrame.Coordinate(11, 14),
+				new SorryFrame.Coordinate(0, 0));
+		assertEquals(test, Engine.INVALID_MOVE);
+
+		e.rotatePlayers();
+		test = e.pawnMove(new SorryFrame.Coordinate(11, 15),
+				new SorryFrame.Coordinate(0, 11));
+		assertEquals(test, 15);
+
+		// pieces were just swapped, test that the pieces are now in the right
+		// spots
+		assertEquals(
+				board.toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsnb|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
+						+ "|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsnr|bmn3|nn|nn|nn|nn"
+						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+
+		// try it the other way for good measure
+		e.rotatePlayers();
+		test = e.pawnMove(new SorryFrame.Coordinate(11, 15),
+				new SorryFrame.Coordinate(0, 11));
+		assertEquals(test, 15);
+
+		assertEquals(
+				board.toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsnr|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
+						+ "|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsnb|bmn3|nn|nn|nn|nn"
+						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+	}
+
+	@Test
+	public void testSwapPiecesCardElevenIllegals() {
+		BoardList board = new BoardList();
+		Engine e = new Engine(board, "english");
+		e.newGame();
+		e.insertPlayer(new Player(Piece.COLOR.red, "Dave"));
+		e.insertPlayer(new Player(Piece.COLOR.blue, "Whale Rider"));
+		e.rotatePlayers();
+
+		// going to fiddle with the board in a hacky sorta way...
+		Piece dave = board.startPointers[0].firstPiece();
+		board.startPointers[0].removePieceFromPieces(dave);
+		assertEquals(dave.col, Piece.COLOR.red);
+
+		Piece whale = board.startPointers[1].firstPiece();
+		board.startPointers[1].removePieceFromPieces(whale);
+		assertEquals(whale.col, Piece.COLOR.blue);
+
+		board.homePointers[0].getPrevious().addPieceToPieces(dave);
+		board.homePointers[1].getPrevious().addPieceToPieces(whale);
+
+		e.currentCard = new Card(1, "TEST");
+		assertEquals(e.pawnMove(new SorryFrame.Coordinate(11, 14),
+				new SorryFrame.Coordinate(11, 15)), 1);
+
+		e.currentCard = new Card(11, "TEST");
+		// now try an illegal move - swapping a piece in safe zone, lot of
+		// freaking work
+		String before = board.toString();
+		assertEquals(e.pawnMove(new SorryFrame.Coordinate(11, 15),
+				new SorryFrame.Coordinate(5, 13)), Engine.INVALID_MOVE);
+		assertEquals(board.toString(), before);
+
+		e.rotatePlayers();
+		assertEquals(e.pawnMove(new SorryFrame.Coordinate(5, 13),
+				new SorryFrame.Coordinate(11, 15)), Engine.INVALID_MOVE);
+		// illegal because the swap FROM node is safe... subtle...
+		// silly hobbitsies...
+	}
+
+	@Test
+	public void testSwapCardSorryIllegal(){
+		BoardList board = new BoardList();
+		Engine e = new Engine(board, "english");
+		e.insertPlayer(new Player(Piece.COLOR.red, "Dave"));
+		e.insertPlayer(new Player(Piece.COLOR.blue, "Whale Rider"));
+		e.newGame();
+		e.rotatePlayers();
+		
+		e.currentCard = new Card(13, "TEST");
+		assertEquals(e.pawnMove(new SorryFrame.Coordinate(11, 14), new SorryFrame.Coordinate(5, 1)), Engine.INVALID_MOVE);
+		
+		e.currentCard = new Card(1, "TEST");
+		assertEquals(e.pawnMove(new SorryFrame.Coordinate(11, 14), new SorryFrame.Coordinate(11, 15)), 1);
+		
+		e.rotatePlayers();
+		e.currentCard = new Card(13, "TEST");
+		assertTrue(e.pawnMove(new SorryFrame.Coordinate(1, 11), new SorryFrame.Coordinate(11, 15)) > 0);
+		
+		assertEquals(board.toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsnb|rmn4|nn|nn|nn|nn|hrsn|rsn|rsn"
+						+ "|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nn|nn|nn|nn"
+						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+		
+		// sorry has now worked fine, try sorry on someone in safe position
+		Piece dave = board.startPointers[0].firstPiece();
+		board.startPointers[0].removePieceFromPieces(dave);
+		board.homePointers[0].getPrevious().addPieceToPieces(dave);
+		
+		String before = board.toString();
+		assertEquals(e.pawnMove(new SorryFrame.Coordinate(1, 11), new SorryFrame.Coordinate(13, 10)), Engine.INVALID_MOVE);
+		assertEquals(board.toString(), before);
+		
+		e.rotatePlayers();
+		assertEquals(e.pawnMove(new SorryFrame.Coordinate(13, 10), new SorryFrame.Coordinate(1, 11)), Engine.INVALID_MOVE);
+		
+	}
+	
+	@Test
+	public void testSevenSplit(){
+		
 	}
 
 	@Test
@@ -770,6 +929,7 @@ public class EngineNonGUITest {
 			current.setNext(temp);
 			current = temp;
 		}
+		start.setPrevious(new MultiNode(start, null, Piece.COLOR.colorless));
 		current.setNext(end);
 		end.setPrevious(current);
 	}

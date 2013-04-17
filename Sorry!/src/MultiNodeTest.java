@@ -194,4 +194,22 @@ public class MultiNodeTest {
 		assertEquals(4,test.numberOfPieces());
 		
 	}
+	
+	@Test
+	public void testCanReceive(){
+		MultiNode target = new MultiNode();
+		assertFalse(target.canReceivePiece(Piece.COLOR.blue));
+		
+		target.setColor(Piece.COLOR.red);
+		assertFalse(target.canReceivePiece(Piece.COLOR.green));
+		assertFalse(target.canReceivePiece(Piece.COLOR.blue));
+		assertFalse(target.canReceivePiece(Piece.COLOR.yellow));
+		assertTrue(target.canReceivePiece(Piece.COLOR.red));
+		
+		target.setColor(Piece.COLOR.yellow);
+		assertFalse(target.canReceivePiece(Piece.COLOR.green));
+		assertFalse(target.canReceivePiece(Piece.COLOR.blue));
+		assertTrue(target.canReceivePiece(Piece.COLOR.yellow));
+		assertFalse(target.canReceivePiece(Piece.COLOR.red));
+	}
 }

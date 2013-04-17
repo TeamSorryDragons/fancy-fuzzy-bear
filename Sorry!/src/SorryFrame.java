@@ -183,8 +183,10 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private void performTurn() {
-		if (this.desiresForfeit)
+		if (this.desiresForfeit) {
 			this.initiateTurn();
+
+		}
 		int result = this.engine.pawnMove(this.clicks.get(0),
 				this.clicks.get(1));
 		if (result == Engine.SAME_NODE_SELECTED) {
@@ -195,6 +197,10 @@ public class SorryFrame extends JFrame implements ActionListener {
 			this.informPlayerError(userMessages[3]);
 		} else if (result == Engine.NO_PIECE_SELECTED) {
 			this.informPlayerError(userMessages[4]);
+		} else if (result == Engine.VALID_MOVE_NO_FINALIZE) {
+			this.repaint();
+			this.awaitUserInteraction();
+			this.performTurn();
 		} else {
 			// turn is over, rotate
 			if (this.engine.finalizeTurn()) {

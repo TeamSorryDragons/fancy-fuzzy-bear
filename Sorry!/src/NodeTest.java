@@ -281,4 +281,26 @@ public class NodeTest {
 		assertEquals(0,test1.countBack(test1));
 		assertEquals(test1.countBack(test2),test2.countTo(test1));
 	}
+	
+	@Test
+	public void testCanReceivePawn(){
+		Node target = new Node();
+		assertTrue(target.canReceivePiece(Piece.COLOR.green));
+		assertTrue(target.canReceivePiece(Piece.COLOR.blue));
+		assertTrue(target.canReceivePiece(Piece.COLOR.yellow));
+		assertTrue(target.canReceivePiece(Piece.COLOR.red));
+		
+		
+		target.setColor(Piece.COLOR.yellow);
+		assertFalse(target.canReceivePiece(Piece.COLOR.green));
+		assertFalse(target.canReceivePiece(Piece.COLOR.blue));
+		assertTrue(target.canReceivePiece(Piece.COLOR.yellow));
+		assertFalse(target.canReceivePiece(Piece.COLOR.red));
+		
+		target.setColor(Piece.COLOR.green);
+		assertTrue(target.canReceivePiece(Piece.COLOR.green));
+		assertFalse(target.canReceivePiece(Piece.COLOR.blue));
+		assertFalse(target.canReceivePiece(Piece.COLOR.yellow));
+		assertFalse(target.canReceivePiece(Piece.COLOR.red));
+	}
 }

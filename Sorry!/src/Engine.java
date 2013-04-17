@@ -9,6 +9,7 @@ public class Engine {
 	public static final int SAME_NODE_SELECTED = 0;
 	public static final int NO_PIECE_SELECTED = -256;
 	public static final int INVALID_MOVE = -512;
+	public static final int VALID_MOVE_NO_FINALIZE = -129;
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
 	private int remainingMoves = 0;
 	protected BoardList board;
@@ -75,13 +76,9 @@ public class Engine {
 	protected int checkValidityOriginalRules(Piece pawn, Node start, Node end,
 			int numberMovesForward, int numberMovesBackward) {
 		int moves = 0;
+		int ninja_return = 0;
 		int error = 1;
 		switch (this.currentCard.cardNum) {
-		// case 1:
-		// if (numberMovesForward == this.currentCard.cardNum)
-		// moves = numberMovesForward;
-		// else
-		// error = INVALID_MOVE;
 		case 2:
 			// 2 forward, get another turn
 			// for now, same rules as the default, but we might need a way to
@@ -90,13 +87,12 @@ public class Engine {
 				error = INVALID_MOVE;
 			else {
 				moves = 2;
-				for (int j = 0; j < players.getNumberOfElements() - 1; j++) {
-					players.goToNextElement();
+				// advance player list so that current player gets another turn
+				for (int j = 0; j < this.players.getNumberOfElements() - 1; j++) {
+					this.players.goToNextElement();
 				}
 			}
 			break;
-		// case 3:
-		// break;
 		case 4:
 			// 4 spots backward
 			if (numberMovesBackward != this.currentCard.cardNum)
@@ -104,13 +100,13 @@ public class Engine {
 			else
 				moves = -4;
 			break;
-		// case 5:
-		// break;
 		case 7:
 			// 7 forward, or a split
-			if (start instanceof MultiNode && start.getPrevious() == null) {
+			if (start.getPrevious() == null) {
 				error = INVALID_MOVE;
+				// trying to move from start
 			}
+
 			if (this.remainingMoves != 0) {
 				// player is finishing a split
 				if (numberMovesForward == this.remainingMoves) {
@@ -125,18 +121,16 @@ public class Engine {
 				else if (numberMovesForward < 7) {
 					moves = numberMovesForward;
 					this.remainingMoves = 7 - numberMovesForward;
+					ninja_return = VALID_MOVE_NO_FINALIZE;
 				} else
 					error = INVALID_MOVE;
-
 			}
-
-			if (numberMovesForward > this.currentCard.cardNum)
-				error = INVALID_MOVE;
-			else
-				moves = numberMovesForward;
+			// // not quite sure what this code is accomplishing
+			// if (numberMovesForward > this.currentCard.cardNum)
+			// error = INVALID_MOVE;
+			// else
+			// moves = numberMovesForward;
 			break;
-		// case 8:
-		// break;
 		case 10:
 			// 10 forward, or 1 backward
 			if (numberMovesForward == 10)
@@ -148,18 +142,23 @@ public class Engine {
 			break;
 		case 11:
 			// 11 spaces forward or a swap
+			if (start.getPrevious() == null)
+				// piece is at home, can't make the move
+				error = INVALID_MOVE;
 			if (numberMovesForward == 11)
 				moves = 11;
-			else if (end.hasPiece())
+			else if (end.hasPiece() && start.canReceivePiece(end.firstPiece().col)){
 				moves = numberMovesForward;
+				
+			}
 			else
 				error = INVALID_MOVE;
 			break;
-		// case 12:
-		// break;
+
 		case 13:
 			// Sorry card
 			if (end.hasPiece() && start.getPrevious() == null)
+				// piece is in start and the target has a piece on it
 				moves = numberMovesForward;
 			else
 				error = INVALID_MOVE;
@@ -182,14 +181,16 @@ public class Engine {
 			}
 			if (this.currentCard.cardNum == 11 && moves != 11) {
 				Piece temp = end.swap(start);
-				if(start.getPrevious() != null || start.getNext() != null || start.getColor() != Piece.COLOR.colorless)
-					start.addPieceToPieces(temp);
-				else if(start.getPrevious() == null){
-					throw new InvalidMoveException("you cannot swap out of start with an 11");
-				}
-				else{
-					toStart(temp);
-				}
+				// if(start.getPrevious() != null || start.getNext() != null ||
+				// start.getColor() != Piece.COLOR.colorless)
+				start.addPieceToPieces(temp);
+				// else if(start.getPrevious() == null){
+				// throw new
+				// InvalidMoveException("you cannot swap out of start with an 11");
+				// }
+				// else{
+				// toStart(temp);
+				// }
 				return moves;
 			}
 			move(moves, pawn, start);
@@ -199,6 +200,8 @@ public class Engine {
 			e.printStackTrace();
 		}
 
+		if (ninja_return != 0)
+			return ninja_return;
 		return moves;
 	}
 
@@ -216,11 +219,16 @@ public class Engine {
 		if (first == second)
 			return SAME_NODE_SELECTED;
 
-		int nodeCountForward = first.countTo(second);
+		int nodeCountForward = 0;
+		try {
+			nodeCountForward = first.countTo(second);
+		} catch (NullPointerException e) {
+			nodeCountForward = 0;
+		}
+
 		int nodeCountBackward = 0;
 		try {
 			nodeCountBackward = first.countBack(second);
-
 		} catch (Exception e) {
 			nodeCountBackward = 0;
 		}
