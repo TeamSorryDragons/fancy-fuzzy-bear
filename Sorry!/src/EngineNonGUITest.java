@@ -668,7 +668,7 @@ public class EngineNonGUITest {
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 8, 0),
 				Engine.INVALID_MOVE);
 
-		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 4, 0), 4);
+		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 4, 0), Engine.VALID_MOVE_NO_FINALIZE);
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 7, 0),
 				Engine.INVALID_MOVE);
 		assertEquals(e.checkValidityOriginalRules(pawn, start, end, 3, 0), 3);
