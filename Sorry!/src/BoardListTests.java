@@ -72,5 +72,13 @@ public class BoardListTests {
 		board.newGame();
 		BoardList board2 = new BoardList(board.toString());
 		assertEquals(board.toString(),board2.toString());
+		
+		String toStr = "hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn0|nn|nn|nn|nn|hrsn|rsn|rsn" +
+				"|rsn|rsn|nnr|nn|hbsn|bsn|bsf|bsf|bsf|bsfb|bsf|bmn0|bsn|bsn|bmn0|nn|nn|nn|nn" +
+				"|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysfy|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn0" +
+				"|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nng|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0" +
+				"|gsn|gsn|gmn0|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|";
+		board2 = new BoardList(toStr);
+		assertEquals(toStr,board2.toString());
 	}
 }

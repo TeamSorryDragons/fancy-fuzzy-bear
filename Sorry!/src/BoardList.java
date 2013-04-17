@@ -39,14 +39,28 @@ public class BoardList {
 		for (int i = 0; i < nodes.length; i++) {
 			String num = nodes[i].substring(nodes[i].length() - 1);
 			int numb = 0;
+			Piece.COLOR col = Piece.COLOR.colorless;
 			try {
-				numb = (Integer.parseInt(num));
+				System.out.println(num);
+				if (num.equals("y") || num.equals("r") || num.equals("g") || num.equals("b")) {
+					System.out.println("hi");
+					numb = 1;
+					if (num.equals("y"))
+						col = Piece.COLOR.yellow;
+					else if (num.equals("r"))
+						col = Piece.COLOR.red;
+					else if (num.equals("b"))
+						col = Piece.COLOR.blue;
+					else if (num.equals("g"))
+						col = Piece.COLOR.green;
+				} else {
+					numb = (Integer.parseInt(num));
+					col = getColor(nodes[i]);
+				}
 			} catch (Exception e) {
 			}
-			Piece.COLOR col;
-			col = getColor(nodes[i]);
 			Piece[] pieces = new Piece[1];
-			if (numb > 0) {
+			if (numb > 1) {
 				pieces = new Piece[numb];
 			}
 			for (; numb > 0; numb--) {
@@ -62,7 +76,7 @@ public class BoardList {
 				}
 			} else if (start.getNext() == null || start.getPrevious() == null) {
 				Piece[] tempPiece = new Piece[4];
-				for(int j = 0; j < pieces.length; j++){
+				for (int j = 0; j < pieces.length; j++) {
 					tempPiece[j] = pieces[j];
 				}
 				((MultiNode) start).setPieces(tempPiece);
