@@ -5,6 +5,6 @@ public class Main {
 	static JFrame frame;
 
 	public static void main(String args[]) {
-		frame = new SorryFrame();
+		frame = new SorryFrame("english");
 	}
 }
