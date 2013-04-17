@@ -2,6 +2,8 @@ public class BoardList {
 	Node[] cornerPointers;
 	Node[] homePointers;
 	Node[] startPointers;
+	
+	protected Piece[] pieceList = new Piece[16];
 
 	public BoardList() {
 		cornerPointers = new Node[4];
@@ -36,14 +38,16 @@ public class BoardList {
 		String[] nodes = load.split("\\|");
 		Node start = cornerPointers[0].getNext();
 		Node temp = null;
+		int blue=4;
+		int red=0;
+		int green=12;
+		int yellow=8;
 		for (int i = 0; i < nodes.length; i++) {
 			String num = nodes[i].substring(nodes[i].length() - 1);
 			int numb = 0;
 			Piece.COLOR col = Piece.COLOR.colorless;
 			try {
-				System.out.println(num);
 				if (num.equals("y") || num.equals("r") || num.equals("g") || num.equals("b")) {
-					System.out.println("hi");
 					numb = 1;
 					if (num.equals("y"))
 						col = Piece.COLOR.yellow;
@@ -65,6 +69,25 @@ public class BoardList {
 			}
 			for (; numb > 0; numb--) {
 				pieces[numb - 1] = new Piece(col);
+				switch(col){
+				case blue:
+					pieceList[blue] = pieces[numb-1];
+					blue++;
+					break;
+				case red:
+					pieceList[red] = pieces[numb-1];
+					red++;
+					break;
+				case green:
+					pieceList[green] = pieces[numb-1];
+					green++;
+					break;
+				case yellow:
+					pieceList[yellow] = pieces[numb-1];
+					yellow++;
+					break;
+				}
+					
 			}
 			if (start instanceof SlideNode) {
 				start.setPieces(pieces);
@@ -128,16 +151,15 @@ public class BoardList {
 
 	public Piece[] newGame() {
 		int j = 0;
-		Piece[] ret = new Piece[16];
 		for (int i = 0; i < 4; i++) {
 			Piece[] pieces = new Piece[4];
 			for (int n = 0; n < 4; n++) {
 				pieces[n] = new Piece(startPointers[i].getColor());
-				ret[j++] = pieces[n];
+				pieceList[j++] = pieces[n];
 			}
 			startPointers[i].setPieces(pieces);
 		}
-		return ret;
+		return pieceList;
 	}
 
 	public String toString() {
