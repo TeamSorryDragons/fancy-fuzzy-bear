@@ -891,6 +891,45 @@ public class EngineNonGUITest {
 	
 	@Test
 	public void testSevenSplit(){
+		BoardList board = new BoardList();
+		Engine e = new Engine(board, "english");
+		e.insertPlayer(new Player(Piece.COLOR.red, "Dave"));
+		e.insertPlayer(new Player(Piece.COLOR.blue, "Whale Rider"));
+		e.newGame();
+		e.rotatePlayers();
+		
+		e.currentCard = new Card(7, "TEST");
+		Piece dave = board.startPointers[0].firstPiece();
+		board.startPointers[0].removePieceFromPieces(dave);
+		Piece harry = board.startPointers[1].firstPiece();
+		board.startPointers[1].removePieceFromPieces(harry);
+		
+		board.startPointers[0].getNext().addPieceToPieces(dave);
+		board.startPointers[1].getNext().addPieceToPieces(harry);
+		e.finalizeTurn();
+		assertEquals(board.toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsnr|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
+						+ "|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsnb|bmn3|nn|nn|nn|nn"
+						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+		
+		assertEquals(e.pawnMove(new SorryFrame.Coordinate(11, 15), new SorryFrame.Coordinate(9, 15)), Engine.VALID_MOVE_NO_FINALIZE);
+	
+		assertEquals(e.getActualBoard().toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nnr|nn|nn|hrsn|rsn|rsn"
+						+ "|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsnb|bmn3|nn|nn|nn|nn"
+						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+		
+		e.revertBoard();
+		assertEquals(e.getActualBoard().toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsnr|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
+						+ "|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsnb|bmn3|nn|nn|nn|nn"
+						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
+						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
+						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 		
 	}
 

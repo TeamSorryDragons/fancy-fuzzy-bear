@@ -184,8 +184,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	private void performTurn() {
 		if (this.desiresForfeit) {
+			this.engine.revertBoard();
 			this.initiateTurn();
-
 		}
 		int result = this.engine.pawnMove(this.clicks.get(0),
 				this.clicks.get(1));
@@ -239,7 +239,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void quitGame() {
-		System.out.println(userMessages[6]);
+		this.saveGame();
+		System.exit(0);
 
 	}
 

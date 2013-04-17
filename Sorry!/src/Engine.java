@@ -13,7 +13,7 @@ public class Engine {
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
 	private int remainingMoves = 0;
 	protected BoardList board;
-	protected BoardList actualBoard;
+	protected BoardList backupBoard;
 	protected Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue,
 								// Indices 8-11
 	// are Yellow, Indices 12-15 are green
@@ -24,7 +24,7 @@ public class Engine {
 
 	public Engine(BoardList board, String lang) {
 		this.board = board;
-		this.actualBoard = board.clone();
+		this.backupBoard = board.clone();
 		this.players = new CircularLinkedList<Player>();
 		this.deck = new Deck(lang);
 
@@ -50,7 +50,7 @@ public class Engine {
 
 	public void newGame() {
 		this.pieces = this.board.newGame();
-		this.actualBoard = this.board.clone();
+		this.backupBoard = this.board.clone();
 	}
 
 	public boolean isValidMove(Piece pawn, int numberMovesForward, Player player) {
@@ -530,17 +530,18 @@ public class Engine {
 	 * @return board
 	 */
 	public BoardList getActualBoard() {
-		return this.board; // actualBoard;
+		return this.board;
 	}
 
 	/**
 	 * Finalize the player's turn by setting the temporary movement board to the
 	 * real board. Reset the temp board.
+	 * @return if the active player won
 	 * 
 	 */
 	public boolean finalizeTurn() {
 		// TODO implement it, when the time comes
-		this.actualBoard = this.board.clone();
+		this.backupBoard = this.board.clone();
 		return hasWon();
 	}
 
@@ -552,7 +553,7 @@ public class Engine {
 	 */
 	public void revertBoard() {
 		// TODO implement once a board can be read from a file.
-		this.board = this.actualBoard.clone();
+		this.board = this.backupBoard.clone();
 		return;
 	}
 
