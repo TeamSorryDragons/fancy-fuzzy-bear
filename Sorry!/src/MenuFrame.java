@@ -21,8 +21,8 @@ import javax.swing.JTextArea;
  * @author sturgedl. Created Apr 17, 2013.
  */
 public class MenuFrame extends JFrame {
-	private static final int FRAME_WIDTH = 1330;
-	private static final int FRAME_HEIGHT = 1040;
+	private static final int FRAME_WIDTH = 600;
+	private static final int FRAME_HEIGHT = 800;
 
 	private static final int TITLE_WIDTH = 1000;
 	private static final int TITLE_HEIGHT = 100;
@@ -30,8 +30,13 @@ public class MenuFrame extends JFrame {
 	private JPanel buttonPanel;
 	private ArrayList<JButton> buttons;
 
+	private String language;
+	private String[] labels;
+
 	public MenuFrame(String lang) {
 		super();
+		this.language = lang;
+		this.labels = MenuFrame.obtainButtonLabels(lang);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -50,6 +55,23 @@ public class MenuFrame extends JFrame {
 		this.buttons = new ArrayList<JButton>();
 
 		this.initializeButtons();
+		this.add(buttonPanel);
+	}
+
+	/**
+	 * Fetch the button labels from an appropriate location based on the given
+	 * language.
+	 * 
+	 * @param lang
+	 * @return
+	 */
+	private static String[] obtainButtonLabels(String lang) {
+		String[] ret = new String[4];
+		ret[0] = "New Game";
+		ret[1] = "Load Game";
+		ret[2] = "Instructions";
+		ret[3] = "Exit";
+		return ret;
 	}
 
 	private void initializeButtons() {
@@ -58,21 +80,22 @@ public class MenuFrame extends JFrame {
 		if (this.buttons == null)
 			this.buttons = new ArrayList<JButton>();
 
-		JButton newGame = new JButton();
+		JButton newGame = new JButton(this.labels[0]);
 		this.buttons.add(newGame);
-		JButton loadGame = new JButton();
+		JButton loadGame = new JButton(this.labels[1]);
 		this.buttons.add(loadGame);
-		JButton instructions = new JButton();
+		JButton instructions = new JButton(this.labels[2]);
 		this.buttons.add(instructions);
-		JButton exit = new JButton();
+		JButton exit = new JButton(this.labels[3]);
 		this.buttons.add(exit);
 
 		newGame.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub.
-
+				MenuFrame.this.remove(MenuFrame.this.buttonPanel);
+				MenuFrame.this.repaint();
+				MenuFrame.this.createNewGame();
 			}
 		});
 
@@ -80,7 +103,7 @@ public class MenuFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub.
+				MenuFrame.this.loadExistingGame();
 
 			}
 		});
@@ -101,16 +124,36 @@ public class MenuFrame extends JFrame {
 			}
 		});
 
+		for (JButton b : this.buttons)
+			this.buttonPanel.add(b);
+
 	}
-	
-	private void displayInstructions(){
-		
-		
-		
+
+	protected void loadExistingGame() {
+		// TODO update to reflect the constructor reading from a file
+//		this.setEnabled(false);
+		SorryFrame sorry = new SorryFrame(this.language);
+		System.out.println("nailed it");
+		//sorry.initiateTurn();
+	}
+
+	/**
+	 * Method to ask the user for names then create a new save file, then load
+	 * the fresh game.
+	 * 
+	 */
+	protected void createNewGame() {
+		// TODO Auto-generated method stub.
+
+	}
+
+	private void displayInstructions() {
+		JFrame instr = new InstructionsFrame(this.language);
 	}
 
 	public static void main(String args[]) {
-		JFrame frame = new MenuFrame("English");
+		JFrame frame = new MenuFrame("english");
+		//JFrame frame2 = new SorryFrame("english");
 	}
 
 }

@@ -59,6 +59,10 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	public SorryFrame(String lang) {
 		super("Sorry!");
+		this.setEnabled(true);
+		this.setFocusable(true);
+		this.requestFocus();
+		
 		this.board = new BoardList();
 		try {
 			fr = new FileReader(lang + ".txt");
@@ -132,7 +136,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 				return;
 
 		}
-
 	}
 
 	/**
@@ -155,7 +158,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * active player. Begins listening to mouse input.
 	 * 
 	 */
-	private void initiateTurn() {
+	protected void initiateTurn() {
 		this.desiresForfeit = false;
 		this.currentCard = this.engine.getNextCard();
 		System.out.println(this.currentCard.toString());

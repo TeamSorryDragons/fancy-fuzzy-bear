@@ -20,24 +20,21 @@ import javax.swing.JTextArea;
  */
 public class InstructionsFrame extends JFrame {
 	private static final int FRAME_WIDTH = 800;
-	private static final int FRAME_HEIGHT = 1000;
-
-	private String title;
-	private String instructions;
+	private static final int FRAME_HEIGHT = 600;
 
 	public InstructionsFrame(String lang) {
 		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);	
-		
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
 		try {
-			String fileName = "/images/instructions_" + lang + ".html";
+			String fileName = InstructionsFrame.obtainFileName(lang);
 			URL location = InstructionsFrame.class.getResource(fileName);
 			if (location == null)
 				System.err.println("Couldn't find the file: " + fileName);
 			JEditorPane instrPane = new JEditorPane(location);
 			JScrollPane scroll = new JScrollPane(instrPane);
-			scroll.setPreferredSize(new Dimension(800, 600));
+			scroll.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 			scroll.setMinimumSize(new Dimension(100, 100));
 			scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 			this.getContentPane().add(scroll, BorderLayout.CENTER);
@@ -45,12 +42,19 @@ public class InstructionsFrame extends JFrame {
 			// TODO Auto-generated catch-block stub.
 			exception.printStackTrace();
 		}
-		
-		
-		this.repaint();
 		this.pack();
 		this.repaint();
-		
+
+	}
+
+	/**
+	 * What does it sound like? Probably does that.
+	 * 
+	 * @param lang
+	 * @return
+	 */
+	private static String obtainFileName(String lang) {
+		return "/images/instructions_" + lang + ".html";
 	}
 
 	/**
@@ -76,9 +80,8 @@ public class InstructionsFrame extends JFrame {
 	private String getTitleText(String lang) {
 		return "Instructions";
 	}
-	
-	
-	public static void main(String args[]){
+
+	public static void main(String args[]) {
 		JFrame tar = new InstructionsFrame("eng");
 	}
 
