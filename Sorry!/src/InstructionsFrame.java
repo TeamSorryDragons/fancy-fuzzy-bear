@@ -32,7 +32,8 @@ public class InstructionsFrame extends JFrame {
 			URL location = InstructionsFrame.class.getResource(fileName);
 			if (location == null)
 				System.err.println("Couldn't find the file: " + fileName);
-			JEditorPane instrPane = new JEditorPane(location);
+			JEditorPane instrPane = new JEditorPane();
+			instrPane.setPage(location);
 			JScrollPane scroll = new JScrollPane(instrPane);
 			scroll.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 			scroll.setMinimumSize(new Dimension(100, 100));
@@ -82,7 +83,7 @@ public class InstructionsFrame extends JFrame {
 	}
 
 	public static void main(String args[]) {
-		JFrame tar = new InstructionsFrame("eng");
+		JFrame tar = new InstructionsFrame("french");
 	}
 
 }
