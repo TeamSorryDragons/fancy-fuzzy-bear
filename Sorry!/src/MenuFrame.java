@@ -133,7 +133,9 @@ public class MenuFrame extends JFrame {
 		// TODO update to reflect the constructor reading from a file
 //		this.setEnabled(false);
 		SorryFrame sorry = new SorryFrame(this.language);
+		sorry.load();
 		this.dispose();
+		sorry.start();
 	}
 
 	/**
