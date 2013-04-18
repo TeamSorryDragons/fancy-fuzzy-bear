@@ -62,7 +62,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.setEnabled(true);
 		this.setFocusable(true);
 		this.requestFocus();
-		
+
 		this.board = new BoardList();
 		try {
 			fr = new FileReader(lang + ".txt");
@@ -85,11 +85,10 @@ public class SorryFrame extends JFrame implements ActionListener {
 		gui = new UIComponent(300, 1000, this, "english");
 		this.add(gui, BorderLayout.EAST);
 		gui.repaint();
-
-		this.setVisible(true);
-		this.repaint();
 		this.addMouseListener(new BoardMouseListener(this));
 		this.insertTestPlayers();
+		this.setVisible(true);
+		this.repaint();
 		this.initiateTurn();
 
 	}
@@ -148,8 +147,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	private void informPlayerError(String msg) {
 		this.notifyPlayer(msg);
-		this.awaitUserInteraction();
-		this.performTurn();
+		//this.awaitUserInteraction();
+		//this.performTurn();
 	}
 
 	/**
@@ -175,8 +174,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.gui.playerNameText.setText(this.engine.activePlayer.getName());
 		this.gui.update();
 		this.notifyPlayer(userMessages[0]);
-		this.awaitUserInteraction();
-		this.performTurn();
+		this.repaint();
+		// this.awaitUserInteraction();
+		// this.performTurn();
 	}
 
 	/**
@@ -191,9 +191,11 @@ public class SorryFrame extends JFrame implements ActionListener {
 		if (this.desiresForfeit) {
 			this.engine.revertBoard();
 			this.initiateTurn();
+			return;
 		}
 		int result = this.engine.pawnMove(this.clicks.get(0),
 				this.clicks.get(1));
+		this.repaint();
 		if (result == Engine.SAME_NODE_SELECTED) {
 			this.informPlayerError(userMessages[1]);
 		} else if (result == Engine.INVALID_MOVE) {
@@ -203,19 +205,27 @@ public class SorryFrame extends JFrame implements ActionListener {
 		} else if (result == Engine.NO_PIECE_SELECTED) {
 			this.informPlayerError(userMessages[4]);
 		} else if (result == Engine.VALID_MOVE_NO_FINALIZE) {
-			this.repaint();
-			this.awaitUserInteraction();
-			this.performTurn();
+
+			// this.awaitUserInteraction();
+			// this.performTurn();
 		} else {
 			// turn is over, rotate
 			if (this.engine.finalizeTurn()) {
-				this.repaint();
 				this.notifyPlayer(userMessages[5]);
+				this.markGameComplete();
 			} else {
-				this.repaint();
 				this.initiateTurn();
 			}
 		}
+	}
+
+	/**
+	 * Eventually decides what to do upon victory. For now, nothing really.
+	 * 
+	 */
+	private void markGameComplete() {
+		// TODO Auto-generated method stub.
+
 	}
 
 	private void resetClickDetection() {
@@ -257,14 +267,18 @@ public class SorryFrame extends JFrame implements ActionListener {
 		File save = new File("save.txt");
 		try {
 			PrintWriter output = new PrintWriter(save);
-			output.println(this.engine.activePlayer.getName() + "|" + this.engine.activePlayer.getColor().toString());
-			for(int i = 0; i < (this.engine.players.getNumberOfElements()-1)/2; i++){
+			output.println(this.engine.activePlayer.getName() + "|"
+					+ this.engine.activePlayer.getColor().toString());
+			for (int i = 0; i < (this.engine.players.getNumberOfElements() - 1) / 2; i++) {
 				this.engine.players.goToNextElement();
-				this.engine.activePlayer = this.engine.players.getActualElementData();
-				output.println(this.engine.activePlayer.getName() + "|" + this.engine.activePlayer.getColor().toString());
+				this.engine.activePlayer = this.engine.players
+						.getActualElementData();
+				output.println(this.engine.activePlayer.getName() + "|"
+						+ this.engine.activePlayer.getColor().toString());
 			}
 			this.engine.players.goToNextElement();
-			this.engine.activePlayer = this.engine.players.getActualElementData();
+			this.engine.activePlayer = this.engine.players
+					.getActualElementData();
 			output.println(this.board.toString());
 			output.close();
 		} catch (IOException e) {
@@ -279,6 +293,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	public void forfeitTurn() {
 		this.desiresForfeit = true;
+		this.resetClickDetection();
+		this.engine.revertBoard();
+		this.initiateTurn();
 	}
 
 	/**
@@ -381,6 +398,12 @@ public class SorryFrame extends JFrame implements ActionListener {
 			}
 			if (coord != null)
 				this.myFrame.registerMouseClick(coord);
+
+			if (this.myFrame.clickCount >= 2) {
+				// have enough clicks to make a turn
+				this.myFrame.performTurn();
+				this.myFrame.resetClickDetection();
+			}
 		}
 
 		@Override
