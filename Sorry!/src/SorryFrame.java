@@ -103,6 +103,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 			int a = passPlayers(players);
 			this.board = new BoardList((players.get(a + 1)));
 			this.engine.board = this.board;
+			this.engine.backupBoard = this.board.clone();
 			this.engine.pieces = this.board.pieceList;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
