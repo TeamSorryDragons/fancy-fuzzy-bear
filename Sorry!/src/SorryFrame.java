@@ -59,6 +59,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	public SorryFrame(String lang) {
 		super("Sorry!");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setEnabled(true);
 		this.setFocusable(true);
 		this.requestFocus();
@@ -81,28 +82,71 @@ public class SorryFrame extends JFrame implements ActionListener {
 		JComponent displayBoard = new DisplayableBoard(this.engine);
 		this.add(displayBoard, BorderLayout.CENTER);
 		// displayBoard.setSize(width, height)
-		this.insertTestPlayers();
-		gui = new UIComponent(300, 1000, this, "english");
+//		this.insertTestPlayers();
+		gui = new UIComponent(300, 1000, this, lang);
 		this.add(gui, BorderLayout.EAST);
-		gui.repaint();
 
+
+//		this.insertTestPlayers();
+
+	}
+	
+	public void start(){
+		gui.repaint();
 		this.setVisible(true);
 		this.repaint();
 		this.addMouseListener(new BoardMouseListener(this));
-		this.insertTestPlayers();
 		this.initiateTurn();
-
+	}
+	
+	public void load(){
+		File file = new File("save.txt");
+		Scanner reader;
+		try {
+			reader = new Scanner(file);
+			ArrayList<String> players = new ArrayList<String>();
+			boolean bool = true;
+			String temp = "";
+			while(reader.hasNext()){
+				players.add(reader.nextLine());
+			}
+			int a = passPlayers(players);
+			this.board = new BoardList((players.get(a+1)));
+			this.engine.board = this.board;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public int passPlayers(ArrayList<String> str){
+		int ret = 0;
+		for(String string : str){
+			if(string == ""){
+				break;
+			}
+			String[] player = string.split("\\|");
+			if(player.length != 2){
+				break;
+			}
+			switch(player[1]){
+			case "red":
+				this.engine.insertPlayer(new Player(Piece.COLOR.red,player[0]));
+				break;
+			case "green":
+				this.engine.insertPlayer(new Player(Piece.COLOR.green,player[0]));
+				break;
+			case "blue":
+				this.engine.insertPlayer(new Player(Piece.COLOR.blue,player[0]));
+				break;
+			case "yellow":
+				this.engine.insertPlayer(new Player(Piece.COLOR.yellow,player[0]));
+				break;
+			}
+			ret ++;
+		}
+		return ret;
 	}
 
-	private void insertTestPlayers() {
-		this.engine.insertPlayer(new Player(Piece.COLOR.red, "Hugh Hefner"));
-		this.engine
-				.insertPlayer(new Player(Piece.COLOR.blue, "Amanda Streich"));
-		this.engine
-				.insertPlayer(new Player(Piece.COLOR.yellow, "Britany Nola"));
-		this.engine
-				.insertPlayer(new Player(Piece.COLOR.green, "Pamela Horton"));
-	}
 
 	/**
 	 * Given an (x, y) tuple of doubles, will return an appropriate board grid
@@ -258,13 +302,14 @@ public class SorryFrame extends JFrame implements ActionListener {
 		try {
 			PrintWriter output = new PrintWriter(save);
 			output.println(this.engine.activePlayer.getName() + "|" + this.engine.activePlayer.getColor().toString());
-			for(int i = 0; i < (this.engine.players.getNumberOfElements()-1)/2; i++){
+			for(int i = 0; i < (this.engine.players.getNumberOfElements()-1); i++){
 				this.engine.players.goToNextElement();
 				this.engine.activePlayer = this.engine.players.getActualElementData();
 				output.println(this.engine.activePlayer.getName() + "|" + this.engine.activePlayer.getColor().toString());
 			}
 			this.engine.players.goToNextElement();
 			this.engine.activePlayer = this.engine.players.getActualElementData();
+			output.println();
 			output.println(this.board.toString());
 			output.close();
 		} catch (IOException e) {
