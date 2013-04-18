@@ -23,3 +23,8 @@ Message
 Exit
 Save
 Forfeit Turn
+
+New Game
+Load Game
+Instructions
+Exit

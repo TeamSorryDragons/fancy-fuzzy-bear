@@ -5,7 +5,10 @@ import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -67,10 +70,20 @@ public class MenuFrame extends JFrame {
 	 */
 	private static String[] obtainButtonLabels(String lang) {
 		String[] ret = new String[4];
-		ret[0] = "New Game";
-		ret[1] = "Load Game";
-		ret[2] = "Instructions";
-		ret[3] = "Exit";
+		Scanner in;
+		try {
+			in = new Scanner(new File(lang +".txt"));
+			for (int x = 0; x < 26; x++)
+				in.nextLine();
+			
+			ret[0] = in.nextLine();
+			ret[1] = in.nextLine();
+			ret[2] = in.nextLine();
+			ret[3] = in.nextLine();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return ret;
 	}
 
