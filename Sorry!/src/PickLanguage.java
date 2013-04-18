@@ -30,8 +30,9 @@ public class PickLanguage extends JFrame{
 		jrbEng.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e)
 			{
+				dispose();
 				mf= new MenuFrame("english");
-				setVisible(false);
+//				setVisible(false);
 				mf.setVisible(true);
 			}
 		});
@@ -39,8 +40,9 @@ public class PickLanguage extends JFrame{
 		jrbFrc.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e)
 			{
+				dispose();
 				mf= new MenuFrame("french");
-				setVisible(false);
+//				setVisible(false);
 				mf.setVisible(true);
 			}
 		});

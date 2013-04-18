@@ -59,10 +59,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	public SorryFrame(String lang) {
 		super("Sorry!");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setEnabled(true);
-		this.setFocusable(true);
-		this.requestFocus();
+//		this.setFocusable(true);
+//		this.requestFocus();
 		
 		this.board = new BoardList();
 		try {
@@ -85,7 +84,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 //		this.insertTestPlayers();
 		gui = new UIComponent(300, 1000, this, lang);
 		this.add(gui, BorderLayout.EAST);
-
 
 //		this.insertTestPlayers();
 
@@ -113,6 +111,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 			int a = passPlayers(players);
 			this.board = new BoardList((players.get(a+1)));
 			this.engine.board = this.board;
+			this.engine.pieces = this.board.pieceList;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
