@@ -34,6 +34,7 @@ public class InstructionsFrame extends JFrame {
 				System.err.println("Couldn't find the file: " + fileName);
 			JEditorPane instrPane = new JEditorPane();
 			instrPane.setPage(location);
+			instrPane.setContentType("text/html; charset=utf-8");
 			JScrollPane scroll = new JScrollPane(instrPane);
 			scroll.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 			scroll.setMinimumSize(new Dimension(100, 100));
