@@ -1,3 +1,5 @@
+import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,15 +10,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 
 
 public class PickLanguage extends JFrame{
+	private MenuFrame mf;
 	public PickLanguage(){
-		JFrame frame = new JFrame();
+		super("Pick the language/ Choisissez la langue");
 		JPanel panel= new JPanel();
+		JLabel title = new JLabel("Pick the language/ Choisissez la langue",JLabel.CENTER);
+		panel.add(title);
 		JRadioButton jrbEng = new JRadioButton("English");
-		JRadioButton jrbFrc = new JRadioButton("French");
+		JRadioButton jrbFrc = new JRadioButton("Français");
 		ButtonGroup group = new ButtonGroup();
 		group.add(jrbEng);
 		group.add(jrbFrc);
@@ -24,21 +30,27 @@ public class PickLanguage extends JFrame{
 		jrbEng.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e)
 			{
-				MenuFrame mf= new MenuFrame("english");
+				mf= new MenuFrame("english");
+				setVisible(false);
+				mf.setVisible(true);
 			}
 		});
 
 		jrbFrc.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e)
 			{
-				MenuFrame mf= new MenuFrame("french");
+				mf= new MenuFrame("french");
+				setVisible(false);
+				mf.setVisible(true);
 			}
 		});
 		JPanel jplRadio = new JPanel();
-		jplRadio.setLayout(new GridLayout(0, 1));
+		jplRadio.setLayout(new GridLayout(0,1));
+		jplRadio.add(title);
 		jplRadio.add(jrbEng);
 		jplRadio.add(jrbFrc);
-		frame.add(jplRadio);
+		this.add(jplRadio);
+		this.setSize(350,200);
 	}
 
 }
