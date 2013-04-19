@@ -116,56 +116,58 @@ public class MenuFrame extends JFrame {
 				MenuFrame.this.getContentPane().removeAll();
 				MenuFrame.this.repaint();
 				JPanel newGamePanel = new JPanel();
-				newGamePanel.setBackground(Color.black);
-//				newGamePanel.setLayout(new GridLayout(3,1));
-//				JLabel playerName = new JLabel();
-//				playerName.setText("Name your Players");
-//				newGamePanel.add(playerName);
-//				JPanel textBoxPanel = new JPanel();
-//				textBoxPanel.setLayout(new GridLayout(4 , 2));
-//				JLabel red = new JLabel("red");
-//				JLabel blue = new JLabel("blue");
-//				JLabel green = new JLabel("green");
-//				JLabel yellow =new JLabel("yellow");
-//				
-//				p1 = new JTextField();
-//				p2 = new JTextField();
-//				p3 = new JTextField();
-//				p4 = new JTextField();
-//				p1.setEditable(true);
-//				p2.setEditable(true);
-//				p3.setEditable(true);
-//				p4.setEditable(true);
-//				textBoxPanel.add(red);
-//				textBoxPanel.add(p1);
-//				textBoxPanel.add(blue);
-//				textBoxPanel.add(p2);;
-//				textBoxPanel.add(yellow);
-//				textBoxPanel.add(p3);
-//				textBoxPanel.add(green);
-//				textBoxPanel.add(p4);
-//				newGamePanel.add(textBoxPanel);
-//				JButton btnStart = new JButton("Start");
-//				btnStart.addActionListener(new ActionListener(){
-//					@Override
-//					public void actionPerformed(ActionEvent evt) {
-//					    ArrayList<String> player=new ArrayList<String>();
-//						if(MenuFrame.this.p1.getText()!=null)
-//							player.add(p1.getText()+"|red");
-//						if(MenuFrame.this.p2.getText()!=null)
-//							player.add(p2.getText()+"|blue");
-//						if(MenuFrame.this.p3.getText()!=null)
-//							player.add(p3.getText()+"|yellow");
-//						if(MenuFrame.this.p4.getText()!=null)
-//							player.add(p4.getText()+"|green");
-//						MenuFrame.this.createNewGame(player);
-//					}
-//					
-//				});
-//				newGamePanel.add(btnStart);
+//				newGamePanel.setBackground(Color.BLACK);
+				newGamePanel.setLayout(new GridLayout(3,1));
+				JLabel playerName = new JLabel();
+				playerName.setText("Name your Players");
+				newGamePanel.add(playerName);
+				JPanel textBoxPanel = new JPanel();
+				textBoxPanel.setLayout(new GridLayout(4 , 2));
+				JLabel red = new JLabel("red");
+				JLabel blue = new JLabel("blue");
+				JLabel green = new JLabel("green");
+				JLabel yellow =new JLabel("yellow");
+				
+				p1 = new JTextField();
+				p2 = new JTextField();
+				p3 = new JTextField();
+				p4 = new JTextField();
+				p1.setEditable(true);
+				p2.setEditable(true);
+				p3.setEditable(true);
+				p4.setEditable(true);
+				textBoxPanel.add(red);
+				textBoxPanel.add(p1);
+				textBoxPanel.add(blue);
+				textBoxPanel.add(p2);;
+				textBoxPanel.add(yellow);
+				textBoxPanel.add(p3);
+				textBoxPanel.add(green);
+				textBoxPanel.add(p4);
+				newGamePanel.add(textBoxPanel);
+				JButton btnStart = new JButton("Start");
+				btnStart.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent evt) {
+					    ArrayList<String> player=new ArrayList<String>();
+						if(!MenuFrame.this.p1.getText().isEmpty())
+							player.add(p1.getText()+"|red");
+						if(!MenuFrame.this.p2.getText().isEmpty())
+							player.add(p2.getText()+"|blue");
+						if(!MenuFrame.this.p3.getText().isEmpty())
+							player.add(p3.getText()+"|yellow");
+						if(!MenuFrame.this.p4.getText().isEmpty())
+							player.add(p4.getText()+"|green");
+						MenuFrame.this.createNewGame(player);
+					}
+					
+				});
+				newGamePanel.add(btnStart);
 				newGamePanel.setVisible(true);
 				newGamePanel.setPreferredSize(new Dimension(600,800));
-				MenuFrame.this.getContentPane().add(newGamePanel);
+				newGamePanel.repaint();
+				MenuFrame.this.add(newGamePanel, BorderLayout.NORTH);
+				MenuFrame.this.setVisible(true);
 				MenuFrame.this.repaint();
 			}
 		});
@@ -218,6 +220,7 @@ public class MenuFrame extends JFrame {
 		// TODO Auto-generated method stub.
 		SorryFrame sorry = new SorryFrame(this.language);
 		sorry.passPlayers(players);
+		sorry.start();
 		this.dispose();
 
 	}
