@@ -196,8 +196,6 @@ public class Engine {
 			move(moves, pawn, start);
 		} catch (InvalidMoveException e) {
 			return INVALID_MOVE;
-		} catch (Unstarted e) {
-			e.printStackTrace();
 		}
 
 		if (ninja_return != 0)
@@ -264,8 +262,7 @@ public class Engine {
 	 *             if the game hasn't been generated
 	 * @throws InvalidMoveException
 	 */
-	public void move(int moves, Piece piece, Node piecenode) throws Unstarted,
-			InvalidMoveException {
+	public void move(int moves, Piece piece, Node piecenode) throws InvalidMoveException {
 		piecenode.removePieceFromPieces(piece);
 		ArrayList<Piece> strt = piecenode.move(moves, piece);
 		if (strt != null && strt.size() > 0) {
@@ -331,35 +328,35 @@ public class Engine {
 		}
 	}
 
-	/**
-	 * Helper method to determine whether or not a pawn is contained within a
-	 * given set of pawns.
-	 * 
-	 * @param pawns
-	 * @param pawn
-	 * @return
-	 */
-	protected static boolean contains(Piece[] pawns, Piece pawn) {
-		for (Piece p : pawns) {
-			if (p == pawn)
-				return true;
-		}
-		return false;
-	}
+//	/**
+//	 * Helper method to determine whether or not a pawn is contained within a
+//	 * given set of pawns.
+//	 * 
+//	 * @param pawns
+//	 * @param pawn
+//	 * @return
+//	 */
+//	protected static boolean contains(Piece[] pawns, Piece pawn) {
+//		for (Piece p : pawns) {
+//			if (p == pawn)
+//				return true;
+//		}
+//		return false;
+//	}
 
-	/**
-	 * Exception thrown is a game has not been started prior to interaction with
-	 * that game.
-	 * 
-	 * @author TeamSorryDragons
-	 */
-	protected class Unstarted extends Exception {
-		private static final long serialVersionUID = 1L;
-
-		public Unstarted(String message) {
-			super(message);
-		}
-	}
+//	/**
+//	 * Exception thrown is a game has not been started prior to interaction with
+//	 * that game.
+//	 * 
+//	 * @author TeamSorryDragons
+//	 */
+//	protected class Unstarted extends Exception {
+//		private static final long serialVersionUID = 1L;
+//
+//		public Unstarted(String message) {
+//			super(message);
+//		}
+//	}
 
 	/**
 	 * Returns the node at the given coordinate position.
