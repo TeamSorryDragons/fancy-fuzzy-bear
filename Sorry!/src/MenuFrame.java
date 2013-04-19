@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * JFrame to display menu options to the user. Used to select game settings then
@@ -32,6 +34,11 @@ public class MenuFrame extends JFrame {
 
 	private String language;
 	private String[] labels;
+	
+	private JTextField p1;
+	private JTextField p2;
+	private JTextField p3;
+	private JTextField p4;
 
 	public MenuFrame(String lang) {
 		super();
@@ -93,9 +100,60 @@ public class MenuFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				MenuFrame.this.remove(MenuFrame.this.buttonPanel);
+				MenuFrame.this.getContentPane().removeAll();
 				MenuFrame.this.repaint();
-				MenuFrame.this.createNewGame();
+				JPanel newGamePanel = new JPanel();
+				newGamePanel.setBackground(Color.black);
+//				newGamePanel.setLayout(new GridLayout(3,1));
+//				JLabel playerName = new JLabel();
+//				playerName.setText("Name your Players");
+//				newGamePanel.add(playerName);
+//				JPanel textBoxPanel = new JPanel();
+//				textBoxPanel.setLayout(new GridLayout(4 , 2));
+//				JLabel red = new JLabel("red");
+//				JLabel blue = new JLabel("blue");
+//				JLabel green = new JLabel("green");
+//				JLabel yellow =new JLabel("yellow");
+//				
+//				p1 = new JTextField();
+//				p2 = new JTextField();
+//				p3 = new JTextField();
+//				p4 = new JTextField();
+//				p1.setEditable(true);
+//				p2.setEditable(true);
+//				p3.setEditable(true);
+//				p4.setEditable(true);
+//				textBoxPanel.add(red);
+//				textBoxPanel.add(p1);
+//				textBoxPanel.add(blue);
+//				textBoxPanel.add(p2);;
+//				textBoxPanel.add(yellow);
+//				textBoxPanel.add(p3);
+//				textBoxPanel.add(green);
+//				textBoxPanel.add(p4);
+//				newGamePanel.add(textBoxPanel);
+//				JButton btnStart = new JButton("Start");
+//				btnStart.addActionListener(new ActionListener(){
+//					@Override
+//					public void actionPerformed(ActionEvent evt) {
+//					    ArrayList<String> player=new ArrayList<String>();
+//						if(MenuFrame.this.p1.getText()!=null)
+//							player.add(p1.getText()+"|red");
+//						if(MenuFrame.this.p2.getText()!=null)
+//							player.add(p2.getText()+"|blue");
+//						if(MenuFrame.this.p3.getText()!=null)
+//							player.add(p3.getText()+"|yellow");
+//						if(MenuFrame.this.p4.getText()!=null)
+//							player.add(p4.getText()+"|green");
+//						MenuFrame.this.createNewGame(player);
+//					}
+//					
+//				});
+//				newGamePanel.add(btnStart);
+				newGamePanel.setVisible(true);
+				newGamePanel.setPreferredSize(new Dimension(600,800));
+				MenuFrame.this.getContentPane().add(newGamePanel);
+				MenuFrame.this.repaint();
 			}
 		});
 
@@ -141,8 +199,11 @@ public class MenuFrame extends JFrame {
 	 * the fresh game.
 	 * 
 	 */
-	protected void createNewGame() {
+	protected void createNewGame(ArrayList<String> players){
 		// TODO Auto-generated method stub.
+		SorryFrame sorry = new SorryFrame(this.language);
+		sorry.passPlayers(players);
+		this.dispose();
 
 	}
 
