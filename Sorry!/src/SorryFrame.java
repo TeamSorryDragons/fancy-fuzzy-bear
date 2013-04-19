@@ -89,8 +89,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.initiateTurn();
 	}
 
-	public void load() {
-		File file = new File("save.txt");
+	public void load(String filename) {
+		File file = new File(filename);
 		Scanner reader;
 		try {
 			reader = new Scanner(file);
