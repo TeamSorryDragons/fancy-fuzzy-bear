@@ -23,3 +23,8 @@ Message
 Sortie
 Économise
 Déchu la tour
+
+nouveau jeu
+Jeu de charge
+instructions
+quitter

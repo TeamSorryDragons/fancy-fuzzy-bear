@@ -59,11 +59,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	public SorryFrame(String lang) {
 		super("Sorry!");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setEnabled(true);
-		this.setFocusable(true);
-		this.requestFocus();
-
 		this.board = new BoardList();
 		try {
 			fr = new FileReader(lang + ".txt");
@@ -83,7 +79,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.add(displayBoard, BorderLayout.CENTER);
 		gui = new UIComponent(300, 1000, this, lang);
 		this.add(gui, BorderLayout.EAST);
-
 	}
 
 	public void start() {
@@ -94,8 +89,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.initiateTurn();
 	}
 
-	public void load() {
-		File file = new File("save.txt");
+	public void load(String filename) {
+		File file = new File(filename);
 		Scanner reader;
 		try {
 			reader = new Scanner(file);
@@ -108,6 +103,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 			int a = passPlayers(players);
 			this.board = new BoardList((players.get(a + 1)));
 			this.engine.board = this.board;
+			this.engine.backupBoard = this.board.clone();
+			this.engine.pieces = this.board.pieceList;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
