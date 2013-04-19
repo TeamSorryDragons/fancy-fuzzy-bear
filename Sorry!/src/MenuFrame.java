@@ -158,7 +158,9 @@ public class MenuFrame extends JFrame {
 							player.add(p3.getText()+"|yellow");
 						if(!MenuFrame.this.p4.getText().isEmpty())
 							player.add(p4.getText()+"|green");
-						MenuFrame.this.createNewGame(player);
+						if(player.size() > 1){
+							MenuFrame.this.createNewGame(player);
+						}
 					}
 					
 				});
