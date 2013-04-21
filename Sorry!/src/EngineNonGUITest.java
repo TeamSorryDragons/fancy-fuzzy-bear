@@ -229,13 +229,13 @@ public class EngineNonGUITest {
 	@SuppressWarnings("javadoc")
 	@Test
 	public void testCoordinateToIntCorners() {
-		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 15)),
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 15),0),
 				0);
-		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(0, 15)),
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(0, 15),0),
 				22);
-		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(0, 0)),
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(0, 0),0),
 				44);
-		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 0)),
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 0),0),
 				66);
 	}
 
@@ -245,21 +245,21 @@ public class EngineNonGUITest {
 		for (int i = 10; i <= 12; i++) {
 			for (int j = 12; j <= 14; j++)
 				assertEquals(
-						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j),0),
 						11);
 		}
 
 		for (int i = 3; i <= 5; i++) {
 			for (int j = 14; j >= 12; j--)
 				assertEquals(
-						Engine.getNodePosition(new SorryFrame.Coordinate(j, i)),
+						Engine.getNodePosition(new SorryFrame.Coordinate(j, i),0),
 						77);
 		}
 
 		for (int i = 3; i <= 5; i++) {
 			for (int j = 1; j <= 3; j++) {
 				assertEquals(
-						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j),0),
 						55);
 			}
 		}
@@ -267,7 +267,7 @@ public class EngineNonGUITest {
 		for (int i = 1; i <= 3; i++) {
 			for (int j = 12; j >= 10; j--) {
 				assertEquals(
-						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j),0),
 						33);
 			}
 		}
@@ -280,27 +280,27 @@ public class EngineNonGUITest {
 		for (int i = 14; i >= 12; i--) {
 			for (int j = 7; j <= 9; j++)
 				assertEquals(
-						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j),0),
 						8);
 		}
 
 		for (int i = 9; i >= 7; i--) {
 			for (int j = 1; j <= 3; j++)
 				assertEquals(
-						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j),0),
 						74);
 		}
 
 		for (int i = 1; i <= 3; i++)
 			for (int j = 6; j <= 8; j++)
 				assertEquals(
-						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j),0),
 						52);
 
 		for (int i = 6; i <= 8; i++)
 			for (int j = 14; j >= 12; j--)
 				assertEquals(
-						Engine.getNodePosition(new SorryFrame.Coordinate(i, j)),
+						Engine.getNodePosition(new SorryFrame.Coordinate(i, j),0),
 						30);
 
 	}
@@ -311,25 +311,25 @@ public class EngineNonGUITest {
 		int green = 68;
 		for (int i = 15; i >= 10; i--)
 			assertEquals(
-					Engine.getNodePosition(new SorryFrame.Coordinate(i, 2)),
+					Engine.getNodePosition(new SorryFrame.Coordinate(i, 2),0),
 					green++);
 
 		int red = 2;
 		for (int i = 15; i >= 10; i--)
 			assertEquals(
-					Engine.getNodePosition(new SorryFrame.Coordinate(13, i)),
+					Engine.getNodePosition(new SorryFrame.Coordinate(13, i),0),
 					red++);
 
 		int blue = 24;
 		for (int i = 0; i <= 5; i++)
 			assertEquals(
-					Engine.getNodePosition(new SorryFrame.Coordinate(i, 13)),
+					Engine.getNodePosition(new SorryFrame.Coordinate(i, 13),0),
 					blue++);
 
 		int yellow = 46;
 		for (int i = 0; i <= 5; i++)
 			assertEquals(
-					Engine.getNodePosition(new SorryFrame.Coordinate(2, i)),
+					Engine.getNodePosition(new SorryFrame.Coordinate(2, i),0),
 					yellow++);
 
 	}
@@ -382,7 +382,7 @@ public class EngineNonGUITest {
 	}
 
 	private void checkCoordinateInt(int x, int y, int pos) {
-		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(x, y)),
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(x, y),0),
 				pos);
 	}
 
@@ -434,6 +434,7 @@ public class EngineNonGUITest {
 	public void testPanwMovement() {
 		BoardList board = new BoardList();
 		Engine e = new Engine(board, "english");
+		e.activePlayer = new Player(Piece.COLOR.red, "Phil");
 		e.getNextCard();
 		assertEquals(e.pawnMove(new SorryFrame.Coordinate(0, 0),
 				new SorryFrame.Coordinate(0, 0)), 0);
@@ -474,6 +475,7 @@ public class EngineNonGUITest {
 		BoardList board = new BoardList();
 		Engine e = new Engine(board, "english");
 		e.newGame();
+		e.activePlayer = new Player(Piece.COLOR.red, "Phil");
 
 		assertEquals(Engine.SAME_NODE_SELECTED, e.pawnMove(
 				new SorryFrame.Coordinate(0, 0),
@@ -492,6 +494,7 @@ public class EngineNonGUITest {
 	public void testPawnMoveInvalidCoordinates() {
 		BoardList board = new BoardList();
 		Engine e = new Engine(board, "english");
+		e.activePlayer = new Player(Piece.COLOR.red, "Phil");
 		e.newGame();
 
 		assertEquals(Engine.NODE_NOT_FOUND, e.pawnMove(
@@ -770,8 +773,8 @@ public class EngineNonGUITest {
 				new SorryFrame.Coordinate(11, 15));
 		assertEquals(test, 1);
 		e.rotatePlayers();
-		test = e.pawnMove(new SorryFrame.Coordinate(1, 11),
-				new SorryFrame.Coordinate(0, 11));
+		test = e.pawnMove(new SorryFrame.Coordinate(11, 14),
+				new SorryFrame.Coordinate(11,15));
 		assertEquals(test, 1);
 
 		e.currentCard = new Card(11, "Test");
@@ -796,8 +799,8 @@ public class EngineNonGUITest {
 
 		// try it the other way for good measure
 		e.rotatePlayers();
-		test = e.pawnMove(new SorryFrame.Coordinate(11, 15),
-				new SorryFrame.Coordinate(0, 11));
+		test = e.pawnMove(new SorryFrame.Coordinate(15,4),
+				new SorryFrame.Coordinate(11, 15));
 		assertEquals(test, 15);
 
 		assertEquals(
@@ -866,7 +869,7 @@ public class EngineNonGUITest {
 		
 		e.rotatePlayers();
 		e.currentCard = new Card(13, "TEST");
-		assertTrue(e.pawnMove(new SorryFrame.Coordinate(1, 11), new SorryFrame.Coordinate(11, 15)) > 0);
+		assertTrue(e.pawnMove(new SorryFrame.Coordinate(11, 14), new SorryFrame.Coordinate(15,4)) > 0);
 		
 		assertEquals(board.toString(),
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsnb|rmn4|nn|nn|nn|nn|hrsn|rsn|rsn"
