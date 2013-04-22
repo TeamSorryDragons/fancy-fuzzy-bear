@@ -200,7 +200,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	protected void initiateTurn() {
 		this.desiresForfeit = false;
 		this.currentCard = this.engine.getNextCard();
-		System.out.println(this.currentCard.toString());
+//		System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
 
 		if (this.engine.activePlayer.getColor() == Piece.COLOR.blue) {

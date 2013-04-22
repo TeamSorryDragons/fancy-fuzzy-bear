@@ -8,33 +8,54 @@ import javax.swing.JComponent;
 public class DisplayableBoard extends JComponent {
 	private static final long serialVersionUID = 1L;
 	Engine gameEngine;
-	private static BufferedImage image;
+	private static BufferedImage[] image = new BufferedImage[4];
 
 	public DisplayableBoard(Engine eng) {
 		super();
 		this.gameEngine = eng;
 		try {
-			image = ImageIO.read(this.getClass().getResource(
+			image[0] = ImageIO.read(this.getClass().getResource(
 					"/images/Board.jpg"));
+			image[1] = ImageIO.read(this.getClass().getResource(
+					"/images/Board2.jpg"));
+			image[2] = ImageIO.read(this.getClass().getResource(
+					"/images/Board3.jpg"));
+			image[3] = ImageIO.read(this.getClass().getResource(
+					"/images/Board4.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void paintComponent(Graphics g) {
-		g.drawImage(image, 0, 0, null);
 		draw(g);
 	}
 
 	public void draw(Graphics g) {
 		Node[] cornerPointers = this.gameEngine.getActualBoard()
 				.getCornerPointers();
-		int size = image.getWidth() / 16;
 		Graphics2D g2 = (Graphics2D) g;
 		g.setFont(new Font(g.getFont().getName(),Font.PLAIN,40));
-		draw(cornerPointers[0], cornerPointers[0].getNext(), Math.PI,
-				image.getWidth() - 2 * size, image.getHeight() - size, size,
-				g2, Piece.COLOR.red);
+		int i = 0;
+		switch(gameEngine.activePlayer.getColor()){
+		case red:
+			i = 0;
+			break;
+		case blue:
+			i = 1;
+			break;
+		case green:
+			i = 3;
+			break;
+		case yellow:
+			i = 2;
+			break;
+		}
+		int size = image[i].getWidth() / 16;
+		g.drawImage(image[i], 0, 0, null);
+		draw(cornerPointers[i], cornerPointers[i].getNext(), Math.PI,
+				image[i].getWidth() - 2 * size, image[i].getHeight() - size, size,
+				g2, gameEngine.activePlayer.getColor());
 	}
 
 	@SuppressWarnings("incomplete-switch")
