@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Engine {
+public class Engine implements EngineInterface {
 	public static final int NODE_NOT_FOUND = -128;
 	public static final int SAME_NODE_SELECTED = 0;
 	public static final int NO_PIECE_SELECTED = -256;
@@ -372,7 +372,7 @@ public class Engine {
 	public Node convertCoordToNode(SorryFrame.Coordinate coordinate) {
 		// TODO this
 		int i = 0;
-		switch(this.activePlayer.getColor()){
+		switch (this.activePlayer.getColor()) {
 		case red:
 			i = 0;
 			break;
@@ -386,7 +386,7 @@ public class Engine {
 			i = 3;
 			break;
 		}
-		return this.findNodeByPosition(this.getNodePosition(coordinate,i));
+		return this.findNodeByPosition(this.getNodePosition(coordinate, i));
 	}
 
 	protected static int getNodePosition(SorryFrame.Coordinate coord, int input) {
@@ -679,7 +679,7 @@ public class Engine {
 			for (int j = 12; j <= 14; j++)
 				coordsMap.put(new SorryFrame.Coordinate(j, i), greenStart);
 		}
-		
+
 		redStart = 11;
 		blueStart = 33;
 		yellowStart = 55;
@@ -703,7 +703,7 @@ public class Engine {
 			for (int j = 12; j <= 14; j++)
 				coordsMap1.put(new SorryFrame.Coordinate(j, i), redStart);
 		}
-		
+
 		redStart = 11;
 		blueStart = 33;
 		yellowStart = 55;
@@ -727,7 +727,7 @@ public class Engine {
 			for (int j = 12; j <= 14; j++)
 				coordsMap2.put(new SorryFrame.Coordinate(j, i), blueStart);
 		}
-		
+
 		redStart = 11;
 		blueStart = 33;
 		yellowStart = 55;
