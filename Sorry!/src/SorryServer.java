@@ -18,6 +18,11 @@ import org.simpleframework.transport.connect.SocketConnection;
  * @author sturgedl. Created Apr 22, 2013.
  */
 public class SorryServer implements Container {
+	private static final String USER_NAME_IDENTIFIER = "user";
+	private static final String FIRST_COORD_IDENTIFIER = "coord1";
+	private static final String SECOND_COORD_IDENTIFIER = "coord2";
+	private static final String INVALID_PLAYER_MSG = "InactivePlayer";
+	private static final String INVALID_DATA_MSG = "InvalidData";
 	protected Engine gameModule;
 	protected LinkedList<String> messages;
 	protected Connection connector;
@@ -43,12 +48,21 @@ public class SorryServer implements Container {
 			this.connector.connect(address);
 			return true;
 		} catch (Exception e) {
-			System.out.println("Error opening server, likely the port failed.");
+			System.out
+					.println("Error opening server, likely the port failed on port: "
+							+ port);
 			return false;
 		}
 
 	}
 
+	/**
+	 * Kill the server with fire and dragons. I personally like using a
+	 * broadsword and smashing the server, but fire is also an acceptable
+	 * alternative.
+	 * 
+	 * @return successful?
+	 */
 	public boolean closeServerConnection() {
 		if (this.connector == null)
 			return false;
@@ -56,7 +70,7 @@ public class SorryServer implements Container {
 			this.connector.close();
 			return true;
 		} catch (IOException exception) {
-			// TODO Auto-generated catch-block stub.
+			// was not successful, bad news bears
 			return false;
 		}
 	}
@@ -100,6 +114,8 @@ public class SorryServer implements Container {
 			return;
 		}
 
+		response.setContentType("text/plain; charset=utf-8");
+
 		String data = "";
 		data += URLEncoder.encode("active-user", "UTF-8")
 				+ "="
@@ -141,11 +157,129 @@ public class SorryServer implements Container {
 		System.out.println("Server received input:");
 		System.out.println(input);
 
+		String[] linesIn = input.split("\n");
+
+		System.out.println("Input lines: " + linesIn.length);
+
 		PrintStream out = response.getPrintStream();
+
+		POSTDataContainer postData = parseServerInput(linesIn);
+		if (!postData.isValidData) {
+			out.println("result=" + INVALID_DATA_MSG);
+			out.flush();
+			out.close();
+			return;
+		}
+
+		if (!postData.userName.equals(this.gameModule.activePlayer.getName())) {
+			out.println("result=" + INVALID_PLAYER_MSG);
+			out.flush();
+			out.close();
+			return;
+		}
+
 		out.print("result=");
-		out.print(Engine.INVALID_MOVE);
+
+		int result = this.gameModule.pawnMove(postData.firstCoord,
+				postData.secondCoord);
+		out.print("" + result);
+
 		out.flush();
 		out.close();
+	}
+
+	protected static POSTDataContainer parseServerInput(String[] input)
+			throws IllegalArgumentException {
+		POSTDataContainer data = new POSTDataContainer();
+		data.isValidData = false;
+		for (String datum : input) {
+			if (datum == null)
+				continue;
+			int breakIndex = datum.indexOf("=");
+			if (breakIndex == -1)
+				throw new IllegalArgumentException(
+						"Invalid data line: no = for data entry, " + datum);
+			String prefix = datum.substring(0, breakIndex);
+			switch (prefix) {
+			case USER_NAME_IDENTIFIER:
+				if (data.userName == null) {
+					String name = datum.substring(datum.indexOf("=") + 1);
+					if (name.equals(""))
+						throw new IllegalArgumentException(
+								"Error in user name parse: no user name given");
+					data.userName = name;
+				} else
+					throw new IllegalArgumentException(
+							"Error in user name parse: Over defined");
+				break;
+
+			case FIRST_COORD_IDENTIFIER:
+				if (data.firstCoord == null) {
+					String coord = datum.substring(datum.indexOf("=") + 1);
+					data.firstCoord = parseDatumToCoordinate(coord);
+				} else
+					throw new IllegalArgumentException(
+							"First coordinate over-defined: " + datum);
+				break;
+
+			case SECOND_COORD_IDENTIFIER:
+				if (data.secondCoord == null) {
+					String coord = datum.substring(datum.indexOf("=") + 1);
+					data.secondCoord = parseDatumToCoordinate(coord);
+				} else
+					throw new IllegalArgumentException(
+							"Second coordinate over-defined: " + datum);
+				break;
+
+			default:
+				throw new IllegalArgumentException(
+						"Invalid POST data, unknown identifier used for data entry: "
+								+ datum);
+			}
+		}
+		data.checkValidity();
+		return data;
+	}
+
+	public static SorryFrame.Coordinate parseDatumToCoordinate(String datum) {
+		int x, y;
+
+		if (!(datum.startsWith("(") && datum.endsWith(")")))
+			throw new IllegalArgumentException("Malformed coordinate: " + datum);
+		String trimmedData;
+		trimmedData = datum.replaceAll(" ", "");
+		trimmedData = trimmedData.replaceAll("\\(", "");
+		trimmedData = trimmedData.replaceFirst("\\)", "");
+		String[] nums = trimmedData.split(",");
+		if (nums.length != 2)
+			throw new IllegalArgumentException(
+					"Malformed coordinate, too many numbers: " + datum);
+
+		try {
+			x = Integer.parseInt(nums[0]);
+			y = Integer.parseInt(nums[1]);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(
+					"Malformed coordinates, not given stricly numbers: "
+							+ datum);
+		}
+
+		SorryFrame.Coordinate ret = new SorryFrame.Coordinate(x, y);
+		return ret;
+	}
+
+	public static class POSTDataContainer {
+		boolean isValidData;
+		String userName;
+		SorryFrame.Coordinate firstCoord;
+		SorryFrame.Coordinate secondCoord;
+
+		public boolean checkValidity() {
+			this.isValidData = !(userName == null) && !(firstCoord == null)
+					&& !(secondCoord == null);
+			return this.isValidData;
+		}
+
 	}
 
 	// Testing code, not actually useful code
