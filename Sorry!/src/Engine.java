@@ -926,4 +926,14 @@ public class Engine implements EngineInterface {
 		output.println(this.board.toString());
 		output.close();
 	}
+
+	@Override
+	public void forfeit() {
+		// TODO Auto-generated method stub
+		revertBoard();
+	}
+	
+	public void getUpdatedInfo(){
+		return;
+	}
 }

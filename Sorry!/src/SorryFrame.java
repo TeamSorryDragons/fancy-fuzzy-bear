@@ -342,7 +342,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	public void forfeitTurn() {
 		this.desiresForfeit = true;
 		this.resetClickDetection();
-		this.engine.revertBoard();
+		this.engine.forfeit();
 		this.initiateTurn();
 	}
 

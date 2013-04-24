@@ -35,4 +35,8 @@ public interface EngineInterface {
 	void load(BoardList board, BoardList clone, Piece[] pieceList);
 
 	void save(File save) throws IOException;
+	
+	void forfeit();
+	
+	void getUpdatedInfo();
 }
