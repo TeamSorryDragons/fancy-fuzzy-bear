@@ -28,3 +28,6 @@ New Game
 Load Game
 Instructions
 Exit
+
+Name your players
+Start

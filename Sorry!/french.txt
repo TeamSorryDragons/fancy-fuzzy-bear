@@ -28,3 +28,6 @@ nouveau jeu
 Jeu de charge
 instructions
 quitter
+
+Nommez vos joueurs
+Commencer
