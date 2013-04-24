@@ -30,3 +30,6 @@ Instructions
 Exit
 Connect
 Host
+
+Name your players
+Start

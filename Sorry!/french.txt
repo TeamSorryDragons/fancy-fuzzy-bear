@@ -30,3 +30,6 @@ instructions
 quitter
 Connectez
 Host
+
+Nommez vos joueurs
+Commencer
