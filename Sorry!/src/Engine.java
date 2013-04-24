@@ -1,6 +1,9 @@
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -888,5 +891,39 @@ public class Engine implements EngineInterface {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public Player getActivePlayer() {
+		// TODO Auto-generated method stub
+		return this.activePlayer;
+	}
+
+	@Override
+	public void load(BoardList board, BoardList clone, Piece[] pieceList) {
+		this.board = board;
+		this.backupBoard = clone;
+		this.pieces = pieceList;
+		
+	}
+
+	@Override
+	public void save(File save) throws IOException {
+		PrintWriter output = new PrintWriter(save);
+		output.println(this.getActivePlayer().getName() + "|"
+				+ this.getActivePlayer().getColor().toString());
+		for (int i = 0; i < (this.players.getNumberOfElements() - 1); i++) {
+			this.players.goToNextElement();
+			this.activePlayer = this.players
+					.getActualElementData();
+			output.println(this.getActivePlayer().getName() + "|"
+					+ this.getActivePlayer().getColor().toString());
+		}
+		this.players.goToNextElement();
+		this.activePlayer = this.players
+				.getActualElementData();
+		output.println();
+		output.println(this.board.toString());
+		output.close();
 	}
 }

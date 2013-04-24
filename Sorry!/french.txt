@@ -28,3 +28,5 @@ nouveau jeu
 Jeu de charge
 instructions
 quitter
+Connectez
+Host

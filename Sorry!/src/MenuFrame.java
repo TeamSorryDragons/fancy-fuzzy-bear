@@ -76,7 +76,7 @@ public class MenuFrame extends JFrame {
 	 * @return
 	 */
 	private static String[] obtainButtonLabels(String lang) {
-		String[] ret = new String[4];
+		String[] ret = new String[6];
 		Scanner in;
 		try {
 			in = new Scanner(new File(lang +".txt"));
@@ -87,6 +87,8 @@ public class MenuFrame extends JFrame {
 			ret[1] = in.nextLine();
 			ret[2] = in.nextLine();
 			ret[3] = in.nextLine();
+			ret[4] = in.nextLine();
+			ret[5] = in.nextLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,6 +110,10 @@ public class MenuFrame extends JFrame {
 		this.buttons.add(instructions);
 		JButton exit = new JButton(this.labels[3]);
 		this.buttons.add(exit);
+		JButton connect = new JButton(this.labels[4]);
+		this.buttons.add(connect);
+		JButton host = new JButton(this.labels[5]);
+		this.buttons.add(host);
 
 		newGame.addActionListener(new ActionListener() {
 
@@ -198,6 +204,20 @@ public class MenuFrame extends JFrame {
 				System.exit(0);
 			}
 		});
+		
+		connect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MenuFrame.this.connect();
+			}
+		});
+		
+		host.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MenuFrame.this.host();
+			}
+		});
 
 		for (JButton b : this.buttons)
 			this.buttonPanel.add(b);
@@ -234,6 +254,14 @@ public class MenuFrame extends JFrame {
 	public static void main(String args[]) {
 		JFrame frame = new MenuFrame("english");
 		//JFrame frame2 = new SorryFrame("english");
+	}
+	
+	public void connect(){
+		
+	}
+	
+	public void host(){
+		
 	}
 
 }

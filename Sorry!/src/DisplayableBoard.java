@@ -7,10 +7,10 @@ import javax.swing.JComponent;
 
 public class DisplayableBoard extends JComponent {
 	private static final long serialVersionUID = 1L;
-	Engine gameEngine;
+	EngineInterface gameEngine;
 	private static BufferedImage[] image = new BufferedImage[4];
 
-	public DisplayableBoard(Engine eng) {
+	public DisplayableBoard(EngineInterface eng) {
 		super();
 		this.gameEngine = eng;
 		try {
@@ -37,7 +37,7 @@ public class DisplayableBoard extends JComponent {
 		Graphics2D g2 = (Graphics2D) g;
 		g.setFont(new Font(g.getFont().getName(),Font.PLAIN,40));
 		int i = 0;
-		switch(gameEngine.activePlayer.getColor()){
+		switch(gameEngine.getActivePlayer().getColor()){
 		case red:
 			i = 0;
 			break;
@@ -55,7 +55,7 @@ public class DisplayableBoard extends JComponent {
 		g.drawImage(image[i], 0, 0, null);
 		draw(cornerPointers[i], cornerPointers[i].getNext(), Math.PI,
 				image[i].getWidth() - 2 * size, image[i].getHeight() - size, size,
-				g2, gameEngine.activePlayer.getColor());
+				g2, gameEngine.getActivePlayer().getColor());
 	}
 
 	@SuppressWarnings("incomplete-switch")

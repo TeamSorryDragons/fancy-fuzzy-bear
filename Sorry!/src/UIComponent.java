@@ -104,7 +104,7 @@ public class UIComponent extends JPanel {
 	//This updates the text components of the GUI
 	public void update() {
 		this.currentCard = this.gameFrame.currentCard;
-		this.activePlayer = this.gameFrame.engine.activePlayer;
+		this.activePlayer = this.gameFrame.engine.getActivePlayer();
 		if (this.currentCard.cardNum != 13) {
 			this.card.setText(this.currentCard.cardNum + "");
 			this.card2.setText("" + this.currentCard.desc);
@@ -114,17 +114,17 @@ public class UIComponent extends JPanel {
 			this.card2.setText("" + this.currentCard.desc);
 			this.card3.setText("!Sorry");
 		}
-		if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.blue){
+		if(this.gameFrame.engine.getActivePlayer().getColor()==Piece.COLOR.blue){
 			this.playerHolder.setForeground(Color.WHITE);
 			this.playerInformation.setBackground(Color.BLUE);
 			this.playerHolder.setBackground(Color.BLUE);
 		}
-		else if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.green){
+		else if(this.gameFrame.engine.getActivePlayer().getColor()==Piece.COLOR.green){
 			this.playerHolder.setForeground(Color.BLACK);
 			this.playerInformation.setBackground(Color.GREEN);
 			this.playerHolder.setBackground(Color.GREEN);
 		}
-		else if(this.gameFrame.engine.activePlayer.getColor()==Piece.COLOR.yellow){
+		else if(this.gameFrame.engine.getActivePlayer().getColor()==Piece.COLOR.yellow){
 			this.playerHolder.setForeground(Color.BLACK);
 			this.playerInformation.setBackground(Color.YELLOW);
 			this.playerHolder.setBackground(Color.YELLOW);
@@ -134,7 +134,7 @@ public class UIComponent extends JPanel {
 			this.playerInformation.setBackground(Color.RED);
 			this.playerHolder.setBackground(Color.RED);
 		}
-		this.playerHolder.setText(this.gameFrame.engine.activePlayer.getName());
+		this.playerHolder.setText(this.gameFrame.engine.getActivePlayer().getName());
 	}
 
 	private void initializeCardHolder() {

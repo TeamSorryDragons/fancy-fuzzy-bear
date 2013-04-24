@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.IOException;
+
 public interface EngineInterface {
 	void insertPlayer(Player p);
 
@@ -26,4 +29,10 @@ public interface EngineInterface {
 	void revertBoard();
 
 	boolean hasWon();
+	
+	Player getActivePlayer();
+
+	void load(BoardList board, BoardList clone, Piece[] pieceList);
+
+	void save(File save) throws IOException;
 }
