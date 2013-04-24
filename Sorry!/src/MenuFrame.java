@@ -115,18 +115,29 @@ public class MenuFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				MenuFrame.this.getContentPane().removeAll();
 				MenuFrame.this.repaint();
+				Scanner in = null;
+				try {
+					in = new Scanner(new File(MenuFrame.this.language +".txt"));
+					for (int x = 0; x < 31; x++)
+						in.nextLine();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				JPanel newGamePanel = new JPanel();
 //				newGamePanel.setBackground(Color.BLACK);
 				newGamePanel.setLayout(new GridLayout(3,1));
-				JLabel playerName = new JLabel();
-				playerName.setText("Name your Players");
+				JLabel playerName = new JLabel(in.nextLine(),JLabel.CENTER);
+				//playerName.setText();
+				//playerName.setAlignmentX(CENTER_ALIGNMENT);
 				newGamePanel.add(playerName);
 				JPanel textBoxPanel = new JPanel();
-				textBoxPanel.setLayout(new GridLayout(4 , 2));
-				JLabel red = new JLabel("red");
-				JLabel blue = new JLabel("blue");
-				JLabel green = new JLabel("green");
-				JLabel yellow =new JLabel("yellow");
+				textBoxPanel.setLayout(new GridLayout(4 , 1));
+				JPanel red = new JPanel();
+//				red.setBackground(Color.RED);
+//				JLabel blue = new JLabel("blue");
+//				JLabel green = new JLabel("green");
+//				JLabel yellow =new JLabel("yellow");
 				
 				p1 = new JTextField();
 				p2 = new JTextField();
@@ -136,16 +147,39 @@ public class MenuFrame extends JFrame {
 				p2.setEditable(true);
 				p3.setEditable(true);
 				p4.setEditable(true);
-				textBoxPanel.add(red);
+				p1.setBackground(Color.RED);
+				p1.setForeground(Color.WHITE);
+				p2.setBackground(Color.BLUE);
+				p2.setForeground(Color.WHITE);
+				p3.setBackground(Color.YELLOW);
+				p4.setBackground(Color.GREEN);
+//				textBoxPanel.add(red);
 				textBoxPanel.add(p1);
-				textBoxPanel.add(blue);
+//				textBoxPanel.add(blue);
 				textBoxPanel.add(p2);;
-				textBoxPanel.add(yellow);
+//				textBoxPanel.add(yellow);
 				textBoxPanel.add(p3);
-				textBoxPanel.add(green);
+//				textBoxPanel.add(green);
 				textBoxPanel.add(p4);
 				newGamePanel.add(textBoxPanel);
-				JButton btnStart = new JButton("Start");
+				JButton btnStart = new JButton(in.nextLine());
+				//btnStart.setSize(100, 100);
+				//btnStart.setPreferredSize(new Dimension (100, 100));
+				JPanel start = new JPanel();
+				start.setLayout(new GridLayout(5 ,4));
+				start.add(new JLabel());
+				start.add(new JLabel());
+				start.add(new JLabel());
+				start.add(new JLabel());
+				start.add(new JLabel());
+				start.add(new JLabel());
+				start.add(new JLabel());
+				start.add(btnStart);
+				start.add(new JLabel());
+				start.add(new JLabel());
+				start.add(new JLabel());
+
+				//start.setPreferredSize(new Dimension (100,100));
 				btnStart.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent evt) {
@@ -164,7 +198,10 @@ public class MenuFrame extends JFrame {
 					}
 					
 				});
-				newGamePanel.add(btnStart);
+				
+				newGamePanel.add(start);
+				//btnStart.setSize(100, 100);
+				//btnStart.setPreferredSize(new Dimension (100, 100));
 				newGamePanel.setVisible(true);
 				newGamePanel.setPreferredSize(new Dimension(600,800));
 				newGamePanel.repaint();
