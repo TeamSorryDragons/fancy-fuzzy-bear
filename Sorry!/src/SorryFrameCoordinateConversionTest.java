@@ -163,9 +163,8 @@ public class SorryFrameCoordinateConversionTest {
 		SorryFrame temp = new SorryFrame("english");
 		temp.load("test.txt");
 		temp.engine.rotatePlayers();
-		assertEquals(temp.engine.activePlayer.getName(), "Hugh Hefner");
-		assertEquals(temp.engine.players.getNumberOfElements(),3);
-		assertEquals(temp.engine.board.toString(), "hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nng|nn|nn|hrsn|rsn|rsn|rsn|rsn|nng|nny|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nny|nn|nn|nn|hbsn|bsn|bsn|bsn|bsn|nn|nnb|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn2|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0|gsn|gsn|gmn2|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nnr|");
-		assertEquals(temp.engine.board.pieceList.length,16);
+		assertEquals(temp.engine.getActivePlayer().getName(), "Hugh Hefner");
+		assertEquals(temp.board.toString(), "hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nng|nn|nn|hrsn|rsn|rsn|rsn|rsn|nng|nny|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nny|nn|nn|nn|hbsn|bsn|bsn|bsn|bsn|nn|nnb|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn2|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0|gsn|gsn|gmn2|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nnr|");
+		assertEquals(temp.board.pieceList.length,16);
 	}
 }

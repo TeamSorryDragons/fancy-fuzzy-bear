@@ -40,8 +40,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	private volatile boolean desiresForfeit;
 
 	private static final long serialVersionUID = 1L;
-	private BoardList board;
-	protected Engine engine;
+	protected BoardList board;
+	protected EngineInterface engine;
 	protected Card currentCard;
 	private FileReader fr;
 	private String[] userMessages;
@@ -57,6 +57,30 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * @param board
 	 * @param engine
 	 */
+	public SorryFrame(String lang, EngineInterface eng) {
+		super("Sorry!");
+		this.setEnabled(true);
+		this.board = new BoardList();
+		try {
+			fr = new FileReader(lang + ".txt");
+		} catch (FileNotFoundException e) {
+		}
+		this.engine = eng;
+		this.engine.newGame();
+		Scanner in = new Scanner(fr);
+		for (int x = 0; x < 12; x++)
+			in.nextLine();
+		userMessages = new String[9];
+		for (int x = 0; x < 9; x++)
+			userMessages[x] = in.nextLine();
+		this.setSize(1330, 1040);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JComponent displayBoard = new DisplayableBoard(eng);
+		this.add(displayBoard, BorderLayout.CENTER);
+		gui = new UIComponent(300, 1000, this, lang);
+		this.add(gui, BorderLayout.EAST);
+	}
+
 	public SorryFrame(String lang) {
 		super("Sorry!");
 		this.setEnabled(true);
@@ -66,7 +90,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		} catch (FileNotFoundException e) {
 		}
 		this.engine = new Engine(this.board, lang);
-		engine.newGame();
+		this.engine.newGame();
 		Scanner in = new Scanner(fr);
 		for (int x = 0; x < 12; x++)
 			in.nextLine();
@@ -102,9 +126,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 			}
 			int a = passPlayers(players);
 			this.board = new BoardList((players.get(a + 1)));
-			this.engine.board = this.board;
-			this.engine.backupBoard = this.board.clone();
-			this.engine.pieces = this.board.pieceList;
+			this.engine.load(this.board, this.board.clone(),
+					this.board.pieceList);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -200,19 +223,20 @@ public class SorryFrame extends JFrame implements ActionListener {
 		this.currentCard = this.engine.getNextCard();
 		// System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
-		if (this.engine.activePlayer.getColor() == Piece.COLOR.blue) {
+		if (this.engine.getActivePlayer().getColor() == Piece.COLOR.blue) {
 			gui.playerInformation.setBackground(Color.CYAN);
-		} else if (this.engine.activePlayer.getColor() == Piece.COLOR.green)
+		} else if (this.engine.getActivePlayer().getColor() == Piece.COLOR.green)
 			gui.playerInformation.setBackground(Color.GREEN);
-		else if (this.engine.activePlayer.getColor() == Piece.COLOR.yellow)
+		else if (this.engine.getActivePlayer().getColor() == Piece.COLOR.yellow)
 			gui.playerInformation.setBackground(Color.YELLOW);
 		else
 			gui.playerInformation.setBackground(Color.RED);
-		this.gui.playerNameText.setText(this.engine.activePlayer.getName());
+		this.gui.playerNameText
+				.setText(this.engine.getActivePlayer().getName());
 		this.gui.update();
 		this.repaint();
 		this.notifyPlayer(userMessages[0]);
-		
+
 	}
 
 	/**
@@ -279,8 +303,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 	}
 
 	private void notifyPlayer(String message) {
-		JOptionPane.showMessageDialog(this, this.engine.activePlayer.getName()
-				+ message, userMessages[8], JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(this, this.engine.getActivePlayer()
+				.getName() + message, userMessages[8],
+				JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**
@@ -300,22 +325,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	public void saveGame() {
 		File save = new File("save.txt");
 		try {
-			PrintWriter output = new PrintWriter(save);
-			output.println(this.engine.activePlayer.getName() + "|"
-					+ this.engine.activePlayer.getColor().toString());
-			for (int i = 0; i < (this.engine.players.getNumberOfElements() - 1); i++) {
-				this.engine.players.goToNextElement();
-				this.engine.activePlayer = this.engine.players
-						.getActualElementData();
-				output.println(this.engine.activePlayer.getName() + "|"
-						+ this.engine.activePlayer.getColor().toString());
-			}
-			this.engine.players.goToNextElement();
-			this.engine.activePlayer = this.engine.players
-					.getActualElementData();
-			output.println();
-			output.println(this.board.toString());
-			output.close();
+			this.engine.save(save);
 		} catch (IOException e) {
 			System.out.println("IT SPLODED");
 			e.printStackTrace();
@@ -329,7 +339,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	public void forfeitTurn() {
 		this.desiresForfeit = true;
 		this.resetClickDetection();
-		this.engine.revertBoard();
+		this.engine.forfeit();
 		this.initiateTurn();
 	}
 

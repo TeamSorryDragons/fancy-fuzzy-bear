@@ -28,6 +28,8 @@ New Game
 Load Game
 Instructions
 Exit
+Connect
+Host
 
 Name your players
 Start
