@@ -13,6 +13,7 @@ public class Engine implements EngineInterface {
 	public static final int NO_PIECE_SELECTED = -256;
 	public static final int INVALID_MOVE = -512;
 	public static final int VALID_MOVE_NO_FINALIZE = -129;
+	public static final int SUCCESSFUL_OPERATION = 191;
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap1;
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap2;

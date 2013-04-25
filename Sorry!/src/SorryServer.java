@@ -18,7 +18,12 @@ import org.simpleframework.transport.connect.SocketConnection;
  * @author sturgedl. Created Apr 22, 2013.
  */
 public class SorryServer implements Container {
+	public enum PerformableAction {
+		FORFEIT, FINALIZE, UNSPECIFIED
+	}
+
 	private static final String USER_NAME_IDENTIFIER = "user";
+	private static final String ACTION_IDENTIFIER = "desired-action";
 	private static final String FIRST_COORD_IDENTIFIER = "coord1";
 	private static final String SECOND_COORD_IDENTIFIER = "coord2";
 	private static final String INVALID_PLAYER_MSG = "InactivePlayer";
@@ -179,6 +184,13 @@ public class SorryServer implements Container {
 		}
 
 		out.print("result=");
+		if (postData.action != PerformableAction.UNSPECIFIED) {
+			performActionOnEngine(this.gameModule, postData.action);
+			out.print("" + Engine.SUCCESSFUL_OPERATION);
+			out.flush();
+			out.close();
+			return;
+		}
 
 		int result = this.gameModule.pawnMove(postData.firstCoord,
 				postData.secondCoord);
@@ -186,6 +198,22 @@ public class SorryServer implements Container {
 
 		out.flush();
 		out.close();
+	}
+
+	protected static void performActionOnEngine(EngineInterface sorryEngine,
+			PerformableAction action) {
+		switch (action) {
+		case FINALIZE:
+			sorryEngine.finalizeTurn();
+			break;
+		case FORFEIT:
+			sorryEngine.forfeit();
+			break;
+		case UNSPECIFIED:
+			break;
+		default:
+			break;
+		}
 	}
 
 	protected static POSTDataContainer parseServerInput(String[] input)
@@ -203,7 +231,8 @@ public class SorryServer implements Container {
 			switch (prefix) {
 			case USER_NAME_IDENTIFIER:
 				if (data.userName == null) {
-					String name = datum.substring(datum.indexOf("=") + 1);
+					String name = datum.substring(datum.indexOf("=") + 1)
+							.trim();
 					if (name.equals(""))
 						throw new IllegalArgumentException(
 								"Error in user name parse: no user name given");
@@ -231,6 +260,15 @@ public class SorryServer implements Container {
 							"Second coordinate over-defined: " + datum);
 				break;
 
+			case ACTION_IDENTIFIER:
+				if (data.action == PerformableAction.UNSPECIFIED) {
+					data.action = stringToPerformable(datum.substring(datum
+							.indexOf("=") + 1));
+				} else
+					throw new IllegalArgumentException("Action over-defined: "
+							+ datum);
+				break;
+
 			default:
 				throw new IllegalArgumentException(
 						"Invalid POST data, unknown identifier used for data entry: "
@@ -239,6 +277,17 @@ public class SorryServer implements Container {
 		}
 		data.checkValidity();
 		return data;
+	}
+
+	public static PerformableAction stringToPerformable(String action) {
+		switch (action.trim()) {
+		case "forfeit":
+			return PerformableAction.FORFEIT;
+		case "finalize":
+			return PerformableAction.FINALIZE;
+		default:
+			return PerformableAction.UNSPECIFIED;
+		}
 	}
 
 	public static SorryFrame.Coordinate parseDatumToCoordinate(String datum) {
@@ -273,10 +322,17 @@ public class SorryServer implements Container {
 		String userName;
 		SorryFrame.Coordinate firstCoord;
 		SorryFrame.Coordinate secondCoord;
+		PerformableAction action = PerformableAction.UNSPECIFIED;
 
 		public boolean checkValidity() {
 			this.isValidData = !(userName == null) && !(firstCoord == null)
 					&& !(secondCoord == null);
+
+			if (this.isValidData)
+				return this.isValidData;
+
+			this.isValidData = !(userName == null)
+					&& !(action == PerformableAction.UNSPECIFIED);
 			return this.isValidData;
 		}
 

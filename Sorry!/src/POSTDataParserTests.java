@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+
 /**
  * Test cases for parsing POST data by the SorryServer.
  * 
@@ -184,7 +185,33 @@ public class POSTDataParserTests {
 		target.firstCoord = new SorryFrame.Coordinate(0, 0);
 		target.secondCoord = new SorryFrame.Coordinate(0, 0);
 		assertTrue(target.checkValidity());
+		
+		target.firstCoord = null;
+		target.secondCoord = null;
+		target.action = SorryServer.PerformableAction.FORFEIT;
+		assertTrue(target.checkValidity());
+		
+		target.action = SorryServer.PerformableAction.FINALIZE;
+		assertTrue(target.checkValidity());
+		
+		target.userName = null;
+		assertFalse(target.checkValidity());
 
+	}
+	
+	@Test
+	public void testParsePerformableActions(){
+		assertEquals(SorryServer.stringToPerformable("  forfeit  "), SorryServer.PerformableAction.FORFEIT);
+		assertEquals(SorryServer.stringToPerformable("finalize"), SorryServer.PerformableAction.FINALIZE);
+		assertEquals(SorryServer.stringToPerformable("Han Solo Was Here"), SorryServer.PerformableAction.UNSPECIFIED);
+		assertEquals(SorryServer.stringToPerformable(""), SorryServer.PerformableAction.UNSPECIFIED);
+		assertEquals(SorryServer.stringToPerformable(" "), SorryServer.PerformableAction.UNSPECIFIED);
+		
+		String[] lines = new String[1];
+		lines[0] = "desired-action=forfeit";
+		
+		SorryServer.POSTDataContainer target = SorryServer.parseServerInput(lines);
+		
 	}
 
 	private void verifyFaultyInput(String test) {
