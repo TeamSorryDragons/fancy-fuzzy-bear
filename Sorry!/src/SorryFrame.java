@@ -187,8 +187,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	private void informPlayerError(String msg) {
 		this.notifyPlayer(msg);
-		// this.awaitUserInteraction();
-		// this.performTurn();
 	}
 
 	/**
@@ -200,9 +198,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 	protected void initiateTurn() {
 		this.desiresForfeit = false;
 		this.currentCard = this.engine.getNextCard();
-//		System.out.println(this.currentCard.toString());
+		// System.out.println(this.currentCard.toString());
 		this.engine.rotatePlayers();
-
 		if (this.engine.activePlayer.getColor() == Piece.COLOR.blue) {
 			gui.playerInformation.setBackground(Color.CYAN);
 		} else if (this.engine.activePlayer.getColor() == Piece.COLOR.green)
@@ -213,10 +210,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 			gui.playerInformation.setBackground(Color.RED);
 		this.gui.playerNameText.setText(this.engine.activePlayer.getName());
 		this.gui.update();
-		this.notifyPlayer(userMessages[0]);
 		this.repaint();
-		// this.awaitUserInteraction();
-		// this.performTurn();
+		this.notifyPlayer(userMessages[0]);
+		
 	}
 
 	/**
@@ -245,9 +241,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		} else if (result == Engine.NO_PIECE_SELECTED) {
 			this.informPlayerError(userMessages[4]);
 		} else if (result == Engine.VALID_MOVE_NO_FINALIZE) {
-
-			// this.awaitUserInteraction();
-			// this.performTurn();
+			// just wait for another turn
 		} else {
 			// turn is over, rotate
 			if (this.engine.finalizeTurn()) {
