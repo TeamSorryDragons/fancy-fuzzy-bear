@@ -5,7 +5,6 @@ public class Node {
 	private Node previous;
 	protected Piece[] pieces;
 	private Piece.COLOR col;
-	private final int MAX_PIECES = 1;
 
 	public Node() {
 		this.next = null;

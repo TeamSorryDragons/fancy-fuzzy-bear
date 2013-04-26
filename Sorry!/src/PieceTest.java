@@ -32,6 +32,11 @@ public class PieceTest {
 		assertNotNull(new Piece(Piece.COLOR.green));
 		assertNotNull(new Piece(Piece.COLOR.yellow));
 	}
+	@SuppressWarnings("javadoc")
+	@Test
+	public void colorIsColorTest() {
+		assertEquals(new Piece().col,Piece.COLOR.colorless);
+	}
 
 	@SuppressWarnings("javadoc")
 	@Test

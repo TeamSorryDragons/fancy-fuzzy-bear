@@ -20,6 +20,10 @@ public class InstructionsFrameTest {
 	public void test() {
 		assertTrue(true);
 	}
+	@Test
+	public void testInstructionsFrame(){
+		assertNotNull(new InstructionsFrame("english"));
+	}
 	
 	@Test
 	public void testObtainsCorrectFileName(){
@@ -35,12 +39,11 @@ public class InstructionsFrameTest {
 	
 	@Test
 	public void testObtainJEditorPane(){
-		String lang = "english";
+		
 		JEditorPane target = null;
 		try {
 			target = InstructionsFrame.createEditorPane("/images/instructions_english.html");
 		} catch (IOException exception) {
-			// TODO Auto-generated catch-block stub.
 		}
 		assertNotNull(target);
 		

@@ -3,8 +3,6 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -12,13 +10,10 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 
 /**
@@ -28,6 +23,7 @@ import javax.swing.JTextArea;
  * 
  * @author sturgedl. Created Apr 10, 2013.
  */
+@SuppressWarnings("serial")
 public class UIComponent extends JPanel {
 	public static final int CARD_HOLDER_HEIGHT = 650;
 	public static final int PLAYER_INFO_HEIGHT = 225;
@@ -39,7 +35,6 @@ public class UIComponent extends JPanel {
 	public static final int CARD_WIDTH = 300;
 
 	private Card currentCard;
-	private Player activePlayer;
 	private SorryFrame gameFrame;
 	private String[] buttonLabels;
 	ArrayList<JButton> interfaceButtons;
@@ -72,11 +67,6 @@ public class UIComponent extends JPanel {
 				PLAYER_INFO_HEIGHT);
 		this.add(this.playerInformation);
 		this.playerNameText=new JLabel();
-//		this.playerInformation.add(this.playerNameText);
-//	//	this.playerInformation.s
-//		this.playerNameText.setVerticalAlignment(SwingConstants.TOP);
-//		this.playerNameText.setPreferredSize(new Dimension(width-HORIZONTAL_PAD, PLAYER_INFO_HEIGHT));
-		//his.playerNameText.setSize(this.playerInformation.WIDTH-10, this.PLAYER_INFO_HEIGHT);
 		
 		
 		this.buttonPane = new JPanel();
@@ -104,7 +94,7 @@ public class UIComponent extends JPanel {
 	//This updates the text components of the GUI
 	public void update() {
 		this.currentCard = this.gameFrame.currentCard;
-		this.activePlayer = this.gameFrame.engine.getActivePlayer();
+		this.gameFrame.engine.getActivePlayer();
 		if (this.currentCard.cardNum != 13) {
 			this.card.setText(this.currentCard.cardNum + "");
 			this.card2.setText("" + this.currentCard.desc);
@@ -138,7 +128,6 @@ public class UIComponent extends JPanel {
 	}
 
 	private void initializeCardHolder() {
-		Graphics2D g2 = (Graphics2D) this.cardHolder.getGraphics();
 		// TODO draw the card right here and stuff
 		this.card = new JTextArea();
 		this.card.setFont(new Font(this.card.getFont().getName(), Font.PLAIN,
@@ -170,10 +159,6 @@ public class UIComponent extends JPanel {
 		this.card3.setForeground(Color.WHITE);
 		this.cardHolder.setLayout(new BorderLayout());
 		this.cardHolder.add(card,BorderLayout.NORTH);
-		this.cardHolder.add(card2,BorderLayout.CENTER);
-		this.cardHolder.add(card3,BorderLayout.SOUTH);
-		// this.cardHolder.add(Box.createRigidArea(new
-		// Dimension(this.getWidth(), CARD_HOLDER_HEIGHT)));
 		this.cardHolder.setBackground(Color.BLACK);
 
 	}
@@ -187,8 +172,6 @@ public class UIComponent extends JPanel {
 		this.playerHolder.setLineWrap(true);
 		this.playerHolder.setWrapStyleWord(true);
 		this.playerHolder.setBackground(Color.RED);
-//		this.playerInformation.add(Box.createRigidArea(new Dimension(this
-//				.getWidth(), PLAYER_INFO_HEIGHT)));
 		this.playerInformation.add(this.playerHolder);
 		this.playerInformation.setBackground(Color.RED);
 	}

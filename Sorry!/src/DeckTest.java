@@ -1,8 +1,5 @@
 import static org.junit.Assert.*;
-
 import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import org.junit.Test;
 
 /**
@@ -64,7 +61,7 @@ public class DeckTest {
 	@Test
 	public void testThrowFileNotFoundException() throws FileNotFoundException{
 		
-		Deck bad = new Deck("spanish");
+		new Deck("spanish");
 	}
 	@Test
 	public void testCardToString(){

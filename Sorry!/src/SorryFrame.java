@@ -1,18 +1,13 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.SampleModel;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -119,8 +114,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 		try {
 			reader = new Scanner(file);
 			ArrayList<String> players = new ArrayList<String>();
-			boolean bool = true;
-			String temp = "";
 			while (reader.hasNext()) {
 				players.add(reader.nextLine());
 			}
@@ -190,15 +183,16 @@ public class SorryFrame extends JFrame implements ActionListener {
 		return new Coordinate(xCoord, yCoord);
 	}
 
-	private void awaitUserInteraction() {
-		this.resetClickDetection();
-		while (this.clickCount < 2) {
-			// wait for it
-			if (this.desiresForfeit)
-				return;
-
-		}
-	}
+//	@SuppressWarnings("unused")
+//	private void awaitUserInteraction() {
+//		this.resetClickDetection();
+//		while (this.clickCount < 2) {
+//			// wait for it
+//			if (this.desiresForfeit)
+//				return;
+//
+//		}
+//	}
 
 	/**
 	 * 

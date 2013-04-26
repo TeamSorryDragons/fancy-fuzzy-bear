@@ -1,16 +1,11 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 /**
  * Frame to contain the instructions for Sorry!. Displays the instructions and a
@@ -18,6 +13,7 @@ import javax.swing.JTextArea;
  * 
  * @author sturgedl. Created Apr 17, 2013.
  */
+@SuppressWarnings("serial")
 public class InstructionsFrame extends JFrame {
 	private static final int FRAME_WIDTH = 800;
 	private static final int FRAME_HEIGHT = 600;
@@ -33,7 +29,6 @@ public class InstructionsFrame extends JFrame {
 			JScrollPane scroll = createScrollPane(instr);
 			this.getContentPane().add(scroll, BorderLayout.CENTER);
 		} catch (IOException exception) {
-			// TODO Auto-generated catch-block stub.
 			exception.printStackTrace();
 		}
 		this.pack();
@@ -70,7 +65,7 @@ public class InstructionsFrame extends JFrame {
 	}
 
 	public static void main(String args[]) {
-		JFrame tar = new InstructionsFrame("french");
+		new InstructionsFrame("french");
 	}
 
 }

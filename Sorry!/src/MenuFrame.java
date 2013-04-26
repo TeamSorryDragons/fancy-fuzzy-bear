@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -15,8 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -25,6 +22,7 @@ import javax.swing.JTextField;
  * 
  * @author sturgedl. Created Apr 17, 2013.
  */
+@SuppressWarnings("serial")
 public class MenuFrame extends JFrame {
 	private static final int FRAME_WIDTH = 600;
 	private static final int FRAME_HEIGHT = 800;
@@ -127,24 +125,14 @@ public class MenuFrame extends JFrame {
 					for (int x = 0; x < 33; x++)
 						in.nextLine();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				JPanel newGamePanel = new JPanel();
-//				newGamePanel.setBackground(Color.BLACK);
 				newGamePanel.setLayout(new GridLayout(3,1));
 				JLabel playerName = new JLabel(in.nextLine(),JLabel.CENTER);
-				//playerName.setText();
-				//playerName.setAlignmentX(CENTER_ALIGNMENT);
 				newGamePanel.add(playerName);
 				JPanel textBoxPanel = new JPanel();
-				textBoxPanel.setLayout(new GridLayout(4 , 1));
-				JPanel red = new JPanel();
-//				red.setBackground(Color.RED);
-//				JLabel blue = new JLabel("blue");
-//				JLabel green = new JLabel("green");
-//				JLabel yellow =new JLabel("yellow");
-				
+				textBoxPanel.setLayout(new GridLayout(4 , 1));			
 				p1 = new JTextField();
 				p2 = new JTextField();
 				p3 = new JTextField();
@@ -159,18 +147,12 @@ public class MenuFrame extends JFrame {
 				p2.setForeground(Color.WHITE);
 				p3.setBackground(Color.YELLOW);
 				p4.setBackground(Color.GREEN);
-//				textBoxPanel.add(red);
 				textBoxPanel.add(p1);
-//				textBoxPanel.add(blue);
 				textBoxPanel.add(p2);;
-//				textBoxPanel.add(yellow);
 				textBoxPanel.add(p3);
-//				textBoxPanel.add(green);
 				textBoxPanel.add(p4);
 				newGamePanel.add(textBoxPanel);
 				JButton btnStart = new JButton(in.nextLine());
-				//btnStart.setSize(100, 100);
-				//btnStart.setPreferredSize(new Dimension (100, 100));
 				JPanel start = new JPanel();
 				start.setLayout(new GridLayout(5 ,4));
 				start.add(new JLabel());
@@ -185,7 +167,6 @@ public class MenuFrame extends JFrame {
 				start.add(new JLabel());
 				start.add(new JLabel());
 
-				//start.setPreferredSize(new Dimension (100,100));
 				btnStart.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent evt) {
@@ -206,8 +187,6 @@ public class MenuFrame extends JFrame {
 				});
 				
 				newGamePanel.add(start);
-				//btnStart.setSize(100, 100);
-				//btnStart.setPreferredSize(new Dimension (100, 100));
 				newGamePanel.setVisible(true);
 				newGamePanel.setPreferredSize(new Dimension(600,800));
 				newGamePanel.repaint();
@@ -285,12 +264,11 @@ public class MenuFrame extends JFrame {
 	}
 
 	private void displayInstructions() {
-		JFrame instr = new InstructionsFrame(this.language);
+		new InstructionsFrame(this.language);
 	}
 
 	public static void main(String args[]) {
-		JFrame frame = new MenuFrame("english");
-		//JFrame frame2 = new SorryFrame("english");
+		new MenuFrame("english");
 	}
 	
 	public void connect(){

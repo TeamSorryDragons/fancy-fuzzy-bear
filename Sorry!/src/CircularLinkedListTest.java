@@ -13,7 +13,7 @@ public class CircularLinkedListTest {
 
 	@Test
 	public void test() {
-		assertNotNull(new CircularLinkedList());
+		assertNotNull(new CircularLinkedList<Object>());
 	}
 	
 	@Test

@@ -210,7 +210,7 @@ public class POSTDataParserTests {
 		String[] lines = new String[1];
 		lines[0] = "desired-action=forfeit";
 		
-		SorryServer.POSTDataContainer target = SorryServer.parseServerInput(lines);
+		SorryServer.parseServerInput(lines);
 		
 	}
 

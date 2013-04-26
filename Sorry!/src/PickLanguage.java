@@ -1,19 +1,15 @@
-import java.awt.Graphics2D;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.SwingConstants;
 
 
-
+@SuppressWarnings("serial")
 public class PickLanguage extends JFrame{
 	private MenuFrame mf;
 	public PickLanguage(){
@@ -26,13 +22,11 @@ public class PickLanguage extends JFrame{
 		ButtonGroup group = new ButtonGroup();
 		group.add(jrbEng);
 		group.add(jrbFrc);
-		JButton done=new JButton("Done");
 		jrbEng.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e)
 			{
 				dispose();
-				mf= new MenuFrame("english");
-//				setVisible(false);
+				mf= new MenuFrame("english");;
 				mf.setVisible(true);
 			}
 		});
@@ -42,7 +36,6 @@ public class PickLanguage extends JFrame{
 			{
 				dispose();
 				mf= new MenuFrame("french");
-//				setVisible(false);
 				mf.setVisible(true);
 			}
 		});

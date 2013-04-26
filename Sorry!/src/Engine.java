@@ -1,7 +1,4 @@
-import static org.junit.Assert.assertEquals;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -155,8 +152,7 @@ public class Engine implements EngineInterface {
 				error = INVALID_MOVE;
 			if (numberMovesForward == 11)
 				moves = 11;
-			else if (end.hasPiece()
-					&& start.canReceivePiece(end.firstPiece().col)) {
+			else if (end.hasPiece() && start.canReceivePiece(end.firstPiece().col)) {
 				moves = numberMovesForward;
 
 			} else
@@ -390,7 +386,7 @@ public class Engine implements EngineInterface {
 			i = 3;
 			break;
 		}
-		return this.findNodeByPosition(this.getNodePosition(coordinate, i));
+		return this.findNodeByPosition(Engine.getNodePosition(coordinate, i));
 	}
 
 	protected static int getNodePosition(SorryFrame.Coordinate coord, int input) {

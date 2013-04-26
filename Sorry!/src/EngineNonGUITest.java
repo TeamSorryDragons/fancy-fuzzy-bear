@@ -443,7 +443,7 @@ public class EngineNonGUITest {
 	@Test
 	public void testCountTo() {
 		BoardList board = new BoardList();
-		Engine e = new Engine(board, "english");
+		new Engine(board, "english");
 		int count = board.cornerPointers[0].countTo(board.cornerPointers[1]);
 		assertEquals(count, 15);
 	}
@@ -745,11 +745,6 @@ public class EngineNonGUITest {
 
 	@Test
 	public void testPawnMovementSwapPiecesCardEleven() {
-		String testingBoard = "hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn4|nn|nn|nn|nn|hrsn|rsn|rsn"
-				+ "|rsn|rsn|nn|nn|hbsn|bsnb|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nn|nn|nn|nn"
-				+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
-				+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
-				+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|";
 		BoardList board = new BoardList();
 		Engine e = new Engine(board, "english");
 		e.newGame();
@@ -759,7 +754,7 @@ public class EngineNonGUITest {
 
 		e.currentCard = new Card(11, "TEST");
 
-		Piece pawn = board.homePointers[0].firstPiece();
+		board.homePointers[0].firstPiece();
 		int test = e.pawnMove(new SorryFrame.Coordinate(11, 14),
 				new SorryFrame.Coordinate(11, 15));
 		assertEquals(test, Engine.INVALID_MOVE);

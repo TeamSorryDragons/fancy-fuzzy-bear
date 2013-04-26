@@ -3,6 +3,7 @@
  * 
  * @author sturgedl. Created Mar 25, 2013.
  */
+@SuppressWarnings("serial")
 public class CoordinateOffOfBoardException extends IllegalArgumentException {
 	/**
 	 * If you can't figure out what this does, please don't use it.
@@ -13,12 +14,4 @@ public class CoordinateOffOfBoardException extends IllegalArgumentException {
 		super(message);
 	}
 
-	/**
-	 * 
-	 * Pretty standard empty constructor. For reasons.
-	 * 
-	 */
-//	public CoordinateOffOfBoardException() {
-//		super();
-//	}
 }
