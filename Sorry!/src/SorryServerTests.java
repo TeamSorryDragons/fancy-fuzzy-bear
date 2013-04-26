@@ -56,7 +56,6 @@ public class SorryServerTests {
 				fail();
 		}
 
-		// int port = 8080;
 
 		try {
 			String in = "";
