@@ -45,13 +45,7 @@ public class Engine implements EngineInterface {
 		}
 	}
 
-	/*
-	 * public void testing() { try { move(1, this.pieces[14]); move(3,
-	 * this.pieces[4]); } catch (Unstarted e) { e.printStackTrace(); } }
-	 * 
-	 * public void testing2() { try { move(1, this.pieces[9]); move(1,
-	 * this.pieces[0]); } catch (Unstarted e) { e.printStackTrace(); } }
-	 */
+
 
 	public void newGame() {
 		this.pieces = this.board.newGame();
@@ -131,10 +125,6 @@ public class Engine implements EngineInterface {
 					error = INVALID_MOVE;
 			}
 			// // not quite sure what this code is accomplishing
-			// if (numberMovesForward > this.currentCard.cardNum)
-			// error = INVALID_MOVE;
-			// else
-			// moves = numberMovesForward;
 			break;
 		case 10:
 			// 10 forward, or 1 backward
@@ -185,16 +175,7 @@ public class Engine implements EngineInterface {
 			}
 			if (this.currentCard.cardNum == 11 && moves != 11) {
 				Piece temp = end.swap(start);
-				// if(start.getPrevious() != null || start.getNext() != null ||
-				// start.getColor() != Piece.COLOR.colorless)
 				start.addPieceToPieces(temp);
-				// else if(start.getPrevious() == null){
-				// throw new
-				// InvalidMoveException("you cannot swap out of start with an 11");
-				// }
-				// else{
-				// toStart(temp);
-				// }
 				return moves;
 			}
 			move(moves, pawn, start);
@@ -240,16 +221,7 @@ public class Engine implements EngineInterface {
 
 		int ret = checkValidityOriginalRules(first.firstPiece(), first, second,
 				nodeCountForward, nodeCountBackward);
-		// try {
-		//
-		// move(nodeCount, first.firstPiece(), first);
-		//
-		// } catch (Unstarted e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// } catch (InvalidMoveException e) {
-		// return INVALID_MOVE;
-		// }
+
 		return ret;
 	}
 
@@ -290,25 +262,6 @@ public class Engine implements EngineInterface {
 
 	}
 
-	/*
-	 * private Node findNode(Piece pawn, Node next) { if (next == null) { return
-	 * null; } Piece[] currentPieces = next.getPieces(); if
-	 * (contains(currentPieces, pawn)) { return next; }
-	 * 
-	 * if (next instanceof SlideNode) { SlideNode slide = (SlideNode) next; if
-	 * (slide.getColor() == pawn.col && !(slide.getSafeNode() instanceof
-	 * MultiNode)) { Node maybeFoundIt = findNode(pawn, slide.getSafeNode()); if
-	 * (maybeFoundIt != null) return maybeFoundIt; } if (slide.getColor() ==
-	 * pawn.col && slide.getSafeNode() != null) { // we're looking at the start
-	 * node right here for reasons if (contains(slide.getSafeNode().getPieces(),
-	 * pawn)) return slide.getSafeNode(); } }
-	 * 
-	 * if (next.getNext() == null) return null;
-	 * 
-	 * return findNode(pawn, next.getNext());
-	 * 
-	 * }
-	 */
 
 	/**
 	 * Helper method for moving pieces to the start position.
@@ -331,37 +284,6 @@ public class Engine implements EngineInterface {
 			break;
 		}
 	}
-
-	// /**
-	// * Helper method to determine whether or not a pawn is contained within a
-	// * given set of pawns.
-	// *
-	// * @param pawns
-	// * @param pawn
-	// * @return
-	// */
-	// protected static boolean contains(Piece[] pawns, Piece pawn) {
-	// for (Piece p : pawns) {
-	// if (p == pawn)
-	// return true;
-	// }
-	// return false;
-	// }
-
-	// /**
-	// * Exception thrown is a game has not been started prior to interaction
-	// with
-	// * that game.
-	// *
-	// * @author TeamSorryDragons
-	// */
-	// protected class Unstarted extends Exception {
-	// private static final long serialVersionUID = 1L;
-	//
-	// public Unstarted(String message) {
-	// super(message);
-	// }
-	// }
 
 	/**
 	 * Returns the node at the given coordinate position.

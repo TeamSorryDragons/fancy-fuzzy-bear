@@ -44,7 +44,6 @@ public class BoardListTests {
 	public void newGameTest() {
 		BoardList board = new BoardList();
 		Piece[] pieces = board.newGame();
-		//assertEquals(board.toString(),"nn|");
 		assertEquals(
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn4|nn|nn|nn|nn|hrsn|rsn|rsn" +
 				"|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn4|nn|nn|nn|nn" +

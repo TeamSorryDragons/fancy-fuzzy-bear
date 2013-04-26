@@ -237,6 +237,12 @@ public class EngineNonGUITest {
 				44);
 		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 0),0),
 				66);
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 0),1),
+				88);
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 0),2),
+				22);
+		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 0),3),
+				0);
 	}
 
 	@SuppressWarnings("javadoc")
@@ -888,6 +894,13 @@ public class EngineNonGUITest {
 	}
 	
 	@Test
+	public void testUpdateInfo(){
+		Engine e = new Engine(new BoardList(), "english");
+		e.getUpdatedInfo();
+		assertNotNull(e.toString());
+	}
+	
+	@Test
 	public void testSevenSplit(){
 		BoardList board = new BoardList();
 		Engine e = new Engine(board, "english");
@@ -913,7 +926,7 @@ public class EngineNonGUITest {
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 		
 		assertEquals(e.pawnMove(new SorryFrame.Coordinate(11, 15), new SorryFrame.Coordinate(9, 15)), Engine.VALID_MOVE_NO_FINALIZE);
-	
+		
 		assertEquals(e.getActualBoard().toString(),
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nnr|nn|nn|hrsn|rsn|rsn"
 						+ "|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsnb|bmn3|nn|nn|nn|nn"
@@ -921,7 +934,7 @@ public class EngineNonGUITest {
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 		
-		e.revertBoard();
+		e.forfeit();
 		assertEquals(e.getActualBoard().toString(),
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsnr|rmn3|nn|nn|nn|nn|hrsn|rsn|rsn"
 						+ "|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsnb|bmn3|nn|nn|nn|nn"
@@ -970,4 +983,5 @@ public class EngineNonGUITest {
 		current.setNext(end);
 		end.setPrevious(current);
 	}
+	
 }

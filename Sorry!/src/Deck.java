@@ -57,7 +57,6 @@ public class Deck {
 
 		this.shuffle();
 		} catch (FileNotFoundException e) {
-			//e.printStackTrace();
 		}
 	}
 	public Card getTopCard(){

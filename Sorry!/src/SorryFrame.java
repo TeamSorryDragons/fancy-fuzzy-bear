@@ -183,16 +183,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 		return new Coordinate(xCoord, yCoord);
 	}
 
-//	@SuppressWarnings("unused")
-//	private void awaitUserInteraction() {
-//		this.resetClickDetection();
-//		while (this.clickCount < 2) {
-//			// wait for it
-//			if (this.desiresForfeit)
-//				return;
-//
-//		}
-//	}
 
 	/**
 	 * 
