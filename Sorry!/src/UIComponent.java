@@ -159,6 +159,8 @@ public class UIComponent extends JPanel {
 		this.card3.setForeground(Color.WHITE);
 		this.cardHolder.setLayout(new BorderLayout());
 		this.cardHolder.add(card,BorderLayout.NORTH);
+		this.cardHolder.add(card2,BorderLayout.CENTER);
+		this.cardHolder.add(card3,BorderLayout.SOUTH);
 		this.cardHolder.setBackground(Color.BLACK);
 
 	}
