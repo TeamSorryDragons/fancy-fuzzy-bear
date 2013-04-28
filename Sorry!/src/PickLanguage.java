@@ -19,9 +19,11 @@ public class PickLanguage extends JFrame{
 		panel.add(title);
 		JRadioButton jrbEng = new JRadioButton("English");
 		JRadioButton jrbFrc = new JRadioButton("Français");
+		JRadioButton jrb133 = new JRadioButton("1337");
 		ButtonGroup group = new ButtonGroup();
 		group.add(jrbEng);
 		group.add(jrbFrc);
+		group.add(jrb133);
 		jrbEng.addActionListener(new ActionListener(){
 			public void actionPerformed (ActionEvent e)
 			{
@@ -39,11 +41,21 @@ public class PickLanguage extends JFrame{
 				mf.setVisible(true);
 			}
 		});
+		
+		jrb133.addActionListener(new ActionListener(){
+			public void actionPerformed (ActionEvent e)
+			{
+				dispose();
+				mf= new MenuFrame("1337");
+				mf.setVisible(true);
+			}
+		});
 		JPanel jplRadio = new JPanel();
 		jplRadio.setLayout(new GridLayout(0,1));
 		jplRadio.add(title);
 		jplRadio.add(jrbEng);
 		jplRadio.add(jrbFrc);
+		jplRadio.add(jrb133);
 		this.add(jplRadio);
 		this.setSize(350,200);
 	}
