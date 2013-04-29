@@ -13,13 +13,28 @@ import org.simpleframework.transport.connect.Connection;
 import org.simpleframework.transport.connect.SocketConnection;
 
 /**
- * TODO Put here a description of what this class does.
+ * Server for the Sorry! game, to be used by the person host for sending and
+ * receiving game updates.
  * 
  * @author sturgedl. Created Apr 22, 2013.
  */
 public class SorryServer implements Container {
+	/**
+	 * Enumeration of the actions which need to be performed by the server.
+	 * 
+	 * @author sturgedl. Created Apr 28, 2013.
+	 */
 	public enum PerformableAction {
-		FORFEIT, FINALIZE, UNSPECIFIED
+		/**
+		 * Forfeit the active player's turn.
+		 */
+		FORFEIT, /**
+		 * Finalize the active player's turn.
+		 */
+		FINALIZE, /**
+		 * No action to perform.
+		 */
+		UNSPECIFIED
 	}
 
 	private static final String USER_NAME_IDENTIFIER = "user";
@@ -28,9 +43,9 @@ public class SorryServer implements Container {
 	private static final String SECOND_COORD_IDENTIFIER = "coord2";
 	private static final String INVALID_PLAYER_MSG = "InactivePlayer";
 	private static final String INVALID_DATA_MSG = "InvalidData";
-	protected Engine gameModule;
-	protected LinkedList<String> messages;
-	protected Connection connector;
+	private Engine gameModule;
+	LinkedList<String> messages;
+	private Connection connector;
 
 	/**
 	 * Create a SorryServer to help play Sorry! over the inter-webz. Please do
@@ -44,6 +59,12 @@ public class SorryServer implements Container {
 
 	}
 
+	/**
+	 * Tries to start the server, listening on the given port.
+	 * 
+	 * @param port
+	 * @return Start up success
+	 */
 	public boolean attemptServerStartUp(int port) {
 		try {
 			Server server = new ContainerServer(this);
@@ -90,14 +111,23 @@ public class SorryServer implements Container {
 				this.handlePostRequest(request, response);
 			} else {
 				PrintStream out = response.getPrintStream();
-				out.println("Unsupported server access.  Your computer will be destroyed in 5...");
+				out.println("Unsupported server access.  Bad Request Type.");
 				out.flush();
 				out.close();
 				return;
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			PrintStream out = null;
+			try {
+				out = response.getPrintStream();
+			} catch (IOException exception) {
+				//exception.printStackTrace();
+			}
+			out.println("Unsupported server access.");
+			out.flush();
+			out.close();
 		}
 
 	}
@@ -112,6 +142,11 @@ public class SorryServer implements Container {
 	private void handleGetRequest(Request request, Response response)
 			throws IOException {
 		PrintStream out = response.getPrintStream();
+		if (request.getAddress().toString().equalsIgnoreCase("/game-info-full")) {
+			this.serveFullGameInformation(out);
+			return;
+		}
+
 		if (!request.getAddress().toString().equalsIgnoreCase("/game-status")) {
 			out.println("Unsupported server access.");
 			out.flush();
@@ -131,17 +166,46 @@ public class SorryServer implements Container {
 		data = URLEncoder.encode("messages", "UTF-8") + "=";
 		for (int i = 0; i < this.messages.size(); i++) {
 			data += this.messages.get(i);
-			if (i != messages.size() - 1)
+			if (i != this.messages.size() - 1)
 				data += ",";
 		}
 		if (this.messages.isEmpty())
 			data += "NONE";
 		out.println(data);
 
-		data += '\n';
+		data = "";
+
+		if (!(this.gameModule == null)
+				&& !(this.gameModule.currentCard == null)) {
+			data += "current-card=";
+			data += this.gameModule.currentCard.cardNum;
+			out.println(data);
+		}
+
 		data = this.gameModule.getActualBoard().toString();
 
 		out.println(data);
+		out.flush();
+		out.close();
+
+	}
+
+	/**
+	 * Get the players in the current game, along with their colors.
+	 * 
+	 * @param out
+	 */
+	private void serveFullGameInformation(PrintStream out) {
+		CircularLinkedList<Player> players = this.gameModule.players;
+		Player first = players.getActualElementData();
+		out.println("player=" + first.getName() + ":" + first.getColor());
+		players.goToNextElement();
+		Player next = players.getActualElementData();
+		while (next != first) {
+			out.println("player=" + next.getName() + ":" + next.getColor());
+			players.goToNextElement();
+			next = players.getActualElementData();
+		}
 		out.flush();
 		out.close();
 
@@ -159,12 +223,8 @@ public class SorryServer implements Container {
 	private void handlePostRequest(Request request, Response response)
 			throws IOException {
 		String input = request.getContent();
-		System.out.println("Server received input:");
-		System.out.println(input);
 
 		String[] linesIn = input.split("\n");
-
-		System.out.println("Input lines: " + linesIn.length);
 
 		PrintStream out = response.getPrintStream();
 
@@ -185,8 +245,8 @@ public class SorryServer implements Container {
 
 		out.print("result=");
 		if (postData.action != PerformableAction.UNSPECIFIED) {
-			performActionOnEngine(this.gameModule, postData.action);
-			out.print("" + Engine.SUCCESSFUL_OPERATION);
+			int result = performActionOnEngine(this.gameModule, postData.action);
+			out.print("" + result);
 			out.flush();
 			out.close();
 			return;
@@ -200,11 +260,20 @@ public class SorryServer implements Container {
 		out.close();
 	}
 
-	protected static void performActionOnEngine(EngineInterface sorryEngine,
+	/**
+	 * Performs a given action on the current game engine.
+	 * 
+	 * @param sorryEngine
+	 * @param action
+	 * @return result
+	 */
+	protected static int performActionOnEngine(EngineInterface sorryEngine,
 			PerformableAction action) {
 		switch (action) {
 		case FINALIZE:
-			sorryEngine.finalizeTurn();
+			boolean result = sorryEngine.finalizeTurn();
+			if (result)
+				return Engine.HAS_WON;
 			break;
 		case FORFEIT:
 			sorryEngine.forfeit();
@@ -214,8 +283,17 @@ public class SorryServer implements Container {
 		default:
 			break;
 		}
+		return Engine.SUCCESSFUL_OPERATION;
 	}
 
+	/**
+	 * Takes the input the server has received, parses it, and stores the data
+	 * in a container.
+	 * 
+	 * @param input
+	 * @return parsed data
+	 * @throws IllegalArgumentException
+	 */
 	protected static POSTDataContainer parseServerInput(String[] input)
 			throws IllegalArgumentException {
 		POSTDataContainer data = new POSTDataContainer();
@@ -279,7 +357,13 @@ public class SorryServer implements Container {
 		return data;
 	}
 
-	public static PerformableAction stringToPerformable(String action) {
+	/**
+	 * Convert a string to its corresponding action.
+	 * 
+	 * @param action
+	 * @return
+	 */
+	protected static PerformableAction stringToPerformable(String action) {
 		switch (action.trim()) {
 		case "forfeit":
 			return PerformableAction.FORFEIT;
@@ -290,7 +374,13 @@ public class SorryServer implements Container {
 		}
 	}
 
-	public static SorryFrame.Coordinate parseDatumToCoordinate(String datum) {
+	/**
+	 * Converts a coordinate, as a string of (x, y), to a SorryFrame Coordinate.
+	 * 
+	 * @param datum
+	 * @return
+	 */
+	protected static SorryFrame.Coordinate parseDatumToCoordinate(String datum) {
 		int x, y;
 
 		if (!(datum.startsWith("(") && datum.endsWith(")")))
@@ -317,34 +407,57 @@ public class SorryServer implements Container {
 		return ret;
 	}
 
+	/**
+	 * Class to contain data received by the server.
+	 * 
+	 * @author sturgedl. Created Apr 28, 2013.
+	 */
 	public static class POSTDataContainer {
+		@SuppressWarnings("javadoc")
 		boolean isValidData;
+		@SuppressWarnings("javadoc")
 		String userName;
+		@SuppressWarnings("javadoc")
 		SorryFrame.Coordinate firstCoord;
+		@SuppressWarnings("javadoc")
 		SorryFrame.Coordinate secondCoord;
+		@SuppressWarnings("javadoc")
 		PerformableAction action = PerformableAction.UNSPECIFIED;
 
+		/**
+		 * Check if the data contain has valid data for game interaction.
+		 * 
+		 * @return validity
+		 */
 		public boolean checkValidity() {
-			this.isValidData = !(userName == null) && !(firstCoord == null)
-					&& !(secondCoord == null);
+			this.isValidData = !(this.userName == null)
+					&& !(this.firstCoord == null)
+					&& !(this.secondCoord == null);
 
 			if (this.isValidData)
 				return this.isValidData;
 
-			this.isValidData = !(userName == null)
-					&& !(action == PerformableAction.UNSPECIFIED);
+			this.isValidData = !(this.userName == null)
+					&& !(this.action == PerformableAction.UNSPECIFIED);
 			return this.isValidData;
 		}
 
 	}
 
-	// Testing code, not actually useful code
+	/**
+	 * 
+	 * Main to allow the server to function as a stand alone entity, mainly for
+	 * testing purposes. NOT used by the actual game.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		try {
 			Engine eng = new Engine(new BoardList(), "english");
 			eng.insertPlayer(new Player(Piece.COLOR.red, "James Bond"));
 			eng.insertPlayer(new Player(Piece.COLOR.blue, "Harry Potter"));
 			eng.newGame();
+			eng.currentCard = new Card(2, "TEST CARD");
 			eng.rotatePlayers();
 			SorryServer cont = new SorryServer(eng);
 			cont.attemptServerStartUp(8080);
