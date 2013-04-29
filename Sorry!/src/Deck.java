@@ -55,7 +55,7 @@ public class Deck {
 		for(int i =0; i<4;i++)
 			cards[i*11+10]=t;
 
-		this.shuffle();
+//		this.shuffle();
 		} catch (FileNotFoundException e) {
 		}
 	}
@@ -66,7 +66,7 @@ public class Deck {
 			this.shuffle();
 		return c;
 	}
-	private void shuffle(){
+	void shuffle(){
 		topCard=0;
 		Random rand= new Random();
 		for(int i=0; i<cards.length;i++){

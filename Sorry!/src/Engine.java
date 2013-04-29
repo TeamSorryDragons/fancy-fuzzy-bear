@@ -11,6 +11,7 @@ public class Engine implements EngineInterface {
 	public static final int INVALID_MOVE = -512;
 	public static final int VALID_MOVE_NO_FINALIZE = -129;
 	public static final int SUCCESSFUL_OPERATION = 191;
+	public static final int HAS_WON = 237;
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap;
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap1;
 	private static HashMap<SorryFrame.Coordinate, Integer> coordsMap2;
@@ -31,6 +32,7 @@ public class Engine implements EngineInterface {
 		this.backupBoard = board.clone();
 		this.players = new CircularLinkedList<Player>();
 		this.deck = new Deck(lang);
+		this.deck.shuffle();
 		populateCoordsMap();
 
 	}
@@ -124,7 +126,7 @@ public class Engine implements EngineInterface {
 				} else
 					error = INVALID_MOVE;
 			}
-			// // not quite sure what this code is accomplishing
+			// not quite sure what this code is accomplishing
 			break;
 		case 10:
 			// 10 forward, or 1 backward

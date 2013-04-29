@@ -140,6 +140,7 @@ public class SorryFrameCoordinateConversionTest {
 
 	}
 	
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testNotCoordinateCompare(){
 		SorryFrame.Coordinate c = new SorryFrame.Coordinate(0,0);
@@ -158,6 +159,7 @@ public class SorryFrameCoordinateConversionTest {
 
 	}
 	
+	@SuppressWarnings("javadoc")
 	@Test
 	public void testNonGuiLoad(){
 		SorryFrame temp = new SorryFrame("english");
