@@ -238,11 +238,11 @@ public class EngineNonGUITest {
 		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 0),0),
 				66);
 		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 0),1),
-				88);
+				0);
 		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 0),2),
 				22);
 		assertEquals(Engine.getNodePosition(new SorryFrame.Coordinate(15, 0),3),
-				0);
+				44);
 	}
 
 	@SuppressWarnings("javadoc")
