@@ -19,6 +19,7 @@ public class Engine implements EngineInterface {
 	private int remainingMoves = 0;
 	protected BoardList board;
 	protected BoardList backupBoard;
+	protected Player owner;
 	protected Piece[] pieces;// Indices 0-3 are red, Indices 4-7 are blue,
 								// Indices 8-11
 	// are Yellow, Indices 12-15 are green
@@ -189,10 +190,15 @@ public class Engine implements EngineInterface {
 		return moves;
 	}
 
-	public int pawnMove(SorryFrame.Coordinate start, SorryFrame.Coordinate end) {
+	public boolean checkOwnerIsActive() {
+		if (this.owner != null)
+			return owner.getColor() == this.activePlayer.getColor();
+		return true;
+	}
+
+	public int attemptMovingPawn(SorryFrame.Coordinate start,
+			SorryFrame.Coordinate end) {
 		Node first, second;
-		// Start with error checking - are the coordinates and desired nodes
-		// valid?
 		try {
 			first = this.convertCoordToNode(start);
 			second = this.convertCoordToNode(end);
@@ -224,6 +230,15 @@ public class Engine implements EngineInterface {
 				nodeCountForward, nodeCountBackward);
 
 		return ret;
+	}
+
+	public int pawnMove(SorryFrame.Coordinate start, SorryFrame.Coordinate end) {
+		// Start with error checking - are the coordinates and desired nodes
+		// valid?
+		if (this.checkOwnerIsActive())
+			return this.attemptMovingPawn(start, end);
+		return this.INVALID_MOVE;
+
 	}
 
 	/**
@@ -704,7 +719,7 @@ public class Engine implements EngineInterface {
 			coordsMap1.put(new SorryFrame.Coordinate(i, 0), greenSide++);
 			coordsMap1.put(new SorryFrame.Coordinate(15, i), redSide++);
 		}
-		coordsMap1.put(new SorryFrame.Coordinate(15,0), 0);
+		coordsMap1.put(new SorryFrame.Coordinate(15, 0), 0);
 
 		redSide = 12;
 		blueSide = 34;
@@ -859,13 +874,15 @@ public class Engine implements EngineInterface {
 			for (int i = 0; i < 16; i++) {
 				for (int j = 0; j < 16; j++) {
 					try {
-					int coord = Engine.getNodePosition(
-							new SorryFrame.Coordinate(i, j), k);
-					if (coord >= 88)
-						System.out.println("Found bad one >= 88: " + i + "  " + j + "  map: " + k);
-					if (coord < 0)
-						System.out.println("Found bad one < 0: " + i + " " + j);
-					} catch (CoordinateOffOfBoardException e){
+						int coord = Engine.getNodePosition(
+								new SorryFrame.Coordinate(i, j), k);
+						if (coord >= 88)
+							System.out.println("Found bad one >= 88: " + i
+									+ "  " + j + "  map: " + k);
+						if (coord < 0)
+							System.out.println("Found bad one < 0: " + i + " "
+									+ j);
+					} catch (CoordinateOffOfBoardException e) {
 						// expected
 					}
 				}

@@ -118,12 +118,12 @@ public class SorryServer implements Container {
 			}
 
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			PrintStream out = null;
 			try {
 				out = response.getPrintStream();
 			} catch (IOException exception) {
-				//exception.printStackTrace();
+				// exception.printStackTrace();
 			}
 			out.println("Unsupported server access.");
 			out.flush();
@@ -252,7 +252,7 @@ public class SorryServer implements Container {
 			return;
 		}
 
-		int result = this.gameModule.pawnMove(postData.firstCoord,
+		int result = this.gameModule.attemptMovingPawn(postData.firstCoord,
 				postData.secondCoord);
 		out.print("" + result);
 
