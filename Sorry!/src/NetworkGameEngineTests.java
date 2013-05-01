@@ -67,6 +67,10 @@ public class NetworkGameEngineTests {
 		target.client = fakeServer;
 		target.getUpdatedInfo();
 		assertEquals(buff, target.getActivePlayer());
+		
+		fakeServer.get = "active-user=Micheal Jackson";
+		target.getUpdatedInfo();
+		assertNull(target.getActivePlayer());
 	}
 
 	@Test
