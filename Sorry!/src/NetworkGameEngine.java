@@ -197,28 +197,37 @@ public class NetworkGameEngine implements EngineInterface {
 
 	@Override
 	public void forfeit() {
-		// TODO Auto-generated method stub.
+		int result = sendServerAction("forfeit");
+		if (result != Engine.SUCCESSFUL_OPERATION) {
+			// failed
+			this.forfeit();
+		}
+	}
+
+	private int sendServerAction(String action) {
+		String data = "user=" + this.owner.getName();
+		data += "\n";
+		data += "desired-action=" + action;
+		String resp = this.client.sendServerData(data);
+		if (!resp.contains("result="))
+			return -1;
+		try {
+			int result = Integer.parseInt(resp.split("=")[1]);
+			return result;
+		} catch (NumberFormatException e) {
+			// did not get a valid result, should not happen
+		}
+		return -1;
 	}
 
 	@Override
 	public boolean finalizeTurn() {
-		String data = "user=" + this.owner.getName();
-		data += "\n";
-		data += "desired-action=finalize";
-		String resp = this.client.sendServerData(data);
-		if (resp.contains("InvalidData")
-				|| resp.contains("Unsupported server access")) {
-			// server failed to use this request
-			finalizeTurn(); // just try again, probably nothing
-		}
-		if (!resp.contains("result="))
-			return false;
-		try {
-			int result = Integer.parseInt(resp.split("=")[1]);
-			if (result == Engine.HAS_WON)
-				return true;
-		} catch (NumberFormatException e) {
-			// did not get a valid result, should not happen
+		int result = sendServerAction("finalize");
+		if (result == Engine.HAS_WON)
+			return true;
+		if (result != Engine.SUCCESSFUL_OPERATION) {
+			// Houston, we have a problem
+			this.finalizeTurn();
 		}
 		return false;
 	}

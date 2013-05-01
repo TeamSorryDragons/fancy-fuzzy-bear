@@ -89,6 +89,14 @@ public class NetworkGameEngineTests {
 			else
 				assertEquals(target.getCurrentCard().cardNum, i);
 		}
+
+		fakeServer.get = "current-card=15";
+		target.getUpdatedInfo();
+		assertNull(target.getNextCard());
+
+		fakeServer.get = "current-card=BILBOBAGGINS";
+		target.getUpdatedInfo();
+		assertNull(target.getNextCard());
 	}
 
 	@Test
@@ -124,12 +132,54 @@ public class NetworkGameEngineTests {
 		NetworkGameEngine target = new NetworkGameEngine("", 0, owner,
 				"english");
 
-		MockClient fakeServer = new MockClient("result=0", "", "");
+		MockClient fakeServer = new MockClient("", "result="
+				+ Engine.SUCCESSFUL_OPERATION, "");
 		target.client = fakeServer;
 		assertFalse(target.finalizeTurn());
 		assertEquals(fakeServer.received,
 				"user=Lady Gaga\ndesired-action=finalize");
 
+		Player jacque = new Player(Piece.COLOR.blue, "Jacque");
+		target.owner = jacque;
+		assertFalse(target.finalizeTurn());
+		assertEquals(fakeServer.received,
+				"user=Jacque\ndesired-action=finalize");
+
+		fakeServer.post = "result=" + Engine.HAS_WON;
+		assertTrue(target.finalizeTurn());
+		assertEquals(fakeServer.received,
+				"user=Jacque\ndesired-action=finalize");
+
+		fakeServer.post = "result=" + Engine.SUCCESSFUL_OPERATION;
+		assertFalse(target.finalizeTurn());
+		assertEquals(fakeServer.received,
+				"user=Jacque\ndesired-action=finalize");
+
+		fakeServer.post = "result=" + Engine.SUCCESSFUL_OPERATION;
+		assertFalse(target.finalizeTurn());
+		assertEquals(fakeServer.received,
+				"user=Jacque\ndesired-action=finalize");
+	}
+
+	@Test
+	public void testNetworkGameEngineForfeits() {
+		Player owner = new Player(Piece.COLOR.red, "Harry Potter");
+		NetworkGameEngine target = new NetworkGameEngine("", 0, owner,
+				"english");
+		MockClient fakeServer = new MockClient("", "result="
+				+ Engine.SUCCESSFUL_OPERATION, "");
+		target.client = fakeServer;
+
+		target.forfeit();
+		assertEquals(fakeServer.received,
+				"user=Harry Potter\ndesired-action=forfeit");
+
+		owner = new Player(Piece.COLOR.green, "James Dean");
+		target.owner = owner;
+
+		target.forfeit();
+		assertEquals(fakeServer.received,
+				"user=James Dean\ndesired-action=forfeit");
 	}
 
 	static class MockClient implements IHTTPClient {
