@@ -867,26 +867,4 @@ public class Engine implements EngineInterface {
 	public void getUpdatedInfo() {
 		return;
 	}
-
-	public static void main(String args[]) {
-		Engine.populateCoordsMap();
-		for (int k = 0; k < 4; k++) {
-			for (int i = 0; i < 16; i++) {
-				for (int j = 0; j < 16; j++) {
-					try {
-						int coord = Engine.getNodePosition(
-								new SorryFrame.Coordinate(i, j), k);
-						if (coord >= 88)
-							System.out.println("Found bad one >= 88: " + i
-									+ "  " + j + "  map: " + k);
-						if (coord < 0)
-							System.out.println("Found bad one < 0: " + i + " "
-									+ j);
-					} catch (CoordinateOffOfBoardException e) {
-						// expected
-					}
-				}
-			}
-		}
-	}
 }

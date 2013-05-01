@@ -58,6 +58,11 @@ public class NetworkGameEngine implements EngineInterface {
 			Player created = new Player(stringColorToActualColor(color), name);
 			players.add(created);
 		}
+
+		for (Player p : players) {
+			this.insertPlayer(p);
+		}
+
 		return players;
 	}
 
