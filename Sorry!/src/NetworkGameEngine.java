@@ -39,6 +39,45 @@ public class NetworkGameEngine implements EngineInterface {
 
 	}
 
+	/**
+	 * 
+	 * Get the players participating in the current game hosted at the current
+	 * client.
+	 * 
+	 * @return all of the players
+	 */
+	public ArrayList<Player> fetchAllPlayers() {
+		ArrayList<Player> players = new ArrayList<Player>();
+		String response = this.client.getServerResponse("game-info-full");
+		String[] results = response.split("\n");
+		for (String msg : results) {
+			if (!msg.contains(":"))
+				continue;
+			String name = msg.split(":")[0];
+			String color = msg.split(":")[1];
+			Player created = new Player(stringColorToActualColor(color), name);
+			players.add(created);
+		}
+		return players;
+	}
+
+	private Piece.COLOR stringColorToActualColor(String col) {
+		switch (col) {
+		case "red":
+			return Piece.COLOR.red;
+		case "blue":
+			return Piece.COLOR.blue;
+		case "yellow":
+			return Piece.COLOR.yellow;
+		case "green":
+			return Piece.COLOR.green;
+		case "colorless":
+			return Piece.COLOR.colorless;
+		default:
+			return Piece.COLOR.colorless;
+		}
+	}
+
 	@Override
 	public void getUpdatedInfo() {
 		String status = this.client.getServerResponse("game-status");
@@ -134,13 +173,6 @@ public class NetworkGameEngine implements EngineInterface {
 			this.players.insertAfterActual(bigP);
 			this.players.goToNextElement();
 		}
-
-	}
-
-	@Override
-	public void newGame() {
-		// TODO Auto-generated method stub.
-
 	}
 
 	@Override
@@ -249,6 +281,12 @@ public class NetworkGameEngine implements EngineInterface {
 
 	@Override
 	public void save(File save) throws IOException {
+		// TODO Auto-generated method stub.
+
+	}
+
+	@Override
+	public void newGame() {
 		// TODO Auto-generated method stub.
 
 	}
