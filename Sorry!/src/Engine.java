@@ -704,7 +704,7 @@ public class Engine implements EngineInterface {
 			coordsMap1.put(new SorryFrame.Coordinate(i, 0), greenSide++);
 			coordsMap1.put(new SorryFrame.Coordinate(15, i), redSide++);
 		}
-		coordsMap1.put(new SorryFrame.Coordinate(0, 15), 0);
+		coordsMap1.put(new SorryFrame.Coordinate(15,0), 0);
 
 		redSide = 12;
 		blueSide = 34;
@@ -718,7 +718,7 @@ public class Engine implements EngineInterface {
 			coordsMap2.put(new SorryFrame.Coordinate(i, 0), redSide++);
 			coordsMap2.put(new SorryFrame.Coordinate(15, i), blueSide++);
 		}
-		coordsMap2.put(new SorryFrame.Coordinate(0, 0), 0);
+		coordsMap2.put(new SorryFrame.Coordinate(0, 15), 0);
 
 		redSide = 12;
 		blueSide = 34;
@@ -732,7 +732,7 @@ public class Engine implements EngineInterface {
 			coordsMap3.put(new SorryFrame.Coordinate(i, 0), blueSide++);
 			coordsMap3.put(new SorryFrame.Coordinate(15, i), yellowSide++);
 		}
-		coordsMap3.put(new SorryFrame.Coordinate(15, 0), 0);
+		coordsMap3.put(new SorryFrame.Coordinate(15, 15), 0);
 
 	}
 

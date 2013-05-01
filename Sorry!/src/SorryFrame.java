@@ -62,6 +62,12 @@ public class SorryFrame extends JFrame implements ActionListener {
 		}
 		this.engine = eng;
 		this.engine.newGame();
+		
+		updateThread t = (new updateThread());
+		t.e = this.engine;
+		t.s = this;
+		t.start();
+		
 		Scanner in = new Scanner(fr);
 		for (int x = 0; x < 12; x++)
 			in.nextLine();
@@ -86,6 +92,12 @@ public class SorryFrame extends JFrame implements ActionListener {
 		}
 		this.engine = new Engine(this.board, lang);
 		this.engine.newGame();
+		
+		updateThread t = (new updateThread());
+		t.e = this.engine;
+		t.s = this;
+		t.start();
+		
 		Scanner in = new Scanner(fr);
 		for (int x = 0; x < 12; x++)
 			in.nextLine();
@@ -182,7 +194,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 		return new Coordinate(xCoord, yCoord);
 	}
-
 
 	/**
 	 * 
@@ -398,6 +409,23 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 * @author sturgedl. Created Mar 25, 2013.
 	 */
+	private class updateThread extends Thread {
+		EngineInterface e;
+		SorryFrame s;
+
+		public void run() {
+			e.getUpdatedInfo();
+			s.repaint();
+			try {
+				sleep(20000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			run();
+		}
+	}
+
 	protected class BoardMouseListener implements MouseListener {
 		private SorryFrame myFrame;
 
