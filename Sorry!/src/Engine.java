@@ -47,8 +47,6 @@ public class Engine implements EngineInterface {
 		}
 	}
 
-
-
 	public void newGame() {
 		this.pieces = this.board.newGame();
 		this.backupBoard = this.board.clone();
@@ -144,7 +142,8 @@ public class Engine implements EngineInterface {
 				error = INVALID_MOVE;
 			if (numberMovesForward == 11)
 				moves = 11;
-			else if (end.hasPiece() && start.canReceivePiece(end.firstPiece().col)) {
+			else if (end.hasPiece()
+					&& start.canReceivePiece(end.firstPiece().col)) {
 				moves = numberMovesForward;
 
 			} else
@@ -263,7 +262,6 @@ public class Engine implements EngineInterface {
 		return this.currentCard;
 
 	}
-
 
 	/**
 	 * Helper method for moving pieces to the start position.
@@ -825,7 +823,7 @@ public class Engine implements EngineInterface {
 		this.board = board;
 		this.backupBoard = clone;
 		this.pieces = pieceList;
-		
+
 	}
 
 	@Override
@@ -835,14 +833,12 @@ public class Engine implements EngineInterface {
 				+ this.getActivePlayer().getColor().toString());
 		for (int i = 0; i < (this.players.getNumberOfElements() - 1); i++) {
 			this.players.goToNextElement();
-			this.activePlayer = this.players
-					.getActualElementData();
+			this.activePlayer = this.players.getActualElementData();
 			output.println(this.getActivePlayer().getName() + "|"
 					+ this.getActivePlayer().getColor().toString());
 		}
 		this.players.goToNextElement();
-		this.activePlayer = this.players
-				.getActualElementData();
+		this.activePlayer = this.players.getActualElementData();
 		output.println();
 		output.println(this.board.toString());
 		output.close();
@@ -850,11 +846,30 @@ public class Engine implements EngineInterface {
 
 	@Override
 	public void forfeit() {
-		// TODO Auto-generated method stub
 		revertBoard();
 	}
-	
-	public void getUpdatedInfo(){
+
+	public void getUpdatedInfo() {
 		return;
+	}
+
+	public static void main(String args[]) {
+		Engine.populateCoordsMap();
+		for (int k = 0; k < 4; k++) {
+			for (int i = 0; i < 16; i++) {
+				for (int j = 0; j < 16; j++) {
+					try {
+					int coord = Engine.getNodePosition(
+							new SorryFrame.Coordinate(i, j), k);
+					if (coord >= 88)
+						System.out.println("Found bad one >= 88: " + i + "  " + j + "  map: " + k);
+					if (coord < 0)
+						System.out.println("Found bad one < 0: " + i + " " + j);
+					} catch (CoordinateOffOfBoardException e){
+						// expected
+					}
+				}
+			}
+		}
 	}
 }

@@ -25,8 +25,7 @@ public class NetworkGameEngine implements EngineInterface {
 	 * @throws MalformedURLException
 	 * 
 	 */
-	public NetworkGameEngine(String loc, int port, Player own, String language)
-			throws MalformedURLException {
+	public NetworkGameEngine(String loc, int port, Player own, String language) {
 		String serverURL = loc + ":" + port + "/";
 		this.client = new HTTPClient(serverURL);
 		this.owner = own;
@@ -35,6 +34,8 @@ public class NetworkGameEngine implements EngineInterface {
 		for (int i = 0; i < 11; i++) {
 			this.cards.add(deck.cards[i]);
 		}
+		this.players = new CircularLinkedList<Player>();
+		this.board = new BoardList();
 
 	}
 
@@ -46,7 +47,13 @@ public class NetworkGameEngine implements EngineInterface {
 		for (String msg : results) {
 			if (!msg.contains("=")) {
 				// have the game board
-				this.board = new BoardList(msg);
+				try {
+					this.board = new BoardList(msg);
+				} catch (Exception e) {
+					// building the board failed, probably bad input
+					// make no changes, hopefully it's corrected the next
+					// iteration
+				}
 				continue;
 			}
 			String prefix = msg.split("=")[0];
@@ -74,43 +81,16 @@ public class NetworkGameEngine implements EngineInterface {
 	 * @return
 	 */
 	private Card fetchCard(String data) {
-		Card ret;
-		switch (data) {
-		case "1":
-			ret = this.cards.get(0);
-			break;
-		case "2":
-			ret = this.cards.get(1);
-			break;
-		case "3":
-			ret = this.cards.get(2);
-			break;
-		case "4":
-			ret = this.cards.get(3);
-			break;
-		case "5":
-			ret = this.cards.get(4);
-			break;
-		case "7":
-			ret = this.cards.get(5);
-			break;
-		case "8":
-			ret = this.cards.get(6);
-			break;
-		case "10":
-			ret = this.cards.get(7);
-			break;
-		case "11":
-			ret = this.cards.get(8);
-			break;
-		case "12":
-			ret = this.cards.get(9);
-			break;
-		case "13":
-			ret = this.cards.get(10);
-			break;
-		default:
-			ret = null;
+		Card ret = null;
+		try {
+			int cardNum = Integer.parseInt(data);
+			if (cardNum < 6)
+				ret = this.cards.get(cardNum - 1);
+			else if (cardNum < 9 && cardNum != 6)
+				ret = this.cards.get(cardNum - 2);
+			else if (cardNum < 14 && cardNum != 9 && cardNum != 6)
+				ret = this.cards.get(cardNum - 3);
+		} catch (NumberFormatException e) {
 		}
 		return ret;
 	}
@@ -131,12 +111,15 @@ public class NetworkGameEngine implements EngineInterface {
 		}
 		this.players.goToNextElement();
 		String next = "";
+		Player test = this.players.getActualElementData();
 		while (next != first) {
 			if (next.equals(data)) {
-				active = this.players.getActualElementData();
+				active = test;
 				break;
 			}
-			next = this.players.getActualElementData().getName();
+			test = this.players.getActualElementData();
+			next = test.getName();
+
 			this.players.goToNextElement();
 		}
 		return active;
@@ -158,12 +141,6 @@ public class NetworkGameEngine implements EngineInterface {
 	public void newGame() {
 		// TODO Auto-generated method stub.
 
-	}
-
-	@Override
-	public boolean isValidMove(Piece p, int i, Player pl) {
-		// TODO Auto-generated method stub.
-		return false;
 	}
 
 	@Override
@@ -227,7 +204,7 @@ public class NetworkGameEngine implements EngineInterface {
 	public boolean finalizeTurn() {
 		String data = "user=" + this.owner.getName();
 		data += "\n";
-		data += "action=finalize";
+		data += "desired-action=finalize";
 		String resp = this.client.sendServerData(data);
 		if (resp.contains("InvalidData")
 				|| resp.contains("Unsupported server access")) {
@@ -244,12 +221,6 @@ public class NetworkGameEngine implements EngineInterface {
 			// did not get a valid result, should not happen
 		}
 		return false;
-	}
-
-	@Override
-	public void revertBoard() {
-		// TODO Auto-generated method stub.
-
 	}
 
 	@Override
@@ -273,49 +244,16 @@ public class NetworkGameEngine implements EngineInterface {
 
 	}
 
-	@Override
-	public Node convertCoordToNode(SorryFrame.Coordinate c) {
-		// TODO Auto-generated method stub.
-		return null;
-
-	}
-
-	@Override
-	public boolean hasWon() {
-		// TODO Auto-generated method stub.
-		return false;
-	}
-
-	@Override
-	public void move(int i, Piece p, Node n) throws InvalidMoveException {
-		// TODO Auto-generated method stub.
-
-	}
-
-	@Override
-	public Node findNode(Piece p) {
-		// TODO Auto-generated method stub.
-		return null;
-	}
-
-	@Override
-	public Node findNodeByPosition(int i) {
-		// TODO Auto-generated method stub.
-		return null;
-	}
-
 	public static void main(String[] args) {
-		try {
-			NetworkGameEngine eng = new NetworkGameEngine(
-					"http://137.112.113.203", 8080, new Player(
-							Piece.COLOR.green, "bob barker"), "english");
-			int resp = eng.pawnMove(new SorryFrame.Coordinate(0, 0),
-					new SorryFrame.Coordinate(1, 1));
-			System.out.println(resp);
-		} catch (MalformedURLException exception) {
-			// TODO Auto-generated catch-block stub.
-			exception.printStackTrace();
-		}
+		BoardList bs = new BoardList("hello world");
+		System.out.println(bs.toString());
+
+		NetworkGameEngine eng = new NetworkGameEngine("http://137.112.113.203",
+				8080, new Player(Piece.COLOR.green, "bob barker"), "english");
+		int resp = eng.pawnMove(new SorryFrame.Coordinate(0, 0),
+				new SorryFrame.Coordinate(1, 1));
+		System.out.println(resp);
+
 	}
 
 }

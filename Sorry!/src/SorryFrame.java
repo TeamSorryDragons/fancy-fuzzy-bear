@@ -232,11 +232,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	private void performTurn() {
-		if (this.desiresForfeit) {
-			this.engine.revertBoard();
-			this.initiateTurn();
-			return;
-		}
 		int result = this.engine.pawnMove(this.clicks.get(0),
 				this.clicks.get(1));
 		this.repaint();
