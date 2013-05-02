@@ -24,12 +24,35 @@ Sortie
 Économise
 Déchu la tour
 
-nouveau jeu
+Nouveau jeu
 Jeu de charge
-instructions
-quitter
+Instructions
+Quitter
 Connectez
 Host
 
 Nommez vos joueurs
 Commencer
+
+Choix du serveur
+Voulez-vous rejoindre ou héberger une partie de Sorry!
+Host
+Rejoindre
+Locale
+
+Connectez-vous à un jeu
+IP Host
+Port
+Votre nom d'utilisateur
+Commencer
+
+Organisez un jeu
+Nommez vos joueurs
+Commencer
+Port
+
+Votre information
+Pour que les utilisateurs que vous avez entrées à connecter à un jeu, ils ont besoin de votre numéro de port et l'adresse IP
+IP:
+Port:
+Ok.

@@ -3,7 +3,6 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 
 import javax.swing.JEditorPane;
-import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import org.junit.Test;
