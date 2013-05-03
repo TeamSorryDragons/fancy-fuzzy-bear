@@ -8,13 +8,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -312,7 +310,7 @@ public class MenuFrame extends JFrame {
 		tfHostIP.setEditable(true);
 		tfPort.setEditable(true);
 		tfUsername.setEditable(true);
-		JPanel hostIPPanel= new JPanel();
+		//JPanel hostIPPanel= new JPanel();
 		connectPanel.add(lblHostIP);
 		connectPanel.add(tfHostIP);
 		//		hostIPPanel.add(lblHostIP);
@@ -489,11 +487,10 @@ public class MenuFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				NetworkGameEngine client=new NetworkGameEngine(MenuFrame.this.IP,MenuFrame.this.port,new Player(Piece.COLOR.red, MenuFrame.this.player.get(0)), MenuFrame.this.language);
-				client.fetchAllPlayers();
-				client.getUpdatedInfo();
-				
-				SorryFrame sf= new SorryFrame(MenuFrame.this.language, client);
+				NetworkGameEngine host=new NetworkGameEngine(MenuFrame.this.IP,MenuFrame.this.port,new Player(Piece.COLOR.red, MenuFrame.this.player.get(0)), MenuFrame.this.language);
+				host.fetchAllPlayers();
+				host.getUpdatedInfo();
+				SorryFrame sf= new SorryFrame(MenuFrame.this.language, host);
 				sf.start();
 				MenuFrame.this.dispose();
 
