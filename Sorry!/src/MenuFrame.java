@@ -327,7 +327,7 @@ public class MenuFrame extends JFrame {
 		btnStart.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				NetworkGameEngine client=new NetworkGameEngine("http://"+MenuFrame.this.tfHostIP.getText(),Integer.parseInt(MenuFrame.this.tfPort.getText()),new Player(Piece.COLOR.colorless, MenuFrame.this.tfUsername.getText()), MenuFrame.this.language);
+				NetworkGameEngine client=new NetworkGameEngine(MenuFrame.this.tfHostIP.getText(),Integer.parseInt(MenuFrame.this.tfPort.getText()),new Player(Piece.COLOR.colorless, MenuFrame.this.tfUsername.getText()), MenuFrame.this.language);
 				client.fetchAllPlayers();
 				client.getUpdatedInfo();
 				SorryFrame sf= new SorryFrame(MenuFrame.this.language, client);
@@ -479,7 +479,7 @@ public class MenuFrame extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		MenuFrame.this.IP="http://"+s.getLocalAddress().getHostAddress();
+		MenuFrame.this.IP=s.getLocalAddress().getHostAddress();
 		JLabel lblIP = new JLabel(in.nextLine()+MenuFrame.this.IP);
 		JLabel lblPort= new JLabel(in.nextLine()+MenuFrame.this.port);
 		JButton btnOkay= new JButton(in.nextLine());
@@ -494,7 +494,6 @@ public class MenuFrame extends JFrame {
 				sf.start();
 				MenuFrame.this.dispose();
 
-				
 			}
 			
 		});

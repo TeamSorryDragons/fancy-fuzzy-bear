@@ -26,7 +26,7 @@ public class NetworkGameEngine implements EngineInterface {
 	 * 
 	 */
 	public NetworkGameEngine(String loc, int port, Player own, String language) {
-		String serverURL = loc + ":" + port + "/";
+		String serverURL ="http://"+ loc + ":" + port + "/";
 		this.client = new HTTPClient(serverURL);
 		this.owner = own;
 		this.cards = new ArrayList<Card>();
