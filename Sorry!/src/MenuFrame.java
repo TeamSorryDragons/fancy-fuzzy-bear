@@ -489,7 +489,7 @@ public class MenuFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				NetworkGameEngine client=new NetworkGameEngine(MenuFrame.this.IP,MenuFrame.this.port,new Player(Piece.COLOR.colorless, MenuFrame.this.player.get(0)), MenuFrame.this.language);
+				NetworkGameEngine client=new NetworkGameEngine(MenuFrame.this.IP,MenuFrame.this.port,new Player(Piece.COLOR.red, MenuFrame.this.player.get(0)), MenuFrame.this.language);
 				client.fetchAllPlayers();
 				client.getUpdatedInfo();
 				
