@@ -485,7 +485,7 @@ public class MenuFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				MenuFrame.this.hostGame();
+				MenuFrame.this.connect();
 				
 			}
 			
@@ -504,9 +504,9 @@ public class MenuFrame extends JFrame {
 
 	}
 
-	protected void hostGame() {
-		// TODO Auto-generated method stub
-		dispose();
-	}
+//	protected void hostGame() {
+//		// TODO Auto-generated method stub
+//		dispose();
+//	}
 
 }
