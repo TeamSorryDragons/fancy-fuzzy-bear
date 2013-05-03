@@ -60,6 +60,8 @@ public class NetworkGameEngine implements EngineInterface {
 		}
 
 		for (Player p : players) {
+			if (p.getName().equals(this.owner.getName()))
+				this.owner = p;
 			this.insertPlayer(p);
 		}
 
