@@ -1,7 +1,4 @@
 import static org.junit.Assert.*;
-
-import java.net.MalformedURLException;
-
 import org.junit.Test;
 
 /**
