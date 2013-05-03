@@ -67,7 +67,7 @@ public class NetworkGameEngineTests {
 		target.client = fakeServer;
 		target.getUpdatedInfo();
 		assertEquals(buff, target.getActivePlayer());
-		
+
 		fakeServer.get = "active-user=Micheal Jackson";
 		target.getUpdatedInfo();
 		assertNull(target.getActivePlayer());
@@ -184,6 +184,32 @@ public class NetworkGameEngineTests {
 		target.forfeit();
 		assertEquals(fakeServer.received,
 				"user=James Dean\ndesired-action=forfeit");
+	}
+
+	@Test
+	public void testfetchAllPlayers() {
+		Player one = new Player(Piece.COLOR.red, "guy");
+		NetworkGameEngine target = new NetworkGameEngine("", 0, one, "english");
+		MockClient fakeServer = new MockClient("guy:red \n not guy:blue",
+				"result=" + Engine.SUCCESSFUL_OPERATION, "");
+		target.client = fakeServer;
+		assertEquals(target.fetchAllPlayers().size(), 2);
+	}
+	
+	@Test
+	public void testStringToColor(){
+		String Str = "red";
+		Player one = new Player(Piece.COLOR.red, "guy");
+		NetworkGameEngine target = new NetworkGameEngine("", 0, one, "english");
+		assertEquals(Piece.COLOR.red,target.stringColorToActualColor(Str));
+		Str = "blue";
+		assertEquals(Piece.COLOR.blue,target.stringColorToActualColor(Str));
+		Str = "yellow";
+		assertEquals(Piece.COLOR.yellow,target.stringColorToActualColor(Str));
+		Str = "green";
+		assertEquals(Piece.COLOR.green,target.stringColorToActualColor(Str));
+		Str = "colorless";
+		assertEquals(Piece.COLOR.colorless,target.stringColorToActualColor(Str));
 	}
 
 	static class MockClient implements IHTTPClient {

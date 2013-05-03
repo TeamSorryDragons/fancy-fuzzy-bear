@@ -66,7 +66,7 @@ public class NetworkGameEngine implements EngineInterface {
 		return players;
 	}
 
-	private Piece.COLOR stringColorToActualColor(String col) {
+	protected Piece.COLOR stringColorToActualColor(String col) {
 		switch (col) {
 		case "red":
 			return Piece.COLOR.red;

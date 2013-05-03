@@ -9,6 +9,7 @@ public class DisplayableBoard extends JComponent {
 	private static final long serialVersionUID = 1L;
 	EngineInterface gameEngine;
 	private static BufferedImage[] image = new BufferedImage[4];
+	private int size;
 
 	public DisplayableBoard(EngineInterface eng) {
 		super();
@@ -35,9 +36,9 @@ public class DisplayableBoard extends JComponent {
 		Node[] cornerPointers = this.gameEngine.getActualBoard()
 				.getCornerPointers();
 		Graphics2D g2 = (Graphics2D) g;
-		g.setFont(new Font(g.getFont().getName(),Font.PLAIN,40));
+		g.setFont(new Font(g.getFont().getName(), Font.PLAIN, 40));
 		int i = 0;
-		switch(gameEngine.getActivePlayer().getColor()){
+		switch (gameEngine.getActivePlayer().getColor()) {
 		case red:
 			i = 0;
 			break;
@@ -53,14 +54,16 @@ public class DisplayableBoard extends JComponent {
 		}
 		int size = image[i].getWidth() / 16;
 		g.drawImage(image[i], 0, 0, null);
+		this.size = size;
 		draw(cornerPointers[i], cornerPointers[i].getNext(), Math.PI,
-				image[i].getWidth() - 2 * size, image[i].getHeight() - size, size,
-				g2, gameEngine.getActivePlayer().getColor());
+				image[i].getWidth() - 2 * size, image[i].getHeight()
+						- this.size, g2, gameEngine.getActivePlayer()
+						.getColor());
 	}
 
 	@SuppressWarnings("incomplete-switch")
 	public void draw(Node start, Node next, Double angle, int x, int y,
-			int size, Graphics2D g, Piece.COLOR curcolor) {
+			Graphics2D g, Piece.COLOR curcolor) {
 		if (next.hasPiece()) {
 			switch (next.firstPiece().col) {
 			case blue:
@@ -84,7 +87,8 @@ public class DisplayableBoard extends JComponent {
 				g.drawOval((int) Math.round(x + size * Math.cos(angle)),
 						(int) Math.round(y - size * Math.sin(angle)), size,
 						size);
-				g.drawString(((MultiNode) next).numberOfPieces() + "",(int) Math.round(x + size * Math.cos(angle)),
+				g.drawString(((MultiNode) next).numberOfPieces() + "",
+						(int) Math.round(x + size * Math.cos(angle)),
 						(int) Math.round(y - size * Math.sin(angle)));
 			} else {
 				g.fillOval(x, y, size, size);
@@ -107,8 +111,7 @@ public class DisplayableBoard extends JComponent {
 						(int) Math.round(x + size
 								* Math.cos(angle - Math.PI / 2)),
 						(int) Math.round(y - size
-								* Math.sin(angle - Math.PI / 2)), size, g,
-						curcolor);
+								* Math.sin(angle - Math.PI / 2)), g, curcolor);
 			}
 		}
 		if (next.getNext().getColor() != Piece.COLOR.colorless
@@ -116,12 +119,11 @@ public class DisplayableBoard extends JComponent {
 			draw(start, next.getNext(), angle - Math.PI / 2,
 					(int) Math.round(x + size * Math.cos(angle - Math.PI / 2)),
 					(int) Math.round(y - size * Math.sin(angle - Math.PI / 2)),
-					size, g, next.getNext().getColor());
+					g, next.getNext().getColor());
 		} else {
 			draw(start, next.getNext(), angle,
 					(int) Math.round(x + size * Math.cos(angle)),
-					(int) Math.round(y - size * Math.sin(angle)), size, g,
-					curcolor);
+					(int) Math.round(y - size * Math.sin(angle)), g, curcolor);
 		}
 
 	}
