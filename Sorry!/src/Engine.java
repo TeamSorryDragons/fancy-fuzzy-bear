@@ -232,6 +232,7 @@ public class Engine implements EngineInterface {
 		return ret;
 	}
 
+	@SuppressWarnings("static-access")
 	public int pawnMove(SorryFrame.Coordinate start, SorryFrame.Coordinate end) {
 		// Start with error checking - are the coordinates and desired nodes
 		// valid?
