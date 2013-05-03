@@ -26,7 +26,7 @@ public class SorryServerTests {
 	@Test
 	public void testServerStarts() {
 		SorryServer target = new SorryServer(null);
-		int port = startUpServerOnLocalHost(target);
+		startUpServerOnLocalHost(target);
 		assertTrue(target.closeServerConnection());
 	}
 
@@ -34,7 +34,7 @@ public class SorryServerTests {
 	public void testCloseUnopenServer() {
 		SorryServer target = new SorryServer(null);
 		assertFalse(target.closeServerConnection());
-		int port = this.startUpServerOnLocalHost(target);
+		this.startUpServerOnLocalHost(target);
 		assertTrue(target.closeServerConnection());
 	}
 

@@ -14,9 +14,7 @@ public class PickLanguage extends JFrame{
 	private MenuFrame mf;
 	public PickLanguage(){
 		super("Pick the language/ Choisissez la langue");
-		JPanel panel= new JPanel();
 		JLabel title = new JLabel("Pick the language/ Choisissez la langue",JLabel.CENTER);
-		panel.add(title);
 		JRadioButton jrbEng = new JRadioButton("English");
 		JRadioButton jrbFrc = new JRadioButton("Français");
 		JRadioButton jrb133 = new JRadioButton("1337");
