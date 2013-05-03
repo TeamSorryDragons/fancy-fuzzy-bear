@@ -514,9 +514,9 @@ public class MenuFrame extends JFrame {
 
 	}
 
-	protected void hostGame() {
-		// TODO Auto-generated method stub
-		
-	}
+//	protected void hostGame() {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 }
