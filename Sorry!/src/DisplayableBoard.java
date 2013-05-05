@@ -32,13 +32,21 @@ public class DisplayableBoard extends JComponent {
 		draw(g);
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	public void draw(Graphics g) {
 		Node[] cornerPointers = this.gameEngine.getActualBoard()
 				.getCornerPointers();
 		Graphics2D g2 = (Graphics2D) g;
 		g.setFont(new Font(g.getFont().getName(), Font.PLAIN, 40));
 		int i = 0;
-		switch (gameEngine.getActivePlayer().getColor()) {
+		Player ply;
+		if(this.gameEngine.getOwner() == null){
+			ply = this.gameEngine.getActivePlayer();
+		}
+		else{
+			ply = this.gameEngine.getOwner();
+		}
+		switch (ply.getColor()) {
 		case red:
 			i = 0;
 			break;
