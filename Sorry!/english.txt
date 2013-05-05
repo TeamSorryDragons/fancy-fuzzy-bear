@@ -42,7 +42,7 @@ Your Username
 Start
 
 Host a Game
-Name your Players
+Name your Players or Load a game
 Start
 Load
 
