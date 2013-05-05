@@ -11,10 +11,10 @@ Move a pawn 12 spaces forward.
 Move any one pawn from Start to a square occupied by any opponent, sending that pawn back to its own Start. If there are no pawns on the player's Start, or no opponent's pawns on any squares, the turn is lost. 
 
 , it is your turn!
-, you picked the same node twice.
+, you picked the same space twice.
 , that move is illegal.
 , you appear to have clicked off of the board.
-, there is no pawn on the first selected node.
+, there is no pawn on the first space you selected.
 , you have won!
 You want to quit do you?  Too bad loser.
 You want to save?  Better win faster.
@@ -27,9 +27,9 @@ Forfeit Turn
 New Game
 Load Game
 Instructions
-Exit
 Connect
 Host
+Exit
 
 New Game
 Name your players
