@@ -215,6 +215,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	protected void initiateTurn() {
+		this.engine.getUpdatedInfo();
 		this.currentCard = this.engine.getCurrentCard();
 		// System.out.println(this.currentCard.toString());
 		// this.engine.rotatePlayers();
@@ -416,7 +417,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 			e.getUpdatedInfo();
 			s.repaint();
 			try {
-				sleep(20000);
+				sleep(1000);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

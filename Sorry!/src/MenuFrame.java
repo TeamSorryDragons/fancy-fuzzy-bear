@@ -386,6 +386,7 @@ public class MenuFrame extends JFrame {
 				player = new ArrayList<String>();
 				Engine EHost = new Engine(new BoardList(),
 						MenuFrame.this.language);
+				EHost.board.newGame();
 				SorryServer host;
 				if (!MenuFrame.this.p1.getText().isEmpty()) {
 					EHost.insertPlayer(new Player(Piece.COLOR.red,

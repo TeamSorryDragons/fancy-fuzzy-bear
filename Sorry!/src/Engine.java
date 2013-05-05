@@ -373,6 +373,8 @@ public class Engine implements EngineInterface {
 		this.players.goToNextElement();
 		this.activePlayer = this.players.getActualElementData();
 		this.activePlayer.setActive(true);
+		System.out.println("The current active player: "
+				+ this.activePlayer.getName());
 
 	}
 
@@ -476,6 +478,8 @@ public class Engine implements EngineInterface {
 	@Override
 	public void forfeit() {
 		revertBoard();
+		this.rotatePlayers();
+		this.getNextCard();
 	}
 
 	@Override
