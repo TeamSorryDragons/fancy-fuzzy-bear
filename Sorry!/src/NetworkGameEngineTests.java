@@ -17,13 +17,13 @@ public class NetworkGameEngineTests {
 
 	@Test
 	public void testNetworkGameEngineConstructorPopulatesFields() {
-		String url = "http://localhost";
+		String url = "localhost";
 		Player testP = new Player(Piece.COLOR.yellow, "Harry Potter");
 		int port = 8080;
 		NetworkGameEngine target = null;
 		target = new NetworkGameEngine(url, port, testP, "english");
 		assertEquals(target.owner, testP);
-		assertEquals(target.client.getServerURL(), url + ":" + port + "/");
+		assertEquals(target.client.getServerURL(), "http://"+url + ":" + port + "/");
 
 		for (int i = 0; i < 5; i++)
 			assertEquals(target.cards.get(i).cardNum, i + 1);

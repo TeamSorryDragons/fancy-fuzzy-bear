@@ -26,4 +26,6 @@ public interface EngineInterface {
 	void forfeit();
 
 	void getUpdatedInfo();
+	
+	Player getOwner();
 }

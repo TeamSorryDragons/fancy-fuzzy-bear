@@ -32,8 +32,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 	private volatile int clickCount = 0;
 	private volatile ArrayList<Coordinate> clicks = new ArrayList<Coordinate>();
-	private volatile boolean desiresForfeit;
-
 	private static final long serialVersionUID = 1L;
 	protected BoardList board;
 	protected EngineInterface engine;
@@ -217,7 +215,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	protected void initiateTurn() {
-		this.desiresForfeit = false;
 		this.currentCard = this.engine.getCurrentCard();
 		// System.out.println(this.currentCard.toString());
 		// this.engine.rotatePlayers();
@@ -330,7 +327,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void forfeitTurn() {
-		this.desiresForfeit = true;
 		this.resetClickDetection();
 		this.engine.forfeit();
 		this.initiateTurn();

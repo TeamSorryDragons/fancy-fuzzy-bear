@@ -31,25 +31,20 @@ Exit
 Connect
 Host
 
+New Game
 Name your players
 Start
 
-Server Choices
-Would you like to join or host or create a local game of Sorry!
-Host
-Join
-Local
-
 Connect to a Game
-Host IP
-Port
-Your Username
+Host IP 
+Port 
+Your Username 
 Start
 
 Host a Game
 Name your Players
 Start
-Port
+Load
 
 Your Information
 To have the users that you inputed connect to a game they need your port number and IP address

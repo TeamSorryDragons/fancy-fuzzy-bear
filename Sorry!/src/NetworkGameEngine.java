@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class NetworkGameEngine implements EngineInterface {
 	 * 
 	 */
 	public NetworkGameEngine(String loc, int port, Player own, String language) {
-		String serverURL = loc + ":" + port + "/";
+		String serverURL ="http://"+ loc + ":" + port + "/";
 		this.client = new HTTPClient(serverURL);
 		this.owner = own;
 		this.cards = new ArrayList<Card>();
@@ -276,7 +277,7 @@ public class NetworkGameEngine implements EngineInterface {
 	@Override
 	public void load(BoardList board, BoardList clone, Piece[] pieceList) {
 		// TODO Auto-generated method stub.
-
+		this.board = board;
 	}
 
 	@Override
@@ -290,8 +291,20 @@ public class NetworkGameEngine implements EngineInterface {
 
 	@Override
 	public void save(File save) throws IOException {
-		// TODO Auto-generated method stub.
-
+		PrintWriter output = new PrintWriter(save);
+		output.println(this.getActivePlayer().getName() + "|"
+				+ this.getActivePlayer().getColor().toString());
+		for (int i = 0; i < (this.players.getNumberOfElements() - 1); i++) {
+			this.players.goToNextElement();
+			this.activePlayer = this.players.getActualElementData();
+			output.println(this.getActivePlayer().getName() + "|"
+					+ this.getActivePlayer().getColor().toString());
+		}
+		this.players.goToNextElement();
+		this.activePlayer = this.players.getActualElementData();
+		output.println();
+		output.println(this.board.toString());
+		output.close();
 	}
 
 	@Override
@@ -310,6 +323,12 @@ public class NetworkGameEngine implements EngineInterface {
 				new SorryFrame.Coordinate(1, 1));
 		System.out.println(resp);
 
+	}
+
+	@Override
+	public Player getOwner() {
+		// TODO Auto-generated method stub
+		return this.owner;
 	}
 
 }
