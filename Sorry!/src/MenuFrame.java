@@ -439,12 +439,11 @@ public class MenuFrame extends JFrame {
 				Scanner reader;
 				try {
 					reader = new Scanner(file);
-					ArrayList<String> players = new ArrayList<String>();
 					while (reader.hasNext()) {
-						players.add(reader.nextLine());
+						player.add(reader.nextLine());
 					}
-					int a = passPlayers(players,EHost);
-					board = new BoardList((players.get(a + 1)));
+					int a = passPlayers(player,EHost);
+					board = new BoardList((player.get(a + 1)));
 					EHost.load(board, board.clone(), board.pieceList);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
