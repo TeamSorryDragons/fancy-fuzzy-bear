@@ -11,43 +11,43 @@ Déplace un pion 12 places avant.
 Déplace aucun pion celle de démarrage sur une case occupée par un adversaire, l'envoi de ce pion à son propre départ. S'il n'ya pas de pions sur Démarrer du joueur, ou des pions de l'adversaire sur aucune des cases, le tour est perdu.
 
 , c'est à votre tour!
-, vous avez choisi le même nœud deux fois.
+, vous avez choisi deux fois le même espace.
 , ce déménagement est illégal.
 , vous semblez avoir cliqué hors de la carte.
-, il n'ya pas de pion sur le premier nœud sélectionné.
+, il n'ya pas de pion sur la première case que vous avez sélectionné.
 , vous avez gagné!
 Vous voulez arrêter de vous? Trop mauvais perdant.
 Vous voulez économiser? Mieux gagner plus rapidement.
 Message
 
 Sortie
-Économise
+Sauvegarde
 Déchu la tour
 
 Nouveau jeu
-Jeu de charge
+Chargez une partie
 Instructions
+Connectez-Vous 
+L'hôte 
 Quitter
-Connectez
-Host
 
 Nouveau Jeu
 Nommez vos joueurs
-Commencer
+Commencez
 
-Connectez-vous à un Jeu
-IP Host 
+Connectez-Vous à un Jeu
+L'adresse IP de l'hôte 
 Port 
 Votre nom d'utilisateur 
-Commencer
+Commencez
 
 Organisez un Jeu
 Nommez vos joueurs ou sur la charge
 Commencer
-Jeu de charge
+Chargez
 
 Votre Information
 Pour que les utilisateurs que vous avez entrées à connecter à un jeu, ils ont besoin de votre numéro de port et l'adresse IP
-IP: 
+L'adresse IP: 
 Port: 
-Ok.
+D'accord 
