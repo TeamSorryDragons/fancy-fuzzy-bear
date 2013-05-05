@@ -396,17 +396,17 @@ public class MenuFrame extends JFrame {
 				if (!MenuFrame.this.p2.getText().isEmpty()) {
 					EHost.insertPlayer(new Player(Piece.COLOR.blue,
 							MenuFrame.this.p2.getText()));
-					player.add(p1.getText() + "|blue");
+					player.add(p1.getText());
 				}
 				if (!MenuFrame.this.p3.getText().isEmpty()) {
 					EHost.insertPlayer(new Player(Piece.COLOR.yellow,
 							MenuFrame.this.p3.getText()));
-					player.add(p1.getText() + "|yellow");
+					player.add(p1.getText());
 				}
 				if (!MenuFrame.this.p4.getText().isEmpty()) {
 					EHost.insertPlayer(new Player(Piece.COLOR.green,
 							MenuFrame.this.p4.getText()));
-					player.add(p1.getText() + "|green");
+					player.add(p1.getText());
 				}
 				if (player.size() > 1) {
 					host = new SorryServer(EHost);
