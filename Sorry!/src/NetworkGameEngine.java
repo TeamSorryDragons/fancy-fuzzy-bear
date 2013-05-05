@@ -268,7 +268,7 @@ public class NetworkGameEngine implements EngineInterface {
 	@Override
 	public void load(BoardList board, BoardList clone, Piece[] pieceList) {
 		// TODO Auto-generated method stub.
-
+		this.board = board;
 	}
 
 	@Override
