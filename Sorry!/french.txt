@@ -3,7 +3,7 @@ Déplace un pion de début ou de déplacer un pion 2 places. Dessin d'un 2 donne au
 Déplace un pion 3 places avant.
 Déplace un pion 4 places arrière.
 Déplace un pion 5 places avant.
-Déplace un pion 7 places vers l'avant ou diviser le 7 places entre deux pions (comme quatre places pour un pion et trois pour l'autre). Il est donc possible que deux pions pour entrer dans Accueil le même tour, par exemple. Le 7 ne peut pas être fractionné en 6 et 1 ou 5 et 2 aux fins de sortir de démarrage. Les sept places entiers doivent être utilisés d'une manière ou l'autre, ou le tour est perdu.
+Déplace un pion 7 places vers l'avant ou diviser le 7 places entre deux pions (comme quatre places pour un pion et trois pour l'autre). Il est donc possible que deux pions pour entrer dans le maison le même tour, par exemple. Le 7 ne peut pas être fractionné en 6 et 1 ou 5 et 2 aux fins de sortir de démarrage. Les sept places entiers doivent être utilisés d'une manière ou l'autre, ou le tour est perdu.
 Déplace un pion 8 places avant.
 Déplace un pion 10 places vers l'avant ou vers l'arrière 1 place. Si un joueur ne peut pas aller de l'avant dix places, puis un pion doit reculer d'un place.
 Déplace 11 places à terme ou permutent avec un pion adverse. Un joueur qui ne peut pas passer 11 places n'est pas obligé de changer de lieu et peut être déchu de la tour.
@@ -31,28 +31,23 @@ Quitter
 Connectez
 Host
 
+Nouveau Jeu
 Nommez vos joueurs
 Commencer
 
-Choix du serveur
-Voulez-vous rejoindre ou héberger une partie de Sorry!
-Host
-Rejoindre
-Locale
-
-Connectez-vous à un jeu
-IP Host
-Port
-Votre nom d'utilisateur
+Connectez-vous à un Jeu
+IP Host 
+Port 
+Votre nom d'utilisateur 
 Commencer
 
-Organisez un jeu
+Organisez un Jeu
 Nommez vos joueurs
 Commencer
-Port
+Jeu de charge
 
-Votre information
+Votre Information
 Pour que les utilisateurs que vous avez entrées à connecter à un jeu, ils ont besoin de votre numéro de port et l'adresse IP
-IP:
-Port:
+IP: 
+Port: 
 Ok.

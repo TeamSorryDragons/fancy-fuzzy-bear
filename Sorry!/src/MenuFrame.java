@@ -48,7 +48,7 @@ public class MenuFrame extends JFrame {
 	private String IP;
 
 	public MenuFrame(String lang) {
-		super();
+		super("Sorry!");
 		this.language = lang;
 		this.labels = MenuFrame.obtainButtonLabels(lang);
 		this.setVisible(true);
@@ -191,6 +191,7 @@ public class MenuFrame extends JFrame {
 			e.printStackTrace();
 		}
 		JPanel newGamePanel = new JPanel();
+		this.setTitle(in.nextLine());
 		newGamePanel.setLayout(new GridLayout(3, 1));
 		newGamePanel.add(new JLabel(in.nextLine(), JLabel.CENTER));
 		JPanel textBoxPanel = new JPanel();
@@ -276,7 +277,7 @@ public class MenuFrame extends JFrame {
 		Scanner in = null;
 		try {
 			in = new Scanner(new File(this.language + ".txt"));
-			for (int x = 0; x < 42; x++)
+			for (int x = 0; x < 37; x++)
 				in.nextLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -341,7 +342,7 @@ public class MenuFrame extends JFrame {
 		Scanner in = null;
 		try {
 			in = new Scanner(new File(this.language + ".txt"));
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < 43; x++)
 				in.nextLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -374,7 +375,7 @@ public class MenuFrame extends JFrame {
 		textBoxPanel.add(p4);
 		hostPanel.add(textBoxPanel);
 		JButton btnStart = new JButton(in.nextLine());
-		JButton btnLoad = new JButton("placeholder");
+		JButton btnLoad = new JButton(in.nextLine());
 		JPanel start = new JPanel();
 		start.setLayout(new FlowLayout(FlowLayout.CENTER));
 		start.add(btnStart);
@@ -484,7 +485,7 @@ public class MenuFrame extends JFrame {
 		Scanner in = null;
 		try {
 			in = new Scanner(new File(this.language + ".txt"));
-			for (int x = 0; x < 53; x++)
+			for (int x = 0; x < 48; x++)
 				in.nextLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

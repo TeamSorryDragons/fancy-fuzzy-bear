@@ -1,7 +1,10 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Scanner;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -17,8 +20,20 @@ import javax.swing.JScrollPane;
 public class InstructionsFrame extends JFrame {
 	private static final int FRAME_WIDTH = 800;
 	private static final int FRAME_HEIGHT = 600;
+	private String language;
 
 	public InstructionsFrame(String lang) {
+		this.language=lang;
+		Scanner in = null;
+		try {
+			in = new Scanner(new File(this.language + ".txt"));
+			for (int x = 0; x < 28; x++)
+				in.nextLine();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.setTitle(in.nextLine());
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
