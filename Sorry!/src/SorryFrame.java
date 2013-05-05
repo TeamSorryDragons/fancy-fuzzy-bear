@@ -113,11 +113,14 @@ public class SorryFrame extends JFrame implements ActionListener {
 	}
 
 	public void start() {
+		this.engine.rotatePlayers();
+		this.engine.getNextCard();
 		gui.repaint();
 		this.setVisible(true);
 		this.repaint();
 		this.addMouseListener(new BoardMouseListener(this));
 		this.initiateTurn();
+		
 	}
 
 	public void load(String filename) {
@@ -215,9 +218,9 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 */
 	protected void initiateTurn() {
 		this.desiresForfeit = false;
-		this.currentCard = this.engine.getNextCard();
+		this.currentCard = this.engine.getCurrentCard();
 		// System.out.println(this.currentCard.toString());
-		this.engine.rotatePlayers();
+		// this.engine.rotatePlayers();
 		if (this.engine.getActivePlayer().getColor() == Piece.COLOR.blue) {
 			gui.playerInformation.setBackground(Color.CYAN);
 		} else if (this.engine.getActivePlayer().getColor() == Piece.COLOR.green)

@@ -422,6 +422,8 @@ public class MenuFrame extends JFrame {
 					EHost.insertPlayer(new Player(Piece.COLOR.green, MenuFrame.this.p4.getText()));
 					player.add(p1.getText()+"|green");
 				}
+				EHost.rotatePlayers();
+				EHost.getNextCard();
 				if(player.size()>1){
 					host = new SorryServer(EHost);
 					if(host.attemptServerStartUp(80))

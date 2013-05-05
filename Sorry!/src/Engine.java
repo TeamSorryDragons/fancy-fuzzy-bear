@@ -38,6 +38,7 @@ public class Engine implements EngineInterface {
 
 	}
 
+	@Override
 	public void insertPlayer(Player bigP) {
 		if (this.players.isEmpty()) {
 			this.players.insertFirst(bigP);
@@ -48,6 +49,7 @@ public class Engine implements EngineInterface {
 		}
 	}
 
+	@Override
 	public void newGame() {
 		this.pieces = this.board.newGame();
 		this.backupBoard = this.board.clone();
@@ -229,9 +231,27 @@ public class Engine implements EngineInterface {
 		int ret = checkValidityOriginalRules(first.firstPiece(), first, second,
 				nodeCountForward, nodeCountBackward);
 
-		return ret;
+		int result = this.handleTurnUpdate(ret);
+		return result;
 	}
 
+	private int handleTurnUpdate(int result) {
+		if (result == Engine.SAME_NODE_SELECTED
+				|| result == Engine.INVALID_MOVE
+				|| result == Engine.NO_PIECE_SELECTED
+				|| result == Engine.NODE_NOT_FOUND
+				|| result == Engine.VALID_MOVE_NO_FINALIZE) {
+			return result;
+		} else {
+			// turn is over, rotate
+			this.rotatePlayers();
+			this.getNextCard();
+			return result;
+		}
+
+	}
+
+	@Override
 	@SuppressWarnings("static-access")
 	public int pawnMove(SorryFrame.Coordinate start, SorryFrame.Coordinate end) {
 		// Start with error checking - are the coordinates and desired nodes
@@ -273,10 +293,16 @@ public class Engine implements EngineInterface {
 		return this.board.getCornerPointers()[0].findNodeWithPosition(i);
 	}
 
+	@Override
 	public Card getNextCard() {
 		this.currentCard = this.deck.getTopCard();
 		return this.currentCard;
 
+	}
+
+	@Override
+	public Card getCurrentCard() {
+		return this.currentCard;
 	}
 
 	/**
@@ -756,6 +782,7 @@ public class Engine implements EngineInterface {
 	 * Get the next player.
 	 * 
 	 */
+	@Override
 	public void rotatePlayers() {
 		if (this.activePlayer != null)
 			this.activePlayer.setActive(false);
@@ -774,6 +801,7 @@ public class Engine implements EngineInterface {
 	 * 
 	 * @return board
 	 */
+	@Override
 	public BoardList getActualBoard() {
 		return this.board;
 	}
@@ -785,6 +813,7 @@ public class Engine implements EngineInterface {
 	 * @return if the active player won
 	 * 
 	 */
+	@Override
 	public boolean finalizeTurn() {
 		// TODO implement it, when the time comes
 		this.backupBoard = this.board.clone();
@@ -865,6 +894,7 @@ public class Engine implements EngineInterface {
 		revertBoard();
 	}
 
+	@Override
 	public void getUpdatedInfo() {
 		return;
 	}

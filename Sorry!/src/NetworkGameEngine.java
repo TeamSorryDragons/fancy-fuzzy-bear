@@ -91,6 +91,8 @@ public class NetworkGameEngine implements EngineInterface {
 		String[] results = status.split("\n");
 
 		for (String msg : results) {
+			if (msg.equals(""))
+				continue;
 			if (!msg.contains("=")) {
 				// have the game board
 				try {
