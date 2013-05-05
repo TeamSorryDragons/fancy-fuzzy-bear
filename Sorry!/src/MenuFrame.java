@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -48,8 +47,10 @@ public class MenuFrame extends JFrame {
 	private JTextField tfHostIP;
 	private JTextField tfUsername;
 	private JTextField tfPort;
+	private ArrayList<String> player;
 	private int port;
-
+	private String IP;
+	
 	public MenuFrame(String lang) {
 		super();
 		this.language = lang;
@@ -309,7 +310,7 @@ public class MenuFrame extends JFrame {
 		tfHostIP.setEditable(true);
 		tfPort.setEditable(true);
 		tfUsername.setEditable(true);
-		JPanel hostIPPanel= new JPanel();
+		//JPanel hostIPPanel= new JPanel();
 		connectPanel.add(lblHostIP);
 		connectPanel.add(tfHostIP);
 		//		hostIPPanel.add(lblHostIP);
@@ -402,7 +403,7 @@ public class MenuFrame extends JFrame {
 		btnStart.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				ArrayList<String> player=new ArrayList<String>();
+				player=new ArrayList<String>();
 				Engine EHost = new Engine(new BoardList(),MenuFrame.this.language);
 				SorryServer host;
 				if(!MenuFrame.this.p1.getText().isEmpty()){
@@ -478,15 +479,21 @@ public class MenuFrame extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		JLabel lblIP = new JLabel(in.nextLine()+s.getLocalAddress().getHostAddress());
+		MenuFrame.this.IP=s.getLocalAddress().getHostAddress();
+		JLabel lblIP = new JLabel(in.nextLine()+MenuFrame.this.IP);
 		JLabel lblPort= new JLabel(in.nextLine()+MenuFrame.this.port);
 		JButton btnOkay= new JButton(in.nextLine());
 		btnOkay.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				MenuFrame.this.hostGame();
-				
+				NetworkGameEngine host=new NetworkGameEngine(MenuFrame.this.IP,MenuFrame.this.port,new Player(Piece.COLOR.red, MenuFrame.this.player.get(0)), MenuFrame.this.language);
+				host.fetchAllPlayers();
+				host.getUpdatedInfo();
+				SorryFrame sf= new SorryFrame(MenuFrame.this.language, host);
+				sf.start();
+				MenuFrame.this.dispose();
+
 			}
 			
 		});
@@ -504,9 +511,9 @@ public class MenuFrame extends JFrame {
 
 	}
 
-	protected void hostGame() {
-		// TODO Auto-generated method stub
-		dispose();
-	}
+//	protected void hostGame() {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 }
