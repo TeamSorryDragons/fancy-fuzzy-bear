@@ -413,7 +413,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 			e.getUpdatedInfo();
 			s.repaint();
 			try {
-				sleep(20000);
+				sleep(1000);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
