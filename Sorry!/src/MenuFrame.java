@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -13,12 +14,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
+import javax.swing.*;
 /**
  * JFrame to display menu options to the user. Used to select game settings then
  * initiate a new game.
@@ -177,7 +173,6 @@ public class MenuFrame extends JFrame {
 
 	protected void loadExistingGame() {
 		// TODO update to reflect the constructor reading from a file
-		// this.setEnabled(false);
 		SorryFrame sorry = new SorryFrame(this.language);
 		sorry.load("save.txt");
 		this.dispose();
@@ -197,7 +192,6 @@ public class MenuFrame extends JFrame {
 		}
 		JPanel newGamePanel = new JPanel();
 		newGamePanel.setLayout(new GridLayout(3, 1));
-		// JLabel playerName =
 		newGamePanel.add(new JLabel(in.nextLine(), JLabel.CENTER));
 		JPanel textBoxPanel = new JPanel();
 		textBoxPanel.setLayout(new GridLayout(4, 1));
@@ -217,24 +211,13 @@ public class MenuFrame extends JFrame {
 		p4.setBackground(Color.GREEN);
 		textBoxPanel.add(p1);
 		textBoxPanel.add(p2);
-		;
 		textBoxPanel.add(p3);
 		textBoxPanel.add(p4);
 		newGamePanel.add(textBoxPanel);
 		JButton btnStart = new JButton(in.nextLine());
 		JPanel start = new JPanel();
-		start.setLayout(new GridLayout(5, 4));
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
+		start.setLayout(new FlowLayout(FlowLayout.CENTER));
 		start.add(btnStart);
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
 
 		btnStart.addActionListener(new ActionListener() {
 			@Override
@@ -301,30 +284,30 @@ public class MenuFrame extends JFrame {
 		}
 		this.setTitle(in.nextLine());
 		JPanel connectPanel = new JPanel();
-		connectPanel.setLayout(new GridLayout(4, 1));
-		JLabel lblHostIP = new JLabel(in.nextLine());
-		this.tfHostIP = new JTextField();
-		JLabel lblPort = new JLabel(in.nextLine());
-		this.tfPort = new JTextField();
-		JLabel lblUsername = new JLabel(in.nextLine());
-		this.tfUsername = new JTextField();
+		GridLayout gl = new GridLayout(4, 0);
+		gl.setVgap(15);
+		connectPanel.setLayout(new GridLayout(4, 1, 0, 150));
+		this.tfHostIP = new JTextField("", 40);
+		this.tfPort = new JTextField("", 40);
+		this.tfUsername = new JTextField("", 40);
 		tfHostIP.setEditable(true);
 		tfPort.setEditable(true);
 		tfUsername.setEditable(true);
-		// JPanel hostIPPanel= new JPanel();
-		connectPanel.add(lblHostIP);
-		connectPanel.add(tfHostIP);
-		// hostIPPanel.add(lblHostIP);
-		// hostIPPanel.add(tfHostIP);
-		// connectPanel.add(hostIPPanel);
-		connectPanel.add(lblPort);
-		connectPanel.add(tfPort);
-		connectPanel.add(lblUsername);
-		connectPanel.add(tfUsername);
-
-		connectPanel.add(new JLabel());
+		JPanel hostIPPanel= new JPanel(new BorderLayout());
+		JPanel portPanel= new JPanel(new BorderLayout());
+		JPanel userPanel= new JPanel(new BorderLayout());
+		hostIPPanel.add(new JLabel(in.nextLine()), BorderLayout.WEST);
+		hostIPPanel.add(tfHostIP, BorderLayout.EAST);
+		connectPanel.add(hostIPPanel);
+		portPanel.add(new JLabel(in.nextLine()),BorderLayout.WEST);
+		portPanel.add(tfPort, BorderLayout.EAST);
+		connectPanel.add(portPanel);
+		userPanel.add(new JLabel(in.nextLine()), BorderLayout.WEST);
+		userPanel.add(tfUsername, BorderLayout.EAST);
+		connectPanel.add(userPanel);
+		JPanel s= new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton btnStart = new JButton(in.nextLine());
-
+		s.add(btnStart);
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -341,7 +324,7 @@ public class MenuFrame extends JFrame {
 				MenuFrame.this.dispose();
 			}
 		});
-		connectPanel.add(btnStart);
+		connectPanel.add(s);
 		connectPanel.setVisible(true);
 		connectPanel.setPreferredSize(new Dimension(600, 800));
 		connectPanel.repaint();
@@ -368,8 +351,7 @@ public class MenuFrame extends JFrame {
 		JPanel hostPanel = new JPanel();
 
 		hostPanel.setLayout(new GridLayout(3, 1));
-		JLabel playerName = new JLabel(in.nextLine(), JLabel.CENTER);
-		hostPanel.add(playerName);
+		hostPanel.add(new JLabel(in.nextLine(), JLabel.CENTER));
 		JPanel textBoxPanel = new JPanel();
 		textBoxPanel.setLayout(new GridLayout(4, 1));
 		p1 = new JTextField();
@@ -388,26 +370,15 @@ public class MenuFrame extends JFrame {
 		p4.setBackground(Color.GREEN);
 		textBoxPanel.add(p1);
 		textBoxPanel.add(p2);
-		;
 		textBoxPanel.add(p3);
 		textBoxPanel.add(p4);
 		hostPanel.add(textBoxPanel);
 		JButton btnStart = new JButton(in.nextLine());
 		JButton btnLoad = new JButton("placeholder");
 		JPanel start = new JPanel();
-		start.setLayout(new GridLayout(5, 4));
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
+		start.setLayout(new FlowLayout(FlowLayout.CENTER));
 		start.add(btnStart);
 		start.add(btnLoad);
-		start.add(new JLabel());
-		start.add(new JLabel());
-		start.add(new JLabel());
 
 		btnStart.addActionListener(new ActionListener() {
 			@Override
@@ -522,7 +493,6 @@ public class MenuFrame extends JFrame {
 		}
 		this.setTitle(in.nextLine());
 		JPanel infoPanel = new JPanel(new GridLayout(4, 1));
-		JLabel lblInfo = new JLabel(in.nextLine());
 		Socket s = null;
 		try {
 			s = new Socket("google.com", 80);
@@ -534,8 +504,9 @@ public class MenuFrame extends JFrame {
 			e.printStackTrace();
 		}
 		MenuFrame.this.IP = s.getLocalAddress().getHostAddress();
-		JLabel lblIP = new JLabel(in.nextLine() + MenuFrame.this.IP);
-		JLabel lblPort = new JLabel(in.nextLine() + MenuFrame.this.port);
+		infoPanel.add(new JLabel(in.nextLine()));
+		infoPanel.add(new JLabel(in.nextLine() + MenuFrame.this.IP));
+		infoPanel.add(new JLabel(in.nextLine() + MenuFrame.this.port));
 		JButton btnOkay = new JButton(in.nextLine());
 		btnOkay.addActionListener(new ActionListener() {
 
@@ -554,10 +525,10 @@ public class MenuFrame extends JFrame {
 			}
 
 		});
-		infoPanel.add(lblInfo);
-		infoPanel.add(lblIP);
-		infoPanel.add(lblPort);
-		infoPanel.add(btnOkay);
+		
+		JPanel okPanel = new JPanel(new FlowLayout());
+		okPanel.add(btnOkay);
+		infoPanel.add(okPanel);
 		infoPanel.setVisible(true);
 		infoPanel.setPreferredSize(new Dimension(600, 800));
 		infoPanel.repaint();

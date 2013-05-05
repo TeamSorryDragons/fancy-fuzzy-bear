@@ -25,6 +25,7 @@ public class Engine implements EngineInterface {
 	protected CircularLinkedList<Player> players;
 	protected Card currentCard;
 
+	@SuppressWarnings("static-access")
 	public Engine(BoardList board, String lang) {
 		this.board = board;
 		this.backupBoard = board.clone();
@@ -453,6 +454,7 @@ public class Engine implements EngineInterface {
 		return;
 	}
 
+	@SuppressWarnings("static-access")
 	public static void main(String args[]) {
 		Engine.coords = new HashContainer();
 		Engine.coords.populateCoordsMap();
