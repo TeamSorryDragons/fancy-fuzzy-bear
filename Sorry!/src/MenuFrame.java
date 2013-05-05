@@ -112,13 +112,12 @@ public class MenuFrame extends JFrame {
 		this.buttons.add(loadGame);
 		JButton instructions = new JButton(this.labels[2]);
 		this.buttons.add(instructions);
-		JButton exit = new JButton(this.labels[3]);
-		this.buttons.add(exit);
-		JButton connect = new JButton(this.labels[4]);
+		JButton connect = new JButton(this.labels[3]);
 		this.buttons.add(connect);
-		JButton host = new JButton(this.labels[5]);
+		JButton host = new JButton(this.labels[4]);
 		this.buttons.add(host);
-
+		JButton exit = new JButton(this.labels[5]);
+		this.buttons.add(exit);
 		newGame.addActionListener(new ActionListener() {
 
 			@Override
@@ -391,22 +390,22 @@ public class MenuFrame extends JFrame {
 				if (!MenuFrame.this.p1.getText().isEmpty()) {
 					EHost.insertPlayer(new Player(Piece.COLOR.red,
 							MenuFrame.this.p1.getText()));
-					player.add(p1.getText() + "|red");
+					player.add(p1.getText());
 				}
 				if (!MenuFrame.this.p2.getText().isEmpty()) {
 					EHost.insertPlayer(new Player(Piece.COLOR.blue,
 							MenuFrame.this.p2.getText()));
-					player.add(p1.getText());
+					player.add(p2.getText());
 				}
 				if (!MenuFrame.this.p3.getText().isEmpty()) {
 					EHost.insertPlayer(new Player(Piece.COLOR.yellow,
 							MenuFrame.this.p3.getText()));
-					player.add(p1.getText());
+					player.add(p3.getText());
 				}
 				if (!MenuFrame.this.p4.getText().isEmpty()) {
 					EHost.insertPlayer(new Player(Piece.COLOR.green,
 							MenuFrame.this.p4.getText()));
-					player.add(p1.getText());
+					player.add(p4.getText());
 				}
 				EHost.rotatePlayers();
 				EHost.getNextCard();
