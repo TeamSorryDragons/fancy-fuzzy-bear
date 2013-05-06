@@ -24,6 +24,8 @@ public class Engine implements EngineInterface {
 	protected Deck deck;
 	protected CircularLinkedList<Player> players;
 	protected Card currentCard;
+	
+	protected boolean underTest = false;
 
 	@SuppressWarnings("static-access")
 	public Engine(BoardList board, String lang) {
@@ -243,8 +245,10 @@ public class Engine implements EngineInterface {
 			return result;
 		} else {
 			// turn is over, rotate
-			this.rotatePlayers();
-			this.getNextCard();
+			if (!this.underTest) {
+				this.rotatePlayers();
+				this.getNextCard();
+			}
 			return result;
 		}
 

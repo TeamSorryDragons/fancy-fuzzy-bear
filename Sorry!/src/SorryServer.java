@@ -198,12 +198,12 @@ public class SorryServer implements Container {
 	private void serveFullGameInformation(PrintStream out) {
 		CircularLinkedList<Player> players = this.gameModule.players;
 		Player first = players.getActualElementData();
-		out.print("player=" + first.getName() + ":" + first.getColor());
+		out.print(first.getName() + ":" + first.getColor());
 		out.print("\n");
 		players.goToNextElement();
 		Player next = players.getActualElementData();
 		while (next != first) {
-			out.print("player=" + next.getName() + ":" + next.getColor());
+			out.print(next.getName() + ":" + next.getColor());
 			out.print("\n");
 			players.goToNextElement();
 			next = players.getActualElementData();

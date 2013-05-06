@@ -56,7 +56,7 @@ public class NetworkGameEngine implements EngineInterface {
 				continue;
 			String name = msg.split(":")[0];
 			String color = msg.split(":")[1];
-			Player created = new Player(stringColorToActualColor(color), name.split("=")[1]);
+			Player created = new Player(stringColorToActualColor(color), name);
 			players.add(created);
 		}
 

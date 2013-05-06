@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.*;
+
 /**
  * JFrame to display menu options to the user. Used to select game settings then
  * initiate a new game.
@@ -293,19 +294,19 @@ public class MenuFrame extends JFrame {
 		tfHostIP.setEditable(true);
 		tfPort.setEditable(true);
 		tfUsername.setEditable(true);
-		JPanel hostIPPanel= new JPanel(new BorderLayout());
-		JPanel portPanel= new JPanel(new BorderLayout());
-		JPanel userPanel= new JPanel(new BorderLayout());
+		JPanel hostIPPanel = new JPanel(new BorderLayout());
+		JPanel portPanel = new JPanel(new BorderLayout());
+		JPanel userPanel = new JPanel(new BorderLayout());
 		hostIPPanel.add(new JLabel(in.nextLine()), BorderLayout.WEST);
 		hostIPPanel.add(tfHostIP, BorderLayout.EAST);
 		connectPanel.add(hostIPPanel);
-		portPanel.add(new JLabel(in.nextLine()),BorderLayout.WEST);
+		portPanel.add(new JLabel(in.nextLine()), BorderLayout.WEST);
 		portPanel.add(tfPort, BorderLayout.EAST);
 		connectPanel.add(portPanel);
 		userPanel.add(new JLabel(in.nextLine()), BorderLayout.WEST);
 		userPanel.add(tfUsername, BorderLayout.EAST);
 		connectPanel.add(userPanel);
-		JPanel s= new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel s = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton btnStart = new JButton(in.nextLine());
 		s.add(btnStart);
 		btnStart.addActionListener(new ActionListener() {
@@ -387,6 +388,7 @@ public class MenuFrame extends JFrame {
 				Engine EHost = new Engine(new BoardList(),
 						MenuFrame.this.language);
 				EHost.board.newGame();
+				EHost.backupBoard = EHost.board.clone();
 				SorryServer host;
 				if (!MenuFrame.this.p1.getText().isEmpty()) {
 					EHost.insertPlayer(new Player(Piece.COLOR.red,
@@ -412,8 +414,8 @@ public class MenuFrame extends JFrame {
 				EHost.getNextCard();
 				if (player.size() > 1) {
 					host = new SorryServer(EHost);
-					if (host.attemptServerStartUp(80))
-						port = 80;
+					if (host.attemptServerStartUp(8080))
+						port = 8080;
 					else if (host.attemptServerStartUp(8080))
 						port = 8080;
 					else {
@@ -445,7 +447,7 @@ public class MenuFrame extends JFrame {
 					while (reader.hasNext()) {
 						player.add(reader.nextLine());
 					}
-					int a = passPlayers(player,EHost);
+					int a = passPlayers(player, EHost);
 					board = new BoardList((player.get(a + 1)));
 					EHost.load(board, board.clone(), board.pieceList);
 				} catch (FileNotFoundException e) {
@@ -527,7 +529,7 @@ public class MenuFrame extends JFrame {
 			}
 
 		});
-		
+
 		JPanel okPanel = new JPanel(new FlowLayout());
 		okPanel.add(btnOkay);
 		infoPanel.add(okPanel);
