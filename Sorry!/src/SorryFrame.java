@@ -60,12 +60,12 @@ public class SorryFrame extends JFrame implements ActionListener {
 		}
 		this.engine = eng;
 		this.engine.newGame();
-		
-		updateThread t = (new updateThread());
-		t.e = this.engine;
-		t.s = this;
-		t.start();
-		
+
+//		updateThread t = (new updateThread());
+//		t.e = this.engine;
+//		t.s = this;
+//		t.start();
+
 		Scanner in = new Scanner(fr);
 		for (int x = 0; x < 12; x++)
 			in.nextLine();
@@ -90,12 +90,13 @@ public class SorryFrame extends JFrame implements ActionListener {
 		}
 		this.engine = new Engine(this.board, lang);
 		this.engine.newGame();
+
+//		updateThread t = (new updateThread());
+//		t.e = this.engine;
+//		t.s = this;
+//		t.start();
 		
-		updateThread t = (new updateThread());
-		t.e = this.engine;
-		t.s = this;
-		t.start();
-		
+
 		Scanner in = new Scanner(fr);
 		for (int x = 0; x < 12; x++)
 			in.nextLine();
@@ -111,11 +112,18 @@ public class SorryFrame extends JFrame implements ActionListener {
 	}
 
 	public void start() {
+		this.engine.rotatePlayers();
+		this.engine.getNextCard();
 		gui.repaint();
 		this.setVisible(true);
 		this.repaint();
 		this.addMouseListener(new BoardMouseListener(this));
 		this.initiateTurn();
+		updateThread t = (new updateThread());
+		t.e = this.engine;
+		t.s = this;
+		t.start();
+
 	}
 
 	public void load(String filename) {
@@ -212,9 +220,10 @@ public class SorryFrame extends JFrame implements ActionListener {
 	 * 
 	 */
 	protected void initiateTurn() {
-		this.currentCard = this.engine.getNextCard();
+		this.engine.getUpdatedInfo();
+		this.currentCard = this.engine.getCurrentCard();
 		// System.out.println(this.currentCard.toString());
-		this.engine.rotatePlayers();
+		// this.engine.rotatePlayers();
 		if (this.engine.getActivePlayer().getColor() == Piece.COLOR.blue) {
 			gui.playerInformation.setBackground(Color.CYAN);
 		} else if (this.engine.getActivePlayer().getColor() == Piece.COLOR.green)
@@ -227,7 +236,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 				.setText(this.engine.getActivePlayer().getName());
 		this.gui.update();
 		this.repaint();
-		this.notifyPlayer(userMessages[0]);
+		// this.notifyPlayer(userMessages[0]);
 
 	}
 
@@ -411,7 +420,8 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 		public void run() {
 			e.getUpdatedInfo();
-			s.repaint();
+			// s.repaint();
+			s.initiateTurn();
 			try {
 				sleep(1000);
 			} catch (InterruptedException e1) {

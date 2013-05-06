@@ -41,7 +41,7 @@ public class HTTPClient implements IHTTPClient {
 			StringBuffer sb = new StringBuffer();
 			String in = "";
 			while (in != null) {
-				sb.append(in);
+				sb.append(in+"\n");
 				in = br.readLine();
 			}
 			in = sb.toString();

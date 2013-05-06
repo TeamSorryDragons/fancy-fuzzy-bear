@@ -62,7 +62,7 @@ public class SorryServerTests {
 		assertEquals(lines.length, 3);
 		assertTrue(lines[0].startsWith("active-user="));
 		assertTrue(lines[1].startsWith("messages="));
-		assertTrue(lines[1].endsWith("You failed,You died,You suck,Puppies"));
+		assertTrue(lines[1].contains("You failed,You died,You suck,Puppies"));
 
 		target.messages = new LinkedList<String>();
 		String in = this.requestServerStatus("http://localhost:" + port
@@ -103,6 +103,7 @@ public class SorryServerTests {
 	@Test
 	public void testGetCardNumber() {
 		Engine e = new Engine(new BoardList(), "english");
+		e.underTest = true;
 		e.insertPlayer(new Player(Piece.COLOR.red, "Dave"));
 		e.insertPlayer(new Player(Piece.COLOR.blue, "Jim"));
 
@@ -142,8 +143,8 @@ public class SorryServerTests {
 
 		String[] lines = in.split("\n");
 		assertEquals(lines.length, 2);
-		assertEquals(lines[0], "player=Dave:red");
-		assertEquals(lines[1], "player=Jim:blue");
+		assertEquals(lines[0], "Dave:red");
+		assertEquals(lines[1], "Jim:blue");
 
 		assertTrue(target.closeServerConnection());
 
@@ -294,7 +295,7 @@ public class SorryServerTests {
 				"http://localhost:" + port + "/", "POST");
 		lines = in.split("\n");
 		assertEquals(lines.length, 1);
-		assertEquals(lines[0], "result=191");
+		assertEquals(lines[0], "result=InactivePlayer");
 
 		in = this.sendDataToServer(
 				"user=Dave\ndesired-action=finalize\ndesired-action=forfeit",

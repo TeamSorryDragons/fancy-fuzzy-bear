@@ -9,6 +9,7 @@ public interface EngineInterface {
 	int pawnMove(SorryFrame.Coordinate c, SorryFrame.Coordinate c2);
 
 	Card getNextCard();
+	Card getCurrentCard();
 
 	void rotatePlayers();
 

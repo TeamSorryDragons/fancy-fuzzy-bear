@@ -59,6 +59,13 @@ public class NetworkGameEngine implements EngineInterface {
 			Player created = new Player(stringColorToActualColor(color), name);
 			players.add(created);
 		}
+
+		for (Player p : players) {
+			if (p.getName().equals(this.owner.getName()))
+				this.owner = p;
+			this.insertPlayer(p);
+		}
+
 		return players;
 	}
 
@@ -85,6 +92,8 @@ public class NetworkGameEngine implements EngineInterface {
 		String[] results = status.split("\n");
 
 		for (String msg : results) {
+			if (msg.equals(""))
+				continue;
 			if (!msg.contains("=")) {
 				// have the game board
 				try {
@@ -232,8 +241,7 @@ public class NetworkGameEngine implements EngineInterface {
 	public void forfeit() {
 		int result = sendServerAction("forfeit");
 		if (result != Engine.SUCCESSFUL_OPERATION) {
-			// failed
-			this.forfeit();
+			// failed, probably becuase that player isn't active
 		}
 	}
 

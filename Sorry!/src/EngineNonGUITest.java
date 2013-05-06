@@ -753,6 +753,7 @@ public class EngineNonGUITest {
 	public void testPawnMovementSwapPiecesCardEleven() {
 		BoardList board = new BoardList();
 		Engine e = new Engine(board, "english");
+		e.underTest = true;
 		e.newGame();
 		e.insertPlayer(new Player(Piece.COLOR.red, "Dave"));
 		e.insertPlayer(new Player(Piece.COLOR.blue, "Whale Rider"));
@@ -774,6 +775,7 @@ public class EngineNonGUITest {
 				new SorryFrame.Coordinate(11, 15));
 		assertEquals(test, 1);
 		e.rotatePlayers();
+		e.currentCard = new Card(1, "TEST");
 		test = e.pawnMove(new SorryFrame.Coordinate(11, 14),
 				new SorryFrame.Coordinate(11,15));
 		assertEquals(test, 1);
@@ -784,6 +786,7 @@ public class EngineNonGUITest {
 		assertEquals(test, Engine.INVALID_MOVE);
 
 		e.rotatePlayers();
+		e.currentCard = new Card(11, "Test");
 		test = e.pawnMove(new SorryFrame.Coordinate(11, 15),
 				new SorryFrame.Coordinate(0, 11));
 		assertEquals(test, 15);
@@ -857,6 +860,7 @@ public class EngineNonGUITest {
 	public void testSwapCardSorryIllegal(){
 		BoardList board = new BoardList();
 		Engine e = new Engine(board, "english");
+		e.underTest = true;
 		e.insertPlayer(new Player(Piece.COLOR.red, "Dave"));
 		e.insertPlayer(new Player(Piece.COLOR.blue, "Whale Rider"));
 		e.newGame();
