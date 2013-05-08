@@ -219,7 +219,7 @@ public class MenuFrame extends JFrame {
 		JPanel start = new JPanel();
 		start.setLayout(new FlowLayout(FlowLayout.CENTER));
 		start.add(btnStart);
-
+		this.getRootPane().setDefaultButton(btnStart);
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
@@ -309,6 +309,7 @@ public class MenuFrame extends JFrame {
 		JPanel s = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton btnStart = new JButton(in.nextLine());
 		s.add(btnStart);
+		this.getRootPane().setDefaultButton(btnStart);
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -531,7 +532,7 @@ public class MenuFrame extends JFrame {
 			}
 
 		});
-
+		this.getRootPane().setDefaultButton(btnOkay);
 		JPanel okPanel = new JPanel(new FlowLayout());
 		okPanel.add(btnOkay);
 		infoPanel.add(okPanel);
