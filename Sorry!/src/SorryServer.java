@@ -40,7 +40,7 @@ public class SorryServer implements Container {
 	private static final String ACTION_IDENTIFIER = "desired-action";
 	private static final String FIRST_COORD_IDENTIFIER = "coord1";
 	private static final String SECOND_COORD_IDENTIFIER = "coord2";
-	private static final String INVALID_PLAYER_MSG = "InactivePlayer";
+	protected static final String INVALID_PLAYER_MSG = "InactivePlayer";
 	private static final String INVALID_DATA_MSG = "InvalidData";
 	private Engine gameModule;
 	LinkedList<String> messages;

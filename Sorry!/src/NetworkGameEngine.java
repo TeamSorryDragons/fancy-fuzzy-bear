@@ -205,6 +205,8 @@ public class NetworkGameEngine implements EngineInterface {
 			int resp = Integer.parseInt(servResp);
 			return resp;
 		} catch (NumberFormatException e) {
+			if (servResp.equals(SorryServer.INVALID_PLAYER_MSG))
+				return Engine.INACTIVE_PLAYER;
 			return Engine.INVALID_MOVE;
 		}
 	}
