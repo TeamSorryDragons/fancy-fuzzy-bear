@@ -929,7 +929,6 @@ public class EngineNonGUITest {
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 
-
 		e.currentCard = new Card(7, "TEST");
 		e.activePlayer = new Player(Piece.COLOR.red, "Dave");
 		assertEquals(e.pawnMove(new SorryFrame.Coordinate(11, 15),
@@ -952,6 +951,29 @@ public class EngineNonGUITest {
 						+ "|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4"
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
+
+		e.activePlayer = new Player(Piece.COLOR.red, "Jimbo");
+		e.currentCard = new Card(7, "TEST SEVEN");
+		assertEquals(e.pawnMove(new SorryFrame.Coordinate(11, 14),
+				new SorryFrame.Coordinate(11, 15)), Engine.INVALID_MOVE);
+	}
+
+	@Test
+	public void testGameOwnerChecker() {
+		Engine target = new Engine(new BoardList(), "english");
+		target.owner = new Player(Piece.COLOR.yellow, "Siris");
+		target.activePlayer = new Player(Piece.COLOR.yellow, "Siris");
+
+		assertTrue(target.checkOwnerIsActive());
+
+		target.activePlayer = new Player(Piece.COLOR.blue, "Siris");
+		assertFalse(target.checkOwnerIsActive());
+
+		assertEquals(target.pawnMove(new SorryFrame.Coordinate(0, 0),
+				new SorryFrame.Coordinate(1, 1)), Engine.INVALID_MOVE);
+
+		target.owner = null;
+		assertTrue(target.checkOwnerIsActive());
 
 	}
 
