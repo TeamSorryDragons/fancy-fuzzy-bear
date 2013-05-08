@@ -64,10 +64,16 @@ public class DisplayableBoard extends JComponent {
 		int size = image[i].getWidth() / 16;
 		g.drawImage(image[i], 0, 0, null);
 		this.size = size;
+		Player pl;
+		if(gameEngine.getOwner()== null){
+			pl = gameEngine.getActivePlayer();
+		}
+		else{
+			pl = gameEngine.getOwner();
+		}
 		draw(cornerPointers[i], cornerPointers[i].getNext(), Math.PI,
 				image[i].getWidth() - 2 * size, image[i].getHeight()
-						- this.size, g2, gameEngine.getActivePlayer()
-						.getColor());
+						- this.size, g2, pl.getColor());
 	}
 
 	@SuppressWarnings("incomplete-switch")

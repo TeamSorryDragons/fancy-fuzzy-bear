@@ -426,7 +426,14 @@ public class Engine implements EngineInterface {
 
 	public boolean hasWon() {
 		int spot = 0;
-		switch (this.activePlayer.getColor()) {
+		Player pl;
+		if(this.owner == null){
+			pl = this.activePlayer;
+		}
+		else{
+			pl = this.owner;
+		}
+		switch (pl.getColor()) {
 		case red:
 			spot = 0;
 			break;
