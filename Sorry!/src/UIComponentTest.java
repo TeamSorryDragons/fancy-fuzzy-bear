@@ -32,6 +32,12 @@ public class UIComponentTest {
 		assertEquals(target.card.getText(), "42");
 		assertEquals(target.card3.getText(), "42");
 		assertEquals(target.card2.getText(), "Does not even exist");
+		
+		testFrame.currentCard = new Card(13, "SORRY you lose");
+		target.update();
+		assertEquals(target.card.getText(), "Sorry!");
+		assertEquals(target.card3.getText(), "!Sorry");
+		assertEquals(target.card2.getText(), "SORRY you lose");
 	}
 
 	@Test
@@ -50,6 +56,16 @@ public class UIComponentTest {
 		testEngine.activePlayer = new Player(Piece.COLOR.green, "Harry Potter");
 		target.update();
 		assertEquals(target.playerInformation.getBackground(), Color.GREEN);
+		assertEquals(target.playerHolder.getText(), "Harry Potter");
+		
+		testEngine.activePlayer = new Player(Piece.COLOR.yellow, "Harry Potter");
+		target.update();
+		assertEquals(target.playerInformation.getBackground(), Color.YELLOW);
+		assertEquals(target.playerHolder.getText(), "Harry Potter");
+		
+		testEngine.activePlayer = new Player(Piece.COLOR.red, "Harry Potter");
+		target.update();
+		assertEquals(target.playerInformation.getBackground(), Color.RED);
 		assertEquals(target.playerHolder.getText(), "Harry Potter");
 	}
 

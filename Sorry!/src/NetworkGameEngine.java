@@ -250,7 +250,7 @@ public class NetworkGameEngine implements EngineInterface {
 		}
 	}
 
-	private int sendServerAction(String action) {
+	protected int sendServerAction(String action) {
 		String data = "user=" + this.owner.getName();
 		data += "\n";
 		data += "desired-action=" + action;
@@ -273,8 +273,6 @@ public class NetworkGameEngine implements EngineInterface {
 			return true;
 		if (result != Engine.SUCCESSFUL_OPERATION) {
 			// Houston, we have a problem
-			// this.finalizeTurn();
-			System.out.println("Engine returned: " + result);
 		}
 		return false;
 	}

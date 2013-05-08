@@ -231,6 +231,71 @@ public class NetworkGameEngineTests {
 				target.stringColorToActualColor(Str));
 	}
 
+	@Test
+	public void testPawnMove() {
+		Player owner = new Player(Piece.COLOR.red, "Harry Potter");
+		NetworkGameEngine target = new NetworkGameEngine("", 0, owner,
+				"english");
+		MockClient fakeServer = new MockClient("",
+				"result=" + "InactivePlayer", "");
+		target.client = fakeServer;
+
+		int result = target.pawnMove(new SorryFrame.Coordinate(0, 0),
+				new SorryFrame.Coordinate(1, 1));
+		assertEquals(result, Engine.INACTIVE_PLAYER);
+
+		fakeServer = new MockClient("", "result="
+				+ Engine.VALID_MOVE_NO_FINALIZE, "");
+		target.client = fakeServer;
+		result = target.pawnMove(new SorryFrame.Coordinate(0, 0),
+				new SorryFrame.Coordinate(1, 1));
+		assertEquals(result, Engine.VALID_MOVE_NO_FINALIZE);
+
+		fakeServer = new MockClient("", "result=" + 5, "");
+		target.client = fakeServer;
+		result = target.pawnMove(new SorryFrame.Coordinate(0, 0),
+				new SorryFrame.Coordinate(1, 1));
+		assertEquals(result, 5);
+
+		fakeServer = new MockClient("", "you done did it", "");
+		target.client = fakeServer;
+		result = target.pawnMove(new SorryFrame.Coordinate(0, 0),
+				new SorryFrame.Coordinate(1, 1));
+		assertEquals(result, Engine.INVALID_MOVE);
+		
+		fakeServer = new MockClient("", "result="
+				+ "Good day sir", "");
+		target.client = fakeServer;
+		result = target.pawnMove(new SorryFrame.Coordinate(0, 0),
+				new SorryFrame.Coordinate(1, 1));
+		assertEquals(result, Engine.INVALID_MOVE);
+
+	}
+	
+	@Test
+	public void testSendServerActions(){
+		Player owner = new Player(Piece.COLOR.red, "Harry Potter");
+		NetworkGameEngine target = new NetworkGameEngine("", 0, owner,
+				"english");
+		MockClient fakeServer = new MockClient("",
+				"something something dark side=" + "InactivePlayer", "");
+		target.client = fakeServer;
+		
+		int result = target.sendServerAction("forfeit");
+		assertEquals(result, -1);
+		
+		fakeServer = new MockClient("", "result=Harry Potter", "");
+		target.client = fakeServer;
+		result = target.sendServerAction("finalize");
+		assertEquals(result, -1);
+		
+		fakeServer = new MockClient("", "result=49", "");
+		target.client = fakeServer;
+		result = target.sendServerAction("finalize");
+		assertEquals(result, 49);
+		
+	}
+
 	static class MockClient implements IHTTPClient {
 		private String get;
 		private String post;
