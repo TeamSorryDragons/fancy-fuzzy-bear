@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+
 import org.junit.Test;
 
 /**
@@ -15,6 +17,15 @@ public class SorryFrameCoordinateConversionTest {
 		assertTrue(true);
 	}
 
+	
+	@SuppressWarnings("javadoc")
+	@Test
+	public void constructorTest(){
+		BoardList board = new BoardList();
+		Engine e = new Engine(board,"english");
+		assertNotNull(new SorryFrame("english", e));
+	}
+	
 	@SuppressWarnings("javadoc")
 	@Test
 	public void testCoordinateConstructor() {
@@ -168,5 +179,22 @@ public class SorryFrameCoordinateConversionTest {
 		assertEquals(temp.engine.getActivePlayer().getName(), "Hugh Hefner");
 		assertEquals(temp.board.toString(), "hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nng|nn|nn|hrsn|rsn|rsn|rsn|rsn|nng|nny|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nny|nn|nn|nn|hbsn|bsn|bsn|bsn|bsn|nn|nnb|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn2|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0|gsn|gsn|gmn2|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nnr|");
 		assertEquals(temp.board.pieceList.length,16);
+		String Str = "red";
+		Player one = new Player(Piece.COLOR.red, "guy");
+		NetworkGameEngine target = new NetworkGameEngine("", 0, one, "english");
+		temp.engine = target;
+		temp.load("test.txt");
+		assertEquals(
+				temp.board.toString(),
+				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nng|nn|nn|hrsn|rsn|rsn|rsn|rsn|nng|nny|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nny|nn|nn|nn|hbsn|bsn|bsn|bsn|bsn|nn|nnb|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn2|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0|gsn|gsn|gmn2|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nnr|");
+	}
+	
+	@SuppressWarnings("javadoc")
+	@Test
+	public void testHashContainerError(){
+		HashContainer h = new HashContainer();
+		h.populateCoordsMap();
+		assertEquals(h.getmap(4),new HashMap<SorryFrame.Coordinate, Integer>());
+		
 	}
 }

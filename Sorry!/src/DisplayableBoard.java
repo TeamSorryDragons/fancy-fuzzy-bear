@@ -29,6 +29,7 @@ public class DisplayableBoard extends JComponent {
 	}
 
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		draw(g);
 	}
 

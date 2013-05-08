@@ -230,6 +230,14 @@ public class NetworkGameEngineTests {
 		assertEquals(Piece.COLOR.colorless,
 				target.stringColorToActualColor(Str));
 	}
+	
+	@Test
+	public void testGetOwner(){
+		String Str = "red";
+		Player one = new Player(Piece.COLOR.red, "guy");
+		NetworkGameEngine target = new NetworkGameEngine("", 0, one, "english");
+		assertEquals(target.getOwner(), one);
+	}
 
 	@Test
 	public void testPawnMove() {
