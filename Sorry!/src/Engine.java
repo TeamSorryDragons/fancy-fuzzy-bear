@@ -12,6 +12,7 @@ public class Engine implements EngineInterface {
 	public static final int VALID_MOVE_NO_FINALIZE = -129;
 	public static final int SUCCESSFUL_OPERATION = 191;
 	public static final int HAS_WON = 237;
+	public static final int INACTIVE_PLAYER = 8191;
 	private static HashContainer coords;
 	private int remainingMoves = 0;
 	protected BoardList board;

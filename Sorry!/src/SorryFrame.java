@@ -69,7 +69,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		Scanner in = new Scanner(fr);
 		for (int x = 0; x < 12; x++)
 			in.nextLine();
-		userMessages = new String[9];
+		userMessages = new String[10];
 		for (int x = 0; x < 9; x++)
 			userMessages[x] = in.nextLine();
 		this.setSize(1330, 1040);
@@ -269,7 +269,11 @@ public class SorryFrame extends JFrame implements ActionListener {
 			this.informPlayerError(userMessages[4]);
 		} else if (result == Engine.VALID_MOVE_NO_FINALIZE) {
 			// just wait for another turn
-		} else {
+		} else if (result == Engine.INACTIVE_PLAYER){
+			this.informPlayerError(userMessages[9]);
+		}
+		
+		else {
 			// turn is over, rotate
 			if (this.engine.finalizeTurn()) {
 				this.notifyPlayer(userMessages[5]);
