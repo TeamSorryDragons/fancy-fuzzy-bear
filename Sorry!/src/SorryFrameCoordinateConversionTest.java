@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.Test;
@@ -195,6 +196,13 @@ public class SorryFrameCoordinateConversionTest {
 		HashContainer h = new HashContainer();
 		h.populateCoordsMap();
 		assertEquals(h.getmap(4),new HashMap<SorryFrame.Coordinate, Integer>());
-		
+	}
+	
+	@Test
+	public void passPlayersFinishTest(){
+		SorryFrame temp = new SorryFrame("english");
+		ArrayList<String> temp2 = (new ArrayList<String>());
+		temp2.add("");
+		assertEquals(0,temp.passPlayers(temp2));
 	}
 }
