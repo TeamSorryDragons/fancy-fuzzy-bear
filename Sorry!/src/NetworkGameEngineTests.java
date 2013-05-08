@@ -129,6 +129,26 @@ public class NetworkGameEngineTests {
 	}
 
 	@Test
+	public void testNetworkGameEngineUpdates() {
+		Player owner = new Player(Piece.COLOR.green, "Lady Gaga");
+		NetworkGameEngine target = new NetworkGameEngine("", 0, owner,
+				"english");
+
+		MockClient fakeServer = new MockClient("fake stuffs", "", "");
+		target.client = fakeServer;
+		target.getUpdatedInfo();
+		assertNull(target.currentCard);
+		assertNull(target.activePlayer);
+
+		fakeServer = new MockClient("information-for-you=stuff", "", "");
+		target.client = fakeServer;
+		target.getUpdatedInfo();
+		assertNull(target.currentCard);
+		assertNull(target.activePlayer);
+
+	}
+
+	@Test
 	public void testNetworkGameEngineSendsFinalizeTurnRequest() {
 		Player owner = new Player(Piece.COLOR.green, "Lady Gaga");
 		NetworkGameEngine target = new NetworkGameEngine("", 0, owner,

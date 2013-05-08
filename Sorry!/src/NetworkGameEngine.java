@@ -95,7 +95,7 @@ public class NetworkGameEngine implements EngineInterface {
 			if (msg.equals(""))
 				continue;
 			if (!msg.contains("="))
-				System.out.println("Error in updating board! \n" + msg);
+				continue;
 			String prefix = msg.split("=")[0];
 			String post = msg.split("=")[1];
 			switch (prefix) {
@@ -117,6 +117,9 @@ public class NetworkGameEngine implements EngineInterface {
 				} catch (Exception e) {
 					// make no changes, that was not a good idea
 				}
+				break;
+			default:
+				continue;
 			}
 		}
 
