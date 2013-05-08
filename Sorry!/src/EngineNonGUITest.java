@@ -929,6 +929,7 @@ public class EngineNonGUITest {
 						+ "|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0"
 						+ "|gsn|gsn|gmn4|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|");
 		
+		e.currentCard = new Card(7, "TEST");
 		assertEquals(e.pawnMove(new SorryFrame.Coordinate(11, 15), new SorryFrame.Coordinate(9, 15)), Engine.VALID_MOVE_NO_FINALIZE);
 		
 		assertEquals(e.getActualBoard().toString(),

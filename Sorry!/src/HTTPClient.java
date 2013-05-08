@@ -41,11 +41,14 @@ public class HTTPClient implements IHTTPClient {
 			StringBuffer sb = new StringBuffer();
 			String in = "";
 			while (in != null) {
-				sb.append(in+"\n");
+				sb.append(in + "\n");
 				in = br.readLine();
 			}
 			in = sb.toString();
 			br.close();
+
+			//System.out.println("Server responded with: \n " + in);
+
 			return in;
 		} catch (IOException exception) {
 			exception.printStackTrace();
@@ -78,6 +81,9 @@ public class HTTPClient implements IHTTPClient {
 			}
 			in = sb.toString();
 			br.close();
+
+			System.out.println("Server responded with: \n" + in);
+
 			return in;
 		} catch (IOException e) {
 			return null;
