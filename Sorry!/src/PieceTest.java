@@ -37,17 +37,4 @@ public class PieceTest {
 	public void colorIsColorTest() {
 		assertEquals(new Piece().col,Piece.COLOR.colorless);
 	}
-
-	@SuppressWarnings("javadoc")
-	@Test
-	public void equalsTest() {
-		assertFalse(new Piece(Piece.COLOR.blue) == new Piece(Piece.COLOR.blue));
-		assertFalse(new Piece() == new Piece());
-		Piece a = new Piece();
-		assertTrue(a == a); // testing object memory construction.
-		Piece b = new Piece(Piece.COLOR.blue);
-		assertTrue(b == b); // testing object memory construction.
-		Piece c = new Piece(Piece.COLOR.blue);
-		assertFalse(b == c);
-	}
 }

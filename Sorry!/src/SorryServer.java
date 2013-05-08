@@ -171,13 +171,12 @@ public class SorryServer implements Container {
 
 		data = "";
 
-		if (!(this.gameModule == null)
-				&& !(this.gameModule.currentCard == null)) {
+		if (!(this.gameModule.currentCard == null)) {
 			data += "current-card=";
 			data += this.gameModule.currentCard.cardNum;
 			out.println(data);
-		}
 
+		}
 		data = "current-board=";
 		data += this.gameModule.getActualBoard().toString();
 

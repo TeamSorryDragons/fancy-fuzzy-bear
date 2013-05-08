@@ -60,12 +60,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 		}
 		this.engine = eng;
 		this.engine.newGame();
-
-//		updateThread t = (new updateThread());
-//		t.e = this.engine;
-//		t.s = this;
-//		t.start();
-
 		Scanner in = new Scanner(fr);
 		for (int x = 0; x < 12; x++)
 			in.nextLine();
@@ -90,13 +84,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 		}
 		this.engine = new Engine(this.board, lang);
 		this.engine.newGame();
-
-//		updateThread t = (new updateThread());
-//		t.e = this.engine;
-//		t.s = this;
-//		t.start();
-		
-
 		Scanner in = new Scanner(fr);
 		for (int x = 0; x < 12; x++)
 			in.nextLine();

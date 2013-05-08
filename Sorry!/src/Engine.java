@@ -233,26 +233,8 @@ public class Engine implements EngineInterface {
 		int ret = checkValidityOriginalRules(first.firstPiece(), first, second,
 				nodeCountForward, nodeCountBackward);
 
-		int result = ret;// this.handleTurnUpdate(ret);
+		int result = ret;
 		return result;
-	}
-
-	private int handleTurnUpdate(int result) {
-		if (result == Engine.SAME_NODE_SELECTED
-				|| result == Engine.INVALID_MOVE
-				|| result == Engine.NO_PIECE_SELECTED
-				|| result == Engine.NODE_NOT_FOUND
-				|| result == Engine.VALID_MOVE_NO_FINALIZE) {
-			return result;
-		} else {
-			// turn is over, rotate
-			if (!this.underTest) {
-				this.rotatePlayers();
-				this.getNextCard();
-			}
-			return result;
-		}
-
 	}
 
 	@Override
