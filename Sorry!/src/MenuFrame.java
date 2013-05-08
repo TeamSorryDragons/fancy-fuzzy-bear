@@ -435,7 +435,7 @@ public class MenuFrame extends JFrame {
 		btnLoad.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
-				player = new ArrayList<String>();
+				ArrayList<String> fileInput = new ArrayList<String>();
 				Engine EHost = new Engine(new BoardList(),
 						MenuFrame.this.language);
 				SorryServer host;
@@ -445,10 +445,10 @@ public class MenuFrame extends JFrame {
 				try {
 					reader = new Scanner(file);
 					while (reader.hasNext()) {
-						player.add(reader.nextLine());
+						fileInput.add(reader.nextLine());
 					}
-					int a = passPlayers(player, EHost);
-					board = new BoardList((player.get(a + 1)));
+					int a = passPlayers(fileInput, EHost);
+					board = new BoardList((fileInput.get(a + 1)));
 					EHost.load(board, board.clone(), board.pieceList);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -466,6 +466,8 @@ public class MenuFrame extends JFrame {
 						}
 
 					}
+					EHost.rotatePlayers();
+					EHost.getNextCard();
 					MenuFrame.this.Info();
 
 				}
@@ -552,22 +554,26 @@ public class MenuFrame extends JFrame {
 			if (string == "") {
 				break;
 			}
-			String[] player = string.split("\\|");
-			if (player.length != 2) {
+			String[] players = string.split("\\|");
+			if (players.length != 2) {
 				break;
 			}
-			switch (player[1]) {
+			switch (players[1]) {
 			case "red":
-				engine.insertPlayer(new Player(Piece.COLOR.red, player[0]));
+				engine.insertPlayer(new Player(Piece.COLOR.red, players[0]));
+				player.add(players[0]);
 				break;
 			case "green":
-				engine.insertPlayer(new Player(Piece.COLOR.green, player[0]));
+				engine.insertPlayer(new Player(Piece.COLOR.green, players[0]));
+				player.add(players[0]);
 				break;
 			case "blue":
-				engine.insertPlayer(new Player(Piece.COLOR.blue, player[0]));
+				engine.insertPlayer(new Player(Piece.COLOR.blue, players[0]));
+				player.add(players[0]);
 				break;
 			case "yellow":
-				engine.insertPlayer(new Player(Piece.COLOR.yellow, player[0]));
+				engine.insertPlayer(new Player(Piece.COLOR.yellow, players[0]));
+				player.add(players[0]);
 				break;
 			}
 			ret++;
