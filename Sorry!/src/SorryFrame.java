@@ -212,7 +212,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 		// System.out.println(this.currentCard.toString());
 		// this.engine.rotatePlayers();
 		Player pl;
-		if(this.engine.getOwner() == null){
+		if(this.engine.getOwner() != null){
 			pl = this.engine.getOwner();
 		}
 		else{
