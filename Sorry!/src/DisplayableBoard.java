@@ -46,6 +46,7 @@ public class DisplayableBoard extends JComponent {
 		else{
 			ply = this.gameEngine.getOwner();
 		}
+		//ply = new Player(Piece.COLOR.red, "dave");
 		switch (ply.getColor()) {
 		case red:
 			i = 0;

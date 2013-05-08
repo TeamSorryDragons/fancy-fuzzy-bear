@@ -23,7 +23,8 @@ public class NetworkGameEngineTests {
 		NetworkGameEngine target = null;
 		target = new NetworkGameEngine(url, port, testP, "english");
 		assertEquals(target.owner, testP);
-		assertEquals(target.client.getServerURL(), "http://"+url + ":" + port + "/");
+		assertEquals(target.client.getServerURL(), "http://" + url + ":" + port
+				+ "/");
 
 		for (int i = 0; i < 5; i++)
 			assertEquals(target.cards.get(i).cardNum, i + 1);
@@ -114,14 +115,14 @@ public class NetworkGameEngineTests {
 
 		String cleanBoard = new BoardList().toString();
 
-		fakeServer = new MockClient(cleanBoard, "", "");
+		fakeServer = new MockClient("current-board=" + cleanBoard, "", "");
 		target.client = fakeServer;
 		target.getUpdatedInfo();
 		assertEquals(target.getActualBoard().toString(), cleanBoard);
 
 		String inUseBoard = "hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nn|nn|nn|hrsnr|rsn|rsn|rsn|rsn|nn|nn|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nn|nn|nn|nn|hbsn|bsn|bsn|bsn|bsn|nn|nn|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn4|nn|nn|nn|nnb|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0|gsn|gsn|gmn3|nng|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nn|";
 
-		fakeServer = new MockClient(inUseBoard, "", "");
+		fakeServer = new MockClient("current-board=" + inUseBoard, "", "");
 		target.client = fakeServer;
 		target.getUpdatedInfo();
 		assertEquals(target.getActualBoard().toString(), inUseBoard);
@@ -192,21 +193,22 @@ public class NetworkGameEngineTests {
 		target.client = fakeServer;
 		assertEquals(target.fetchAllPlayers().size(), 2);
 	}
-	
+
 	@Test
-	public void testStringToColor(){
+	public void testStringToColor() {
 		String Str = "red";
 		Player one = new Player(Piece.COLOR.red, "guy");
 		NetworkGameEngine target = new NetworkGameEngine("", 0, one, "english");
-		assertEquals(Piece.COLOR.red,target.stringColorToActualColor(Str));
+		assertEquals(Piece.COLOR.red, target.stringColorToActualColor(Str));
 		Str = "blue";
-		assertEquals(Piece.COLOR.blue,target.stringColorToActualColor(Str));
+		assertEquals(Piece.COLOR.blue, target.stringColorToActualColor(Str));
 		Str = "yellow";
-		assertEquals(Piece.COLOR.yellow,target.stringColorToActualColor(Str));
+		assertEquals(Piece.COLOR.yellow, target.stringColorToActualColor(Str));
 		Str = "green";
-		assertEquals(Piece.COLOR.green,target.stringColorToActualColor(Str));
+		assertEquals(Piece.COLOR.green, target.stringColorToActualColor(Str));
 		Str = "colorless";
-		assertEquals(Piece.COLOR.colorless,target.stringColorToActualColor(Str));
+		assertEquals(Piece.COLOR.colorless,
+				target.stringColorToActualColor(Str));
 	}
 
 	static class MockClient implements IHTTPClient {

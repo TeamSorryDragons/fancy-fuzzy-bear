@@ -27,7 +27,7 @@ public class NetworkGameEngine implements EngineInterface {
 	 * 
 	 */
 	public NetworkGameEngine(String loc, int port, Player own, String language) {
-		String serverURL ="http://"+ loc + ":" + port + "/";
+		String serverURL = "http://" + loc + ":" + port + "/";
 		this.client = new HTTPClient(serverURL);
 		this.owner = own;
 		this.cards = new ArrayList<Card>();
@@ -94,17 +94,8 @@ public class NetworkGameEngine implements EngineInterface {
 		for (String msg : results) {
 			if (msg.equals(""))
 				continue;
-			if (!msg.contains("=")) {
-				// have the game board
-				try {
-					this.board = new BoardList(msg);
-				} catch (Exception e) {
-					// building the board failed, probably bad input
-					// make no changes, hopefully it's corrected the next
-					// iteration
-				}
-				continue;
-			}
+			if (!msg.contains("="))
+				System.out.println("Error in updating board! \n" + msg);
 			String prefix = msg.split("=")[0];
 			String post = msg.split("=")[1];
 			switch (prefix) {
@@ -117,6 +108,15 @@ public class NetworkGameEngine implements EngineInterface {
 			case "messages":
 				// TODO fetch messages
 				break;
+			case "current-board":
+				try {
+					BoardList updatedBoard = new BoardList(post);
+					if (!updatedBoard.equals(new BoardList()))
+						this.board = updatedBoard;
+					// if you just get the default board, it might not be real
+				} catch (Exception e) {
+					// make no changes, that was not a good idea
+				}
 			}
 		}
 
@@ -268,7 +268,8 @@ public class NetworkGameEngine implements EngineInterface {
 			return true;
 		if (result != Engine.SUCCESSFUL_OPERATION) {
 			// Houston, we have a problem
-			this.finalizeTurn();
+			// this.finalizeTurn();
+			System.out.println("Engine returned: " + result);
 		}
 		return false;
 	}

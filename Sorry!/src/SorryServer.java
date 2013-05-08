@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.net.URLEncoder;
 import java.util.LinkedList;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
@@ -157,13 +156,10 @@ public class SorryServer implements Container {
 		response.setContentType("text/plain; charset=utf-8");
 
 		String data = "";
-		data += URLEncoder.encode("active-user", "UTF-8")
-				+ "="
-				+ URLEncoder.encode(this.gameModule.activePlayer.getName(),
-						"UTF-8");
+		data += "active-user" + "=" + this.gameModule.activePlayer.getName();
 		out.println(data);
 		data += '\n';
-		data = URLEncoder.encode("messages", "UTF-8") + "=";
+		data = "messages" + "=";
 		for (int i = 0; i < this.messages.size(); i++) {
 			data += this.messages.get(i);
 			if (i != this.messages.size() - 1)
@@ -182,7 +178,8 @@ public class SorryServer implements Container {
 			out.println(data);
 		}
 
-		data = this.gameModule.getActualBoard().toString();
+		data = "current-board=";
+		data += this.gameModule.getActualBoard().toString();
 
 		out.println(data);
 		out.flush();
@@ -231,6 +228,7 @@ public class SorryServer implements Container {
 		PrintStream out = response.getPrintStream();
 
 		POSTDataContainer postData = parseServerInput(linesIn);
+		System.out.println("Server received: \n" + input);
 		if (!postData.isValidData) {
 			out.println("result=" + INVALID_DATA_MSG);
 			out.flush();

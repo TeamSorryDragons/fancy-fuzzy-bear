@@ -24,7 +24,7 @@ public class Engine implements EngineInterface {
 	protected Deck deck;
 	protected CircularLinkedList<Player> players;
 	protected Card currentCard;
-	
+
 	protected boolean underTest = false;
 
 	@SuppressWarnings("static-access")
@@ -232,7 +232,7 @@ public class Engine implements EngineInterface {
 		int ret = checkValidityOriginalRules(first.firstPiece(), first, second,
 				nodeCountForward, nodeCountBackward);
 
-		int result = this.handleTurnUpdate(ret);
+		int result = ret;// this.handleTurnUpdate(ret);
 		return result;
 	}
 
@@ -407,6 +407,8 @@ public class Engine implements EngineInterface {
 	public boolean finalizeTurn() {
 		// TODO implement it, when the time comes
 		this.backupBoard = this.board.clone();
+		this.rotatePlayers();
+		this.getNextCard();
 		return hasWon();
 	}
 
