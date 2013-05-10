@@ -77,7 +77,7 @@ public class SlideNode extends Node {
 				break;
 			case green:
 				ret.append("g");
-			
+
 			}
 		}
 		ret.append("|");
@@ -105,7 +105,7 @@ public class SlideNode extends Node {
 			} else if (this.safe instanceof MultiNode) {
 				i -= 1;
 			} else {
-				
+
 				i -= 6;
 			}
 		}
@@ -118,14 +118,14 @@ public class SlideNode extends Node {
 			if (this.head && p.col != this.getColor()) {
 				Node temp = this;
 				while (temp.getNext() instanceof SlideNode) {
-					if(temp.hasPiece()){
+					if (temp.hasPiece()) {
 						ret.add(temp.firstPiece());
 						temp.removePieceFromPieces(temp.firstPiece());
 					}
 					temp = temp.getNext();
 				}
 				Piece temp2 = null;
-				if(temp.hasPiece()){
+				if (temp.hasPiece()) {
 					temp2 = temp.firstPiece();
 					temp.removePieceFromPieces(temp2);
 					ret.add(temp2);
@@ -134,7 +134,7 @@ public class SlideNode extends Node {
 				return ret;
 			} else {
 				Piece temp2 = null;
-				if(hasPiece()){
+				if (hasPiece()) {
 					temp2 = this.firstPiece();
 					this.removePieceFromPieces(temp2);
 					ret.add(temp2);
@@ -142,10 +142,11 @@ public class SlideNode extends Node {
 				this.addPieceToPieces(p);
 				return ret;
 			}
-		}
-		else if(this.getSafeNode() != null && !(this.getSafeNode() instanceof MultiNode) && this.getColor() == p.col && moves > 0){
+		} else if (this.getSafeNode() != null
+				&& !(this.getSafeNode() instanceof MultiNode)
+				&& this.getColor() == p.col && moves > 0) {
 			try {
-				return this.safe.move(moves-1, p);
+				return this.safe.move(moves - 1, p);
 			} catch (InvalidMoveException e) {
 				e.printStackTrace();
 			}
@@ -157,77 +158,75 @@ public class SlideNode extends Node {
 			return ret;
 		}
 	}
-	
-	public int countTo(Node node){
-		if(this == node){
+
+	public int countTo(Node node) {
+		if (this == node) {
 			return 0;
-		}
-		else if(this.getSafeNode() != null && this.getSafeNode().getPrevious() != null){
+		} else if (this.getSafeNode() != null
+				&& this.getSafeNode().getPrevious() != null) {
 			Node temp = this.getSafeNode();
 			boolean breaker = false;
 			int temp2 = 0;
-			while(temp != null){
-				if(temp == node){
+			while (temp != null) {
+				if (temp == node) {
 					breaker = true;
 					break;
-				}
-				else{
-					temp2 ++;
+				} else {
+					temp2++;
 					temp = temp.getNext();
 				}
 			}
-			if(breaker){
+			if (breaker) {
 				return 1 + temp2;
 			}
-		}
-		else if(this.getSafeNode() != null && this.getSafeNode() == node){
+		} else if (this.getSafeNode() != null && this.getSafeNode() == node) {
 			return 1;
 		}
 		return 1 + this.getNext().countTo(node);
 	}
-	
-	public int countBack(Node node){
-		if(this == node){
+
+	public int countBack(Node node) {
+		if (this == node) {
 			return 0;
-		}
-		else if(this.getSafeNode() != null && this.getSafeNode().getPrevious() != null){
+		} else if (this.getSafeNode() != null
+				&& this.getSafeNode().getPrevious() != null) {
 			Node temp = this.getSafeNode();
 			boolean breaker = false;
-			while(temp != null){
-				if(temp == node){
+			while (temp != null) {
+				if (temp == node) {
 					breaker = true;
 					break;
-				}
-				else{
+				} else {
 					temp = temp.getNext();
 				}
 			}
-			if(breaker){
-				throw new IllegalArgumentException("You decided that going forwards on a slide was backwards.");
+			if (breaker) {
+				throw new IllegalArgumentException(
+						"You decided that going forwards on a slide was backwards.");
 			}
-		}
-		else if(this.getSafeNode() != null && this.getSafeNode() == node){
-			throw new IllegalArgumentException("You decided that going forwards into start was backwards.");
+		} else if (this.getSafeNode() != null && this.getSafeNode() == node) {
+			throw new IllegalArgumentException(
+					"You decided that going forwards into start was backwards.");
 		}
 		return 1 + this.getPrevious().countBack(node);
 	}
-	
-	public Piece swap(Node node) throws InvalidMoveException{
+
+	public Piece swap(Node node) throws InvalidMoveException {
 		Piece piece = node.firstPiece();
 		node.removePieceFromPieces(piece);
 		Piece piece2 = firstPiece();
 		removePieceFromPieces(piece2);
 		Node temp = this;
-		if(piece.col != this.getColor() && this.head){
-			while(temp.getNext() instanceof SlideNode){
+		if (piece.col != this.getColor() && this.head) {
+			while (temp.getNext() instanceof SlideNode) {
 				temp = temp.getNext();
 			}
 		}
 		temp.addPieceToPieces(piece);
 		return piece2;
 	}
-	
-	public boolean canReceivePiece(Piece.COLOR col){
+
+	public boolean canReceivePiece(Piece.COLOR col) {
 		return true;
 	}
 }

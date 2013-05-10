@@ -336,24 +336,7 @@ public class MenuFrame extends JFrame {
 
 	}
 
-	public void host() {
-		MenuFrame.this.getContentPane().removeAll();
-		MenuFrame.this.repaint();
-
-		Scanner in = null;
-		try {
-			in = new Scanner(new File(this.language + ".txt"));
-			for (int x = 0; x < 43; x++)
-				in.nextLine();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		this.setTitle(in.nextLine());
-		JPanel hostPanel = new JPanel();
-
-		hostPanel.setLayout(new GridLayout(3, 1));
-		hostPanel.add(new JLabel(in.nextLine(), JLabel.CENTER));
+	public void populateHostPanel(JPanel hostPanel) {
 		JPanel textBoxPanel = new JPanel();
 		textBoxPanel.setLayout(new GridLayout(4, 1));
 		p1 = new JTextField();
@@ -375,6 +358,27 @@ public class MenuFrame extends JFrame {
 		textBoxPanel.add(p3);
 		textBoxPanel.add(p4);
 		hostPanel.add(textBoxPanel);
+	}
+
+	public void host() {
+		MenuFrame.this.getContentPane().removeAll();
+		MenuFrame.this.repaint();
+
+		Scanner in = null;
+		try {
+			in = new Scanner(new File(this.language + ".txt"));
+			for (int x = 0; x < 43; x++)
+				in.nextLine();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.setTitle(in.nextLine());
+		JPanel hostPanel = new JPanel();
+		hostPanel.setLayout(new GridLayout(3, 1));
+		hostPanel.add(new JLabel(in.nextLine(), JLabel.CENTER));
+		this.populateHostPanel(hostPanel);
+
 		JButton btnStart = new JButton(in.nextLine());
 		JButton btnLoad = new JButton(in.nextLine());
 		JPanel start = new JPanel();
@@ -390,7 +394,6 @@ public class MenuFrame extends JFrame {
 						MenuFrame.this.language);
 				EHost.board.newGame();
 				EHost.backupBoard = EHost.board.clone();
-				SorryServer host;
 				if (!MenuFrame.this.p1.getText().isEmpty()) {
 					EHost.insertPlayer(new Player(Piece.COLOR.red,
 							MenuFrame.this.p1.getText()));
@@ -411,27 +414,11 @@ public class MenuFrame extends JFrame {
 							MenuFrame.this.p4.getText()));
 					player.add(p4.getText());
 				}
-				EHost.rotatePlayers();
-				EHost.getNextCard();
+
 				if (player.size() > 1) {
-					host = new SorryServer(EHost);
-					if (host.attemptServerStartUp(8080))
-						port = 8080;
-					else if (host.attemptServerStartUp(8080))
-						port = 8080;
-					else {
-						port = 4000;
-						while (host.attemptServerStartUp(port) == false) {
-							port++;
-						}
-
-					}
-					MenuFrame.this.Info();
-
+					MenuFrame.this.startUpHostServer(EHost);
 				}
-
 			}
-
 		});
 		btnLoad.addActionListener(new ActionListener() {
 			@Override
@@ -455,22 +442,7 @@ public class MenuFrame extends JFrame {
 					e.printStackTrace();
 				}
 				if (player.size() > 1) {
-					host = new SorryServer(EHost);
-					if (host.attemptServerStartUp(80))
-						port = 80;
-					else if (host.attemptServerStartUp(8080))
-						port = 8080;
-					else {
-						port = 4000;
-						while (host.attemptServerStartUp(port) == false) {
-							port++;
-						}
-
-					}
-					EHost.rotatePlayers();
-					EHost.getNextCard();
-					MenuFrame.this.Info();
-
+					MenuFrame.this.startUpHostServer(EHost);
 				}
 
 			}
@@ -482,6 +454,32 @@ public class MenuFrame extends JFrame {
 		MenuFrame.this.add(hostPanel, BorderLayout.NORTH);
 		MenuFrame.this.setVisible(true);
 		MenuFrame.this.repaint();
+
+	}
+
+	/**
+	 * Given a game engine, get a server started ready to host games on the
+	 * local machine.
+	 * 
+	 * @param Engine
+	 *            EHost
+	 */
+	protected void startUpHostServer(Engine EHost) {
+		SorryServer host = new SorryServer(EHost);
+		if (host.attemptServerStartUp(8080))
+			port = 8080;
+		else if (host.attemptServerStartUp(8080))
+			port = 8080;
+		else {
+			port = 4000;
+			while (host.attemptServerStartUp(port) == false) {
+				port++;
+			}
+
+		}
+		EHost.rotatePlayers();
+		EHost.getNextCard();
+		MenuFrame.this.Info();
 
 	}
 

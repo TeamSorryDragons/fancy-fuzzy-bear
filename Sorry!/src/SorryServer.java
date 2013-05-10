@@ -73,9 +73,6 @@ public class SorryServer implements Container {
 			this.connector.connect(address);
 			return true;
 		} catch (Exception e) {
-			System.out
-					.println("Error opening server, likely the port failed on port: "
-							+ port);
 			return false;
 		}
 
@@ -227,7 +224,6 @@ public class SorryServer implements Container {
 		PrintStream out = response.getPrintStream();
 
 		POSTDataContainer postData = parseServerInput(linesIn);
-		System.out.println("Server received: \n" + input);
 		if (!postData.isValidData) {
 			out.println("result=" + INVALID_DATA_MSG);
 			out.flush();
@@ -442,30 +438,4 @@ public class SorryServer implements Container {
 		}
 
 	}
-
-	/**
-	 * 
-	 * Main to allow the server to function as a stand alone entity, mainly for
-	 * testing purposes. NOT used by the actual game.
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			Engine eng = new Engine(new BoardList(), "english");
-			eng.insertPlayer(new Player(Piece.COLOR.red, "James Bond"));
-			eng.insertPlayer(new Player(Piece.COLOR.blue, "Harry Potter"));
-			eng.newGame();
-			eng.currentCard = new Card(2, "TEST CARD");
-			eng.rotatePlayers();
-			SorryServer cont = new SorryServer(eng);
-			cont.attemptServerStartUp(8080);
-			System.out.println("Server is up!");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
 }

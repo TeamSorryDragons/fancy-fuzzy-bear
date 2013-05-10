@@ -209,13 +209,10 @@ public class SorryFrame extends JFrame implements ActionListener {
 	protected void initiateTurn() {
 		this.engine.getUpdatedInfo();
 		this.currentCard = this.engine.getCurrentCard();
-		// System.out.println(this.currentCard.toString());
-		// this.engine.rotatePlayers();
 		Player pl;
-		if(this.engine.getOwner() != null){
+		if (this.engine.getOwner() != null) {
 			pl = this.engine.getOwner();
-		}
-		else{
+		} else {
 			pl = this.engine.getActivePlayer();
 		}
 		if (pl.getColor() == Piece.COLOR.blue) {
@@ -226,8 +223,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 			gui.playerInformation.setBackground(Color.YELLOW);
 		else
 			gui.playerInformation.setBackground(Color.RED);
-		this.gui.playerNameText
-				.setText(pl.getName());
+		this.gui.playerNameText.setText(pl.getName());
 		this.gui.update();
 		this.repaint();
 		// this.notifyPlayer(userMessages[0]);
@@ -256,10 +252,10 @@ public class SorryFrame extends JFrame implements ActionListener {
 			this.informPlayerError(userMessages[4]);
 		} else if (result == Engine.VALID_MOVE_NO_FINALIZE) {
 			// just wait for another turn
-		} else if (result == Engine.INACTIVE_PLAYER){
+		} else if (result == Engine.INACTIVE_PLAYER) {
 			this.informPlayerError(userMessages[9]);
 		}
-		
+
 		else {
 			// turn is over, rotate
 			if (this.engine.finalizeTurn()) {
@@ -313,7 +309,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * TODO Put here a description of what this method does.
+	 * Save the game at the user's request.
 	 * 
 	 */
 	public void saveGame() {
@@ -321,7 +317,6 @@ public class SorryFrame extends JFrame implements ActionListener {
 		try {
 			this.engine.save(save);
 		} catch (IOException e) {
-			System.out.println("IT SPLODED");
 			e.printStackTrace();
 		}
 	}
@@ -450,7 +445,7 @@ public class SorryFrame extends JFrame implements ActionListener {
 				coord = SorryFrame.convertClickToCoordinate(click.getX()
 						- FRAME_X_PAD, click.getY() - FRAME_Y_PAD);
 			} catch (CoordinateOffOfBoardException e) {
-				System.out.println("Clicked off board, probably ok.");
+				// please disregard click, user error... stupid users
 			}
 			if (coord != null)
 				this.myFrame.registerMouseClick(coord);
@@ -488,4 +483,3 @@ public class SorryFrame extends JFrame implements ActionListener {
 
 	}
 }
-
