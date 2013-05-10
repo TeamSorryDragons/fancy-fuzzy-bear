@@ -23,7 +23,7 @@ public class InstructionsFrame extends JFrame {
 	private String language;
 
 	public InstructionsFrame(String lang) {
-		this.language=lang;
+		this.language = lang;
 		Scanner in = null;
 		try {
 			in = new Scanner(new File(this.language + ".txt"));
@@ -39,7 +39,7 @@ public class InstructionsFrame extends JFrame {
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
 		try {
-			String fileName = InstructionsFrame.obtainFileName(lang);	
+			String fileName = InstructionsFrame.obtainFileName(lang);
 			JEditorPane instr = createEditorPane(fileName);
 			JScrollPane scroll = createScrollPane(instr);
 			this.getContentPane().add(scroll, BorderLayout.CENTER);
@@ -50,19 +50,24 @@ public class InstructionsFrame extends JFrame {
 		this.repaint();
 
 	}
-	
-	protected static JScrollPane createScrollPane(JEditorPane instrPane){
+
+	protected static JScrollPane createScrollPane(JEditorPane instrPane) {
 		JScrollPane scroll = new JScrollPane(instrPane);
 		scroll.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 		scroll.setMinimumSize(new Dimension(100, 100));
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		return scroll;
 	}
-	
-	protected static JEditorPane createEditorPane(String fileName) throws IOException{
+
+	protected static JEditorPane createEditorPane(String fileName)
+			throws IOException {
 		URL location = InstructionsFrame.class.getResource(fileName);
-		if (location == null)
-			System.err.println("Couldn't find the file: " + fileName);
+		if (location == null) {
+			location = InstructionsFrame.class
+					.getResource("instructions_english.html");
+			// if we can't find instructions in their language, give them
+			// english ones... it is better than NOTHING
+		}
 		JEditorPane instrPane = new JEditorPane();
 		instrPane.setPage(location);
 		instrPane.setContentType("text/html; charset=utf-8");
