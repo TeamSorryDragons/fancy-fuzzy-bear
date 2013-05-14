@@ -1003,6 +1003,23 @@ public class EngineNonGUITest {
 				.getPrevious(), start);
 
 	}
+	
+	@Test
+	public void testNullOwner(){
+		Engine e = new Engine(new BoardList(), "english");
+		assertNull(e.getOwner());
+	}
+	
+	@Test
+	public void testRemainingRotatedCoordinates(){
+		Engine e = new Engine(new BoardList(), "english");
+		e.insertPlayer(new Player(Piece.COLOR.yellow, "Bill"));
+		e.insertPlayer(new Player(Piece.COLOR.green, "Bill2"));
+		e.rotatePlayers();
+		assertEquals("nn|",e.convertCoordToNode(new SorryFrame.Coordinate(1,15)).toString());
+		e.rotatePlayers();
+		assertEquals("nn|",e.convertCoordToNode(new SorryFrame.Coordinate(1,15)).toString());
+	}
 
 	private static void createNodeChain(Node start, Node end, int length) {
 		Node current = start;
