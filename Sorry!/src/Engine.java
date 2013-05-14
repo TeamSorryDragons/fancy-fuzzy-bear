@@ -360,9 +360,6 @@ public class Engine implements EngineInterface {
 		this.players.goToNextElement();
 		this.activePlayer = this.players.getActualElementData();
 		this.activePlayer.setActive(true);
-		System.out.println("The current active player: "
-				+ this.activePlayer.getName());
-
 	}
 
 	/**
@@ -481,30 +478,6 @@ public class Engine implements EngineInterface {
 	@Override
 	public void getUpdatedInfo() {
 		return;
-	}
-
-	@SuppressWarnings("static-access")
-	public static void main(String args[]) {
-		Engine.coords = new HashContainer();
-		Engine.coords.populateCoordsMap();
-		for (int k = 0; k < 4; k++) {
-			for (int i = 0; i < 16; i++) {
-				for (int j = 0; j < 16; j++) {
-					try {
-						int coord = Engine.getNodePosition(
-								new SorryFrame.Coordinate(i, j), k);
-						if (coord >= 88)
-							System.out.println("Found bad one >= 88: " + i
-									+ "  " + j + "  map: " + k);
-						if (coord < 0)
-							System.out.println("Found bad one < 0: " + i + " "
-									+ j);
-					} catch (CoordinateOffOfBoardException e) {
-						// expected
-					}
-				}
-			}
-		}
 	}
 
 	@Override

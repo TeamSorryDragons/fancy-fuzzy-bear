@@ -313,19 +313,6 @@ public class NetworkGameEngine implements EngineInterface {
 	@Override
 	public void newGame() {
 		// TODO Auto-generated method stub.
-
-	}
-
-	public static void main(String[] args) {
-		BoardList bs = new BoardList("hello world");
-		System.out.println(bs.toString());
-
-		NetworkGameEngine eng = new NetworkGameEngine("http://137.112.113.203",
-				8080, new Player(Piece.COLOR.green, "bob barker"), "english");
-		int resp = eng.pawnMove(new SorryFrame.Coordinate(0, 0),
-				new SorryFrame.Coordinate(1, 1));
-		System.out.println(resp);
-
 	}
 
 	@Override

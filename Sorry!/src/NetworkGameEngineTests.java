@@ -126,6 +126,11 @@ public class NetworkGameEngineTests {
 		target.client = fakeServer;
 		target.getUpdatedInfo();
 		assertEquals(target.getActualBoard().toString(), inUseBoard);
+		
+		fakeServer = new MockClient("current-board="+ new BoardList().toString(), "", "");
+		target.client = fakeServer;
+		target.getUpdatedInfo();
+		assertEquals(target.getActualBoard().toString(), new BoardList().toString());
 	}
 
 	@Test
@@ -208,8 +213,9 @@ public class NetworkGameEngineTests {
 	public void testfetchAllPlayers() {
 		Player one = new Player(Piece.COLOR.red, "guy");
 		NetworkGameEngine target = new NetworkGameEngine("", 0, one, "english");
-		MockClient fakeServer = new MockClient("guy:red \n not guy:blue",
-				"result=" + Engine.SUCCESSFUL_OPERATION, "");
+		MockClient fakeServer = new MockClient(
+				"guy:red \n not guy:blue \n harry potter", "result="
+						+ Engine.SUCCESSFUL_OPERATION, "");
 		target.client = fakeServer;
 		assertEquals(target.fetchAllPlayers().size(), 2);
 	}
@@ -230,9 +236,9 @@ public class NetworkGameEngineTests {
 		assertEquals(Piece.COLOR.colorless,
 				target.stringColorToActualColor(Str));
 	}
-	
+
 	@Test
-	public void testGetOwner(){
+	public void testGetOwner() {
 		String Str = "red";
 		Player one = new Player(Piece.COLOR.red, "guy");
 		NetworkGameEngine target = new NetworkGameEngine("", 0, one, "english");
@@ -270,38 +276,37 @@ public class NetworkGameEngineTests {
 		result = target.pawnMove(new SorryFrame.Coordinate(0, 0),
 				new SorryFrame.Coordinate(1, 1));
 		assertEquals(result, Engine.INVALID_MOVE);
-		
-		fakeServer = new MockClient("", "result="
-				+ "Good day sir", "");
+
+		fakeServer = new MockClient("", "result=" + "Good day sir", "");
 		target.client = fakeServer;
 		result = target.pawnMove(new SorryFrame.Coordinate(0, 0),
 				new SorryFrame.Coordinate(1, 1));
 		assertEquals(result, Engine.INVALID_MOVE);
 
 	}
-	
+
 	@Test
-	public void testSendServerActions(){
+	public void testSendServerActions() {
 		Player owner = new Player(Piece.COLOR.red, "Harry Potter");
 		NetworkGameEngine target = new NetworkGameEngine("", 0, owner,
 				"english");
 		MockClient fakeServer = new MockClient("",
 				"something something dark side=" + "InactivePlayer", "");
 		target.client = fakeServer;
-		
+
 		int result = target.sendServerAction("forfeit");
 		assertEquals(result, -1);
-		
+
 		fakeServer = new MockClient("", "result=Harry Potter", "");
 		target.client = fakeServer;
 		result = target.sendServerAction("finalize");
 		assertEquals(result, -1);
-		
+
 		fakeServer = new MockClient("", "result=49", "");
 		target.client = fakeServer;
 		result = target.sendServerAction("finalize");
 		assertEquals(result, 49);
-		
+
 	}
 
 	static class MockClient implements IHTTPClient {

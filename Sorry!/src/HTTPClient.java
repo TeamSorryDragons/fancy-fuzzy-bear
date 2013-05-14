@@ -47,8 +47,6 @@ public class HTTPClient implements IHTTPClient {
 			in = sb.toString();
 			br.close();
 
-			//System.out.println("Server responded with: \n " + in);
-
 			return in;
 		} catch (IOException exception) {
 			exception.printStackTrace();
@@ -81,8 +79,6 @@ public class HTTPClient implements IHTTPClient {
 			}
 			in = sb.toString();
 			br.close();
-
-			System.out.println("Server responded with: \n" + in);
 
 			return in;
 		} catch (IOException e) {

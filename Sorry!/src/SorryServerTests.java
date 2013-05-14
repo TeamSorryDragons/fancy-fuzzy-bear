@@ -350,7 +350,6 @@ public class SorryServerTests {
 			br.close();
 			return in;
 		} catch (Exception exception) {
-			System.err.println("Error in test set-up");
 			exception.printStackTrace();
 		}
 		return null;
