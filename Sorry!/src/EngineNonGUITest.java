@@ -1020,6 +1020,13 @@ public class EngineNonGUITest {
 		e.rotatePlayers();
 		assertEquals("nn|",e.convertCoordToNode(new SorryFrame.Coordinate(1,15)).toString());
 	}
+	
+	@Test
+	public void testCurrentCard(){
+		Engine e = new Engine(new BoardList(), "english");
+		e.getNextCard();
+		assertNotNull(e.getCurrentCard());
+	}
 
 	private static void createNodeChain(Node start, Node end, int length) {
 		Node current = start;
