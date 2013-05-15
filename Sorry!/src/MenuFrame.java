@@ -423,6 +423,7 @@ public class MenuFrame extends JFrame {
 		btnLoad.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
+				player = new ArrayList<String>();
 				ArrayList<String> fileInput = new ArrayList<String>();
 				Engine EHost = new Engine(new BoardList(),
 						MenuFrame.this.language);
