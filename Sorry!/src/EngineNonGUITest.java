@@ -1,5 +1,10 @@
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import org.junit.Test;
 
 /**
@@ -1002,6 +1007,61 @@ public class EngineNonGUITest {
 		assertEquals(end.getPrevious().getPrevious().getPrevious()
 				.getPrevious(), start);
 
+	}
+
+	@Test
+	public void testNullOwner() {
+		Engine e = new Engine(new BoardList(), "english");
+		assertNull(e.getOwner());
+	}
+
+	@Test
+	public void testRemainingRotatedCoordinates() {
+		Engine e = new Engine(new BoardList(), "english");
+		e.insertPlayer(new Player(Piece.COLOR.yellow, "Bill"));
+		e.insertPlayer(new Player(Piece.COLOR.green, "Bill2"));
+		e.rotatePlayers();
+		assertEquals("nn|",
+				e.convertCoordToNode(new SorryFrame.Coordinate(1, 15))
+						.toString());
+		e.rotatePlayers();
+		assertEquals("nn|",
+				e.convertCoordToNode(new SorryFrame.Coordinate(1, 15))
+						.toString());
+	}
+
+	@Test
+	public void testCurrentCard() {
+		Engine e = new Engine(new BoardList(), "english");
+		e.getNextCard();
+		assertNotNull(e.getCurrentCard());
+	}
+
+	@Test
+	public void testSaveGame() {
+		Engine e = new Engine(new BoardList(), "english");
+		e.insertPlayer(new Player(Piece.COLOR.red, "bill"));
+		e.insertPlayer(new Player(Piece.COLOR.blue, "joe"));
+		e.rotatePlayers();
+		try {
+			e.save(new File("Trial.txt"));
+			Scanner reader = new Scanner(new File("Trial.txt"));
+			ArrayList<String> players = new ArrayList<String>();
+			ArrayList<String> players2 = new ArrayList<String>();
+			while (reader.hasNext()) {
+				players.add(reader.nextLine());
+			}
+			for (int i = e.players.getNumberOfElements(); i > 0; i--) {
+				players2.add(e.players.getActualElementData().toString());
+				e.players.goToNextElement();
+			}
+			players2.add(e.board.toString());
+			for (int i = 0; i > players2.size(); i--) {
+				assertEquals(players2.get(i), players.get(i));
+			}
+		} catch (IOException e1) {
+			fail();
+		}
 	}
 
 	private static void createNodeChain(Node start, Node end, int length) {

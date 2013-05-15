@@ -119,6 +119,8 @@ public class MenuFrame extends JFrame {
 		this.buttons.add(host);
 		JButton exit = new JButton(this.labels[5]);
 		this.buttons.add(exit);
+		JButton Language = new JButton("Select a new Language \\\\ sélectionner une nouvelle langue \\\\ 53l3C7 4 n3w L4N9U493");
+		this.buttons.add(Language);
 		newGame.addActionListener(new ActionListener() {
 
 			@Override
@@ -163,6 +165,16 @@ public class MenuFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MenuFrame.this.host();
+			}
+		});
+		
+		Language.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e){
+				MenuFrame.this.dispose();
+				PickLanguage s = new PickLanguage();
+				s.setVisible(true);
+				s.repaint();
 			}
 		});
 
