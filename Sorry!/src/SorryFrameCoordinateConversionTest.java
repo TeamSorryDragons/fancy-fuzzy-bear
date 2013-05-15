@@ -180,7 +180,6 @@ public class SorryFrameCoordinateConversionTest {
 		assertEquals(temp.engine.getActivePlayer().getName(), "Hugh Hefner");
 		assertEquals(temp.board.toString(), "hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nng|nn|nn|hrsn|rsn|rsn|rsn|rsn|nng|nny|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nny|nn|nn|nn|hbsn|bsn|bsn|bsn|bsn|nn|nnb|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn2|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0|gsn|gsn|gmn2|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nnr|");
 		assertEquals(temp.board.pieceList.length,16);
-		String Str = "red";
 		Player one = new Player(Piece.COLOR.red, "guy");
 		NetworkGameEngine target = new NetworkGameEngine("", 0, one, "english");
 		temp.engine = target;
@@ -190,7 +189,7 @@ public class SorryFrameCoordinateConversionTest {
 				"hrsn|rsn|rsf|rsf|rsf|rsf|rsf|rmn0|rsn|rsn|rmn3|nn|nng|nn|nn|hrsn|rsn|rsn|rsn|rsn|nng|nny|hbsn|bsn|bsf|bsf|bsf|bsf|bsf|bmn0|bsn|bsn|bmn3|nny|nn|nn|nn|hbsn|bsn|bsn|bsn|bsn|nn|nnb|hysn|ysn|ysf|ysf|ysf|ysf|ysf|ymn0|ysn|ysn|ymn2|nn|nn|nn|nn|hysn|ysn|ysn|ysn|ysn|nn|nn|hgsn|gsn|gsf|gsf|gsf|gsf|gsf|gmn0|gsn|gsn|gmn2|nn|nn|nn|nn|hgsn|gsn|gsn|gsn|gsn|nn|nnr|");
 	}
 	
-	@SuppressWarnings("javadoc")
+	@SuppressWarnings({ "javadoc", "static-access" })
 	@Test
 	public void testHashContainerError(){
 		HashContainer h = new HashContainer();

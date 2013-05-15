@@ -31,21 +31,25 @@ Instructions
 Connectez-Vous 
 L'hôte 
 Quitter
+Sélectionnez une langue
 
 Nouveau Jeu
 Nommez vos joueurs
 Commencez
+Retour
 
 Connectez-Vous à un Jeu
 L'adresse IP de l'hôte 
 Port 
 Votre nom d'utilisateur 
 Commencez
+Retour
 
 Organisez un Jeu
 Nommez vos joueurs ou sur la charge
 Commencer
 Chargez
+Retour
 
 Votre Information
 Pour que les utilisateurs que vous avez entrées à connecter à un jeu, ils ont besoin de votre numéro de port et l'adresse IP
