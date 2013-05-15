@@ -18,6 +18,7 @@ Move any one pawn from Start to a square occupied by any opponent, sending that 
 , you have won!
 You want to quit do you?  Too bad loser.
 You want to save?  Better win faster.
+It is not your turn.
 Message
 
 Exit
@@ -30,21 +31,25 @@ Instructions
 Connect
 Host
 Exit
+Select a Language
 
 New Game
 Name your players
 Start
+Back
 
 Connect to a Game
 Host IP 
 Port 
 Your Username 
 Start
+Back
 
 Host a Game
 Name your Players or Load a game
 Start
 Load
+Back
 
 Your Information
 To have the users that you inputed connect to a game they need your port number and IP address

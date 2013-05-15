@@ -81,11 +81,11 @@ public class MenuFrame extends JFrame {
 	 * @return
 	 */
 	private static String[] obtainButtonLabels(String lang) {
-		String[] ret = new String[6];
+		String[] ret = new String[7];
 		Scanner in;
 		try {
 			in = new Scanner(new File(lang + ".txt"));
-			for (int x = 0; x < 26; x++)
+			for (int x = 0; x < 27; x++)
 				in.nextLine();
 
 			ret[0] = in.nextLine();
@@ -94,6 +94,7 @@ public class MenuFrame extends JFrame {
 			ret[3] = in.nextLine();
 			ret[4] = in.nextLine();
 			ret[5] = in.nextLine();
+			ret[6] = in.nextLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,7 +120,7 @@ public class MenuFrame extends JFrame {
 		this.buttons.add(host);
 		JButton exit = new JButton(this.labels[5]);
 		this.buttons.add(exit);
-		JButton Language = new JButton("Select a new Language \\\\ sélectionner une nouvelle langue \\\\ 53l3C7 4 n3w L4N9U493");
+		JButton Language = new JButton(this.labels[6]);
 		this.buttons.add(Language);
 		newGame.addActionListener(new ActionListener() {
 
@@ -197,7 +198,7 @@ public class MenuFrame extends JFrame {
 		Scanner in = null;
 		try {
 			in = new Scanner(new File(MenuFrame.this.language + ".txt"));
-			for (int x = 0; x < 33; x++)
+			for (int x = 0; x < 35; x++)
 				in.nextLine();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -228,10 +229,21 @@ public class MenuFrame extends JFrame {
 		textBoxPanel.add(p4);
 		newGamePanel.add(textBoxPanel);
 		JButton btnStart = new JButton(in.nextLine());
+		JButton btnBack = new JButton(in.nextLine());
 		JPanel start = new JPanel();
 		start.setLayout(new FlowLayout(FlowLayout.CENTER));
 		start.add(btnStart);
+		start.add(btnBack);
 		this.getRootPane().setDefaultButton(btnStart);
+		btnBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				MenuFrame.this.back();
+				
+
+			}
+
+		});
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
@@ -248,6 +260,14 @@ public class MenuFrame extends JFrame {
 		this.add(newGamePanel, BorderLayout.NORTH);
 		this.setVisible(true);
 		this.repaint();
+	}
+
+	protected void back() {
+		// TODO Auto-generated method stub
+				MenuFrame.this.dispose();
+				MenuFrame mf= new MenuFrame(language);
+				mf.setVisible(true);
+				mf.repaint();
 	}
 
 	/**
@@ -289,7 +309,7 @@ public class MenuFrame extends JFrame {
 		Scanner in = null;
 		try {
 			in = new Scanner(new File(this.language + ".txt"));
-			for (int x = 0; x < 37; x++)
+			for (int x = 0; x < 40; x++)
 				in.nextLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -320,7 +340,9 @@ public class MenuFrame extends JFrame {
 		connectPanel.add(userPanel);
 		JPanel s = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton btnStart = new JButton(in.nextLine());
+		JButton btnBack = new JButton(in.nextLine());
 		s.add(btnStart);
+		s.add(btnBack);
 		this.getRootPane().setDefaultButton(btnStart);
 		btnStart.addActionListener(new ActionListener() {
 			@Override
@@ -337,6 +359,15 @@ public class MenuFrame extends JFrame {
 				sf.start();
 				MenuFrame.this.dispose();
 			}
+		});
+		btnBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				MenuFrame.this.back();
+				
+
+			}
+
 		});
 		connectPanel.add(s);
 		connectPanel.setVisible(true);
@@ -379,7 +410,7 @@ public class MenuFrame extends JFrame {
 		Scanner in = null;
 		try {
 			in = new Scanner(new File(this.language + ".txt"));
-			for (int x = 0; x < 43; x++)
+			for (int x = 0; x < 47; x++)
 				in.nextLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -393,11 +424,21 @@ public class MenuFrame extends JFrame {
 
 		JButton btnStart = new JButton(in.nextLine());
 		JButton btnLoad = new JButton(in.nextLine());
+		JButton btnBack = new JButton(in.nextLine());
 		JPanel start = new JPanel();
 		start.setLayout(new FlowLayout(FlowLayout.CENTER));
 		start.add(btnStart);
 		start.add(btnLoad);
+		start.add(btnBack);
+		
+		btnBack.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				MenuFrame.this.back();
+				
+			}
 
+		});
 		btnStart.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
@@ -503,7 +544,7 @@ public class MenuFrame extends JFrame {
 		Scanner in = null;
 		try {
 			in = new Scanner(new File(this.language + ".txt"));
-			for (int x = 0; x < 48; x++)
+			for (int x = 0; x < 53; x++)
 				in.nextLine();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

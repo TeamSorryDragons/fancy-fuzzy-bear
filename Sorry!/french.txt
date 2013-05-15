@@ -18,6 +18,7 @@ Déplace aucun pion celle de démarrage sur une case occupée par un adversaire, l'
 , vous avez gagné!
 Vous voulez arrêter de vous? Trop mauvais perdant.
 Vous voulez économiser? Mieux gagner plus rapidement.
+Ce n'est pas votre tour
 Message
 
 Sortie
@@ -30,21 +31,25 @@ Instructions
 Connectez-Vous 
 L'hôte 
 Quitter
+Sélectionnez une langue
 
 Nouveau Jeu
 Nommez vos joueurs
 Commencez
+Retour
 
 Connectez-Vous à un Jeu
 L'adresse IP de l'hôte 
 Port 
 Votre nom d'utilisateur 
 Commencez
+Retour
 
 Organisez un Jeu
 Nommez vos joueurs ou sur la charge
 Commencer
 Chargez
+Retour
 
 Votre Information
 Pour que les utilisateurs que vous avez entrées à connecter à un jeu, ils ont besoin de votre numéro de port et l'adresse IP
