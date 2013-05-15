@@ -29,7 +29,7 @@ public class SorryServerTests {
 		startUpServerOnLocalHost(target);
 		assertTrue(target.closeServerConnection());
 	}
-
+	
 	@Test
 	public void testCloseUnopenServer() {
 		SorryServer target = new SorryServer(null);
@@ -303,6 +303,15 @@ public class SorryServerTests {
 		lines = in.split("\n");
 		assertEquals(lines.length, 1);
 		assertEquals(lines[0], "Unsupported server access.");
+		
+		e.activePlayer = new Player(Piece.COLOR.green, "James");
+		in = this.sendDataToServer(
+				"user=James\ndesired-action=finalize\ndesired-action=forfeit",
+				"http://localhost:" + port + "/", "POST");
+		lines = in.split("\n");
+		assertEquals(lines.length, 1);
+		assertEquals(lines[0], ""+Engine.SUCCESSFUL_OPERATION);
+		
 
 		assertTrue(target.closeServerConnection());
 	}
