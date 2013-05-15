@@ -18,6 +18,7 @@ Move any one pawn from Start to a square occupied by any opponent, sending that 
 , you have won!
 You want to quit do you?  Too bad loser.
 You want to save?  Better win faster.
+It is not your turn.
 Message
 
 Exit

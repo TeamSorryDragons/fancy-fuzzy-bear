@@ -85,7 +85,7 @@ public class MenuFrame extends JFrame {
 		Scanner in;
 		try {
 			in = new Scanner(new File(lang + ".txt"));
-			for (int x = 0; x < 26; x++)
+			for (int x = 0; x < 27; x++)
 				in.nextLine();
 
 			ret[0] = in.nextLine();
