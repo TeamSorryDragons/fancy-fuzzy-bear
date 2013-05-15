@@ -77,7 +77,7 @@ public class UIComponent extends JPanel {
 		} catch (FileNotFoundException e) {
 		}
 		Scanner in = new Scanner(fr);
-		for (int i = 0; i < 22; i++)
+		for (int i = 0; i < 23; i++)
 			in.nextLine();
 		buttonLabels = new String[3];
 		for (int i = 0; i < 3; i++)
