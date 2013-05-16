@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -47,6 +48,8 @@ public class MenuFrame extends JFrame {
 	private ArrayList<String> player;
 	private int port;
 	private String IP;
+	
+	private ColorPicker cPicker;
 
 	public MenuFrame(String lang) {
 		super("Sorry!");
@@ -65,12 +68,16 @@ public class MenuFrame extends JFrame {
 		titleLabel.setPreferredSize(new Dimension(TITLE_WIDTH, TITLE_HEIGHT));
 		titleLabel.add(title, BorderLayout.CENTER);
 		this.add(titleLabel, BorderLayout.NORTH);
+		
+		this.cPicker = new ColorPicker(new Date());
 
 		this.buttonPanel = new JPanel();
 		this.buttons = new ArrayList<JButton>();
 
 		this.initializeButtons();
 		this.add(buttonPanel);
+		
+		
 	}
 
 	/**
@@ -107,6 +114,8 @@ public class MenuFrame extends JFrame {
 			this.buttonPanel = new JPanel();
 		if (this.buttons == null)
 			this.buttons = new ArrayList<JButton>();
+		
+		this.buttonPanel.setBackground(this.cPicker.getRandomColor());
 
 		JButton newGame = new JButton(this.labels[0]);
 		this.buttons.add(newGame);
@@ -168,10 +177,10 @@ public class MenuFrame extends JFrame {
 				MenuFrame.this.host();
 			}
 		});
-		
+
 		Language.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e){
+			public void actionPerformed(ActionEvent e) {
 				MenuFrame.this.dispose();
 				PickLanguage s = new PickLanguage();
 				s.setVisible(true);
@@ -239,7 +248,6 @@ public class MenuFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				MenuFrame.this.back();
-				
 
 			}
 
@@ -264,10 +272,10 @@ public class MenuFrame extends JFrame {
 
 	protected void back() {
 		// TODO Auto-generated method stub
-				MenuFrame.this.dispose();
-				MenuFrame mf= new MenuFrame(language);
-				mf.setVisible(true);
-				mf.repaint();
+		MenuFrame.this.dispose();
+		MenuFrame mf = new MenuFrame(language);
+		mf.setVisible(true);
+		mf.repaint();
 	}
 
 	/**
@@ -364,7 +372,6 @@ public class MenuFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				MenuFrame.this.back();
-				
 
 			}
 
@@ -430,12 +437,12 @@ public class MenuFrame extends JFrame {
 		start.add(btnStart);
 		start.add(btnLoad);
 		start.add(btnBack);
-		
+
 		btnBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
 				MenuFrame.this.back();
-				
+
 			}
 
 		});
