@@ -64,7 +64,7 @@ public class InstructionsFrame extends JFrame {
 		URL location = InstructionsFrame.class.getResource(fileName);
 		if (location == null) {
 			location = InstructionsFrame.class
-					.getResource("instructions_english.html");
+					.getResource("/images/instructions_"+"english.html");
 			// if we can't find instructions in their language, give them
 			// english ones... it is better than NOTHING
 		}
@@ -85,7 +85,7 @@ public class InstructionsFrame extends JFrame {
 	}
 
 	public static void main(String args[]) {
-		new InstructionsFrame("french");
+		new InstructionsFrame("leet");
 	}
 
 }
